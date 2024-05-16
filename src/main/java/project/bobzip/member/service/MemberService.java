@@ -14,4 +14,10 @@ public class MemberService {
     public void add(Member member) {
         memberRepository.save(member);
     }
+
+    public Member login(String userId, String password) {
+        return memberRepository.findByUserId(userId)
+                .filter(m -> m.getPassword().equals(password))
+                .orElse(null);
+    }
 }

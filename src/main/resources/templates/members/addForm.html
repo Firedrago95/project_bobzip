@@ -8,7 +8,8 @@
     <form action="" th:action th:object="${member}" method="post">
         <input type="text" th:field="*{userId}" placeholder="ID">
         <input type="text" th:field="*{password}" placeholder="Password">
-        <input type="submit" value="Login">
+        <input type="text" th:field="*{username}" placeholder="username">
+        <input type="submit" value="회원가입">
     </form>
 </body>
 </html>

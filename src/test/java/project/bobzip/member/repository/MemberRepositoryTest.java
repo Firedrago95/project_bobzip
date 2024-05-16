@@ -29,4 +29,15 @@ class MemberRepositoryTest {
         assertThat(findMember).isEqualTo(member);
     }
 
+    @Test
+    void findByUserIdTest() {
+        Member member = new Member();
+        member.setUsername("userA");
+        member.setUserId("abcd");
+        member.setPassword("1234");
+        memberRepository.save(member);
+
+        Member loginMember = memberRepository.findByUserId("abcd").get();
+        assertThat(loginMember).isEqualTo(member);
+    }
 }

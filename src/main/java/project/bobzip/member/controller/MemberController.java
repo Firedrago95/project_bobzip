@@ -18,24 +18,9 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/login")
-    public String loginForm(@ModelAttribute("member") Member member) {
-        return "member/loginForm";
-    }
-
     @GetMapping("/add")
     public String addForm(@ModelAttribute("member") Member member) {
         return "member/addForm";
-    }
-
-    @PostMapping("/login")
-    public String login(@Validated @ModelAttribute("member") Member member,
-                        BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "members/addForm";
-        }
-
-        return "redirect:/";
     }
 
     @PostMapping("/add")

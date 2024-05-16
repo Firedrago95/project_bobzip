@@ -169,4 +169,8 @@ $RECYCLE.BIN/
 **/application.yml
 **/application.properties
 
+### Gradle ###
+.gradle
+build/
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,java,intellij
