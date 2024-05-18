@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+    <p th:if="${loginMember != null}" th:text="|${loginMember.username}님 반갑습니다.|"></p>
     <button th:onclick="|location.href='@{/members/add}'|">회원가입</button>
     <button th:onclick="|location.href='@{/members/login}'|">로그인</button>
 </body>

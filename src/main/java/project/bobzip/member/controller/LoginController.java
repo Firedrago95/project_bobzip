@@ -1,5 +1,7 @@
 package project.bobzip.member.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -26,16 +28,22 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@Validated @ModelAttribute("memberForm") LoginForm loginForm,
-                        BindingResult bindingResult) {
+                        BindingResult bindingResult,
+                        HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return "members/loginForm";
         }
+
         Member loginMember = memberService.login(loginForm.getUserId(), loginForm.getPassword());
         if (loginMember == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
             return "members/loginForm";
         }
-        return null;
+
+        HttpSession session = request.getSession();
+        session.setAttribute("loginMember", loginMember);
+
+        return "redirect:/";
     }
 
 }
