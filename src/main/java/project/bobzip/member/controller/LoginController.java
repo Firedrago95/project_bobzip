@@ -29,7 +29,7 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@Validated @ModelAttribute("memberForm") LoginForm loginForm,
                         BindingResult bindingResult,
-                        HttpServletRequest request) {
+                        HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "members/loginForm";
         }
@@ -40,10 +40,14 @@ public class LoginController {
             return "members/loginForm";
         }
 
-        HttpSession session = request.getSession();
         session.setAttribute("loginMember", loginMember);
 
         return "redirect:/";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("loginMember");
+        return "redirect:/";
+    }
 }
