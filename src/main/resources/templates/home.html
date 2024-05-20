@@ -5,9 +5,15 @@
     <title>Title</title>
 </head>
 <body>
+<div>
     <p th:if="${loginMember != null}" th:text="|${loginMember.username}님 반갑습니다.|"></p>
     <button th:if="${loginMember == null}" th:onclick="|location.href='@{/members/add}'|">회원가입</button>
     <button th:if="${loginMember == null}" th:onclick="|location.href='@{/members/login}'|">로그인</button>
     <button th:if="${loginMember != null}" th:onclick="|location.href='@{/members/logout}'|">로그아웃</button>
+</div>
+
+<div>
+    <button th:if="${loginMember != null}" th:onclick="|location.href='@{/recipe/add}'|">레시피 등록</button>
+</div>
 </body>
 </html>
