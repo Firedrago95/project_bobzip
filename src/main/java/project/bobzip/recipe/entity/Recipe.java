@@ -1,6 +1,8 @@
 package project.bobzip.recipe.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import project.bobzip.member.entity.Member;
 
@@ -17,7 +19,8 @@ public class Recipe {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Column(length = 20)
+    @NotNull
+    @Size(max = 50)
     private String title;
 
     @Column(length = 100)

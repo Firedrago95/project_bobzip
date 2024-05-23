@@ -16,6 +16,6 @@ public class Ingredient {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "category_id")
+    @Column(name = "category_id", length = 10)
     private IngredientCategory category;
 }

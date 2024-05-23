@@ -4,6 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.Getter;
 
@@ -16,12 +18,15 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    @Column(nullable = false, length = 20)
+    @NotNull
+    @Size(min = 5, max = 20)
     private String userId;
 
-    @Column(nullable = false, length = 20)
+    @NotNull
+    @Size(min = 8, max = 20)
     private String password;
 
-    @Column(nullable = false, length = 20)
+    @NotNull
+    @Size(max = 15)
     private String username;
 }
