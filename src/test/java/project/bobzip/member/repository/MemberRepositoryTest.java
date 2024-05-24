@@ -19,10 +19,7 @@ class MemberRepositoryTest {
 
     @Test
     void saveTest() {
-        Member member = new Member();
-        member.setUsername("userA");
-        member.setUserId("abcd");
-        member.setPassword("1234");
+        Member member = new Member("userA", "abcd", "1234");
         memberRepository.save(member);
 
         Member findMember = memberRepository.findById(member.getId()).get();
@@ -31,10 +28,7 @@ class MemberRepositoryTest {
 
     @Test
     void findByUserIdTest() {
-        Member member = new Member();
-        member.setUsername("userA");
-        member.setUserId("abcd");
-        member.setPassword("1234");
+        Member member = new Member("userA", "abcd", "1234");
         memberRepository.save(member);
 
         Member loginMember = memberRepository.findByUserId("abcd").get();

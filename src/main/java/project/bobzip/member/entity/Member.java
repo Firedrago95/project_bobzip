@@ -18,15 +18,20 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    @NotNull
-    @Size(min = 5, max = 20)
+    @Column(length = 20)
     private String userId;
 
-    @NotNull
-    @Size(min = 8, max = 20)
+    @Column(length = 20)
     private String password;
 
-    @NotNull
-    @Size(max = 15)
+    @Column(length = 15)
     private String username;
+
+    public Member() {}
+
+    public Member(String userId, String password, String username) {
+        this.userId = userId;
+        this.password = password;
+        this.username = username;
+    }
 }
