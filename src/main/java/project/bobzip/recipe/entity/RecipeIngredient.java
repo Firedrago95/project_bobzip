@@ -1,6 +1,7 @@
 package project.bobzip.recipe.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Entity
@@ -21,5 +22,6 @@ public class RecipeIngredient {
     private int quantity;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 2)
     private Unit unit;
 }
