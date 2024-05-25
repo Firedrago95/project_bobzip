@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public enum Unit {
     g("g"),
-    ml("ml"),
     kg("kg"),
+    ml("ml"),
     L("L");
 
     private final String symbol;
