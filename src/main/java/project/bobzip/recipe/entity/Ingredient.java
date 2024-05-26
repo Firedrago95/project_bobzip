@@ -15,7 +15,4 @@ public class Ingredient {
     @Column(name = "name", length = 20)
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "category_id", length = 10)
-    private IngredientCategory category;
 }
