@@ -18,7 +18,9 @@ public class RecipeForm {
     private MultipartFile thumbnail;
 
     private List<String> ingredientName;
-    private int quantity;
+    private List<Integer> quantity;
     private List<String> unit;
 
+    private List<String> stepInstruction;
+    private List<MultipartFile> stepThumbnail;
 }
