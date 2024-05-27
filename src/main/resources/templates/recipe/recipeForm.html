@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script>
-        function readURL(input) {
+        function readURL(input, id) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                    document.getElementById('preview').src = e.target.result;
+                    document.getElementById(id).src = e.target.result;
                 };
                 reader.readAsDataURL(input.files[0]);
             } else {
-                document.getElementById('preview').src = "";
+                document.getElementById(id).src = "";
             }
         }
 
-        function addIngredient() {
-            var ingredientList = document.getElementById("ingredient");
-            var newIngredient = document.querySelector("#ingredient li").cloneNode(true);
+        function addIngredient(id) {
+            var ingredientList = document.getElementById(id);
+            var newIngredient = document.querySelector("#"+id+" li").cloneNode(true);
 
             newIngredient.querySelectorAll("input, select").forEach(function(element) {
                 element.value = "";
@@ -26,14 +26,23 @@
 
             ingredientList.appendChild(newIngredient);
         }
+
+        function deleteIngredient(obj, id) {
+            const ingredientList = document.getElementById(id);
+            const childCount = ingredientList.children.length;
+
+            if (childCount != 1) {
+                ingredientList.removeChild(obj.parentNode);
+            }
+        }
     </script>
 </head>
 <body>
 <form action="" method="post" th:object="${recipeForm}" enctype="multipart/form-data">
     요리명 <input type="text" th:field="*{title}" >
     요리 소개 <input type="text" th:field="*{instruction}" >
-    요리 이미지 <input type="file" th:field="*{thumbnail}" onchange="readURL(this)"> <br>
-    <img id="preview" width="500" height="333"/>
+    요리 이미지 <input type="file" th:field="*{thumbnail}" onchange="readURL(this, 'preview')">
+    <img id="preview" width="400" height="300"/>
 
     <div id="ingredient">
         재료정보
@@ -45,10 +54,22 @@
                 <option th:each="unit : ${units}" th:value="${unit.symbol}"
                         th:text="${unit.symbol}">FAST</option>
             </select>
+            <button type="button" onclick="deleteIngredient(this, 'ingredient')">X</button>
         </li>
     </div>
+    <button type="button" onclick="addIngredient('ingredient')">재료추가</button>
+
+    <div id="cooking_step">
+        조리과정
+        <li>
+            <input type="text" th:field="*{stepInstruction}" placeholder="(조리법)">
+            <input type="file" th:field="*{stepThumbnail}" onchange="readURL(this, 'step')">
+            <img id="step" width="250" height="150"/>
+            <button type="button" onclick="deleteIngredient(this, 'cooking_step')">X</button>
+        </li>
+    </div>
+    <button type="button" onclick="addIngredient('cooking_step')">과정 추가</button>
     <input type="submit" value="레시피 등록">
 </form>
-<button onclick="addIngredient()">재료추가</button>
 </body>
 </html>
