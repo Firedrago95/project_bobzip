@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
     <script>
         function readURL(input, id) {
             if (input.files && input.files[0]) {
@@ -40,7 +46,9 @@
 <body>
 <form action="" method="post" th:object="${recipeForm}" enctype="multipart/form-data">
     요리명 <input type="text" th:field="*{title}" >
+    <div class="field-error" th:errors="*{title}"/>
     요리 소개 <input type="text" th:field="*{instruction}" >
+    <div class="field-error" th:errors="*{instruction}"/>
     요리 이미지 <input type="file" th:field="*{thumbnail}" onchange="readURL(this, 'preview')">
     <img id="preview" width="400" height="300"/>
 
@@ -48,12 +56,15 @@
         재료정보
         <li>
             <input type="text" th:field="*{ingredientName}" placeholder="(재료명)">
+            <div class="field-error" th:errors="*{ingredientName}"/>
             <input type="number" th:field="*{quantity}" placeholder="(수량)">
+            <div class="field-error" th:errors="*{quantity}"/>
             <select th:field="*{unit}">
                 <option value="">==단위 선택==</option>
                 <option th:each="unit : ${units}" th:value="${unit.symbol}"
                         th:text="${unit.symbol}">FAST</option>
             </select>
+            <div class="field-error" th:errors="*{unit}"/>
             <button type="button" onclick="deleteIngredient(this, 'ingredient')">X</button>
         </li>
     </div>
@@ -63,6 +74,7 @@
         조리과정
         <li>
             <input type="text" th:field="*{stepInstruction}" placeholder="(조리법)">
+            <div class="field-error" th:errors="*{stepInstruction}"/>
             <input type="file" th:field="*{stepThumbnail}" onchange="readURL(this, 'step')">
             <img id="step" width="250" height="150"/>
             <button type="button" onclick="deleteIngredient(this, 'cooking_step')">X</button>
