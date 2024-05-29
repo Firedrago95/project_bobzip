@@ -28,7 +28,6 @@ public class FileStore {
             return null;
         }
 
-
         String originalFilename = thumbnail.getOriginalFilename();
         String storeFilename = createStoreFilename(originalFilename);
         thumbnail.transferTo(new File(getRecipeThumbnailPath(storeFilename)));
@@ -38,14 +37,25 @@ public class FileStore {
     public List<UploadFile> addThumbnail(List<MultipartFile> stepThumbnail) throws IOException {
         ArrayList<UploadFile> uploadFiles = new ArrayList<>();
         for (MultipartFile multipartFile : stepThumbnail) {
-            uploadFiles.add(addThumbnail(multipartFile));
+            uploadFiles.add(addStepThumbnail(multipartFile));
         }
         return uploadFiles;
     }
 
+    private UploadFile addStepThumbnail(MultipartFile thumbnail) throws IOException {
+        if (thumbnail.isEmpty()) {
+            return null;
+        }
+
+        String originalFilename = thumbnail.getOriginalFilename();
+        String storeFilename = createStoreFilename(originalFilename);
+        thumbnail.transferTo(new File(getStepThumbnailPath(storeFilename)));
+        return new UploadFile(originalFilename, storeFilename);
+    }
+
     private String createStoreFilename(String originalFilename) {
         String ext = extractExt(originalFilename);
-        String uuid = UUID.randomUUID().toString();
+        String uuid = UUID.randomUUID().toString().substring(0,8);
         return uuid + "." + ext;
     }
 
