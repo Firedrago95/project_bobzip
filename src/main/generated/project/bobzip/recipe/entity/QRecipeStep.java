@@ -30,7 +30,7 @@ public class QRecipeStep extends EntityPathBase<RecipeStep> {
 
     public final NumberPath<Integer> stepNumber = createNumber("stepNumber", Integer.class);
 
-    public final StringPath thumbnail = createString("thumbnail");
+    public final project.bobzip.global.entity.QUploadFile thumbnail;
 
     public QRecipeStep(String variable) {
         this(RecipeStep.class, forVariable(variable), INITS);
@@ -51,6 +51,7 @@ public class QRecipeStep extends EntityPathBase<RecipeStep> {
     public QRecipeStep(Class<? extends RecipeStep> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.recipe = inits.isInitialized("recipe") ? new QRecipe(forProperty("recipe"), inits.get("recipe")) : null;
+        this.thumbnail = inits.isInitialized("thumbnail") ? new project.bobzip.global.entity.QUploadFile(forProperty("thumbnail")) : null;
     }
 
 }

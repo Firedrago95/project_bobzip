@@ -26,7 +26,7 @@ public class RecipeForm {
     @NotEmpty(message = "재료 수량을 입력해주세요")
     private List<Integer> quantity;
     @NotEmpty(message = "단위를 입력해주세요")
-    private List<String> unit;
+    private List<Unit> unit;
 
     @NotEmpty(message = "조리 단계를 입력해주세요")
     private List<String> stepInstruction;

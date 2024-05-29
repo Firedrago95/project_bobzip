@@ -22,6 +22,8 @@ public class QRecipeIngredient extends EntityPathBase<RecipeIngredient> {
 
     public static final QRecipeIngredient recipeIngredient = new QRecipeIngredient("recipeIngredient");
 
+    public final NumberPath<Long> id = createNumber("id", Long.class);
+
     public final QIngredient ingredient;
 
     public final NumberPath<Integer> quantity = createNumber("quantity", Integer.class);

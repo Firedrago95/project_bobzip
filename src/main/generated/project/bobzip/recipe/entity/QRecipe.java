@@ -28,7 +28,7 @@ public class QRecipe extends EntityPathBase<Recipe> {
 
     public final project.bobzip.member.entity.QMember member;
 
-    public final StringPath thumbnail = createString("thumbnail");
+    public final project.bobzip.global.entity.QUploadFile thumbnail;
 
     public final StringPath title = createString("title");
 
@@ -51,6 +51,7 @@ public class QRecipe extends EntityPathBase<Recipe> {
     public QRecipe(Class<? extends Recipe> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.member = inits.isInitialized("member") ? new project.bobzip.member.entity.QMember(forProperty("member")) : null;
+        this.thumbnail = inits.isInitialized("thumbnail") ? new project.bobzip.global.entity.QUploadFile(forProperty("thumbnail")) : null;
     }
 
 }

@@ -7,6 +7,8 @@ import project.bobzip.global.entity.UploadFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -31,6 +33,14 @@ public class FileStore {
         String storeFilename = createStoreFilename(originalFilename);
         thumbnail.transferTo(new File(getRecipeThumbnailPath(storeFilename)));
         return new UploadFile(originalFilename, storeFilename);
+    }
+
+    public List<UploadFile> addThumbnail(List<MultipartFile> stepThumbnail) throws IOException {
+        ArrayList<UploadFile> uploadFiles = new ArrayList<>();
+        for (MultipartFile multipartFile : stepThumbnail) {
+            uploadFiles.add(addThumbnail(multipartFile));
+        }
+        return uploadFiles;
     }
 
     private String createStoreFilename(String originalFilename) {

@@ -8,11 +8,12 @@ import project.bobzip.member.repository.MemberRepository;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    @Transactional
     public void add(Member member) {
         memberRepository.save(member);
     }
