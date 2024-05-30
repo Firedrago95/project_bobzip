@@ -35,26 +35,16 @@ public class RecipeService {
         // 파일 저장
         MultipartFile thumbnail = recipeForm.getThumbnail();
         UploadFile uploadFile = fileStore.addThumbnail(thumbnail);
-
         // 레시피 생성
         Recipe recipe = new Recipe(member, recipeForm.getTitle(), recipeForm.getInstruction(), uploadFile);
         recipeRepository.save(recipe);
-        
         // 레시피 단계 생성
-        List<String> stepInstruction = recipeForm.getStepInstruction();
-        List<MultipartFile> stepThumbnail = recipeForm.getStepThumbnail();
-        List<UploadFile> uploadStepThumbnail = fileStore.addThumbnail(stepThumbnail);
-        for (int i = 0; i < stepInstruction.size(); i++) {
-            recipeStepRepository.save(
-                    new RecipeStep(
-                            recipe, i + 1,
-                            uploadStepThumbnail.get(i)
-                            ,stepInstruction.get(i)
-                    )
-            );
-        }
-
+        createRecipeStep(recipeForm, recipe);
         // 재료 및 레시피 재료 생성
+        createRecipeIngredient(recipeForm, recipe);
+    }
+
+    private void createRecipeIngredient(RecipeForm recipeForm, Recipe recipe) {
         List<String> ingredientName = recipeForm.getIngredientName();
         List<Unit> unit = recipeForm.getUnit();
         List<Integer> quantity = recipeForm.getQuantity();
@@ -66,6 +56,21 @@ public class RecipeService {
             RecipeIngredient recipeIngredient =
                     new RecipeIngredient(recipe, ingredient, quantity.get(i), unit.get(i));
             recipeIngredientRepository.save(recipeIngredient);
+        }
+    }
+
+    private void createRecipeStep(RecipeForm recipeForm, Recipe recipe) throws IOException {
+        List<String> stepInstruction = recipeForm.getStepInstruction();
+        List<MultipartFile> stepThumbnail = recipeForm.getStepThumbnail();
+        List<UploadFile> uploadStepThumbnail = fileStore.addThumbnail(stepThumbnail);
+        for (int i = 0; i < stepInstruction.size(); i++) {
+            recipeStepRepository.save(
+                    new RecipeStep(
+                            recipe, i + 1,
+                            uploadStepThumbnail.get(i)
+                            ,stepInstruction.get(i)
+                    )
+            );
         }
     }
 }
