@@ -34,43 +34,29 @@ public class RecipeService {
     public void addRecipe(RecipeForm recipeForm, Member member) throws IOException {
         // 파일 저장
         MultipartFile thumbnail = recipeForm.getThumbnail();
-        UploadFile uploadFile = fileStore.addThumbnail(thumbnail);
-        // 레시피 생성
-        Recipe recipe = new Recipe(member, recipeForm.getTitle(), recipeForm.getInstruction(), uploadFile);
-        recipeRepository.save(recipe);
+        List<MultipartFile> stepThumbnails = recipeForm.getStepThumbnail();
+        UploadFile recipeThumbnailUrl = fileStore.addThumbnail(thumbnail);
+        List<UploadFile> stepThumbnailUrls = fileStore.addThumbnail(stepThumbnails);
+
+        // 재료 생성
+        List<Ingredient> ingredients = Ingredient.createIngredients(recipeForm.getIngredientName());
+        ingredientRepository.saveAll(ingredients);
+
+        // 레시피 재료 생성
+        List<RecipeIngredient> recipeIngredients = RecipeIngredient.createRecipeIngredient(
+                ingredients,
+                recipeForm.getQuantity(),
+                recipeForm.getUnit());
+
         // 레시피 단계 생성
-        createRecipeStep(recipeForm, recipe);
-        // 재료 및 레시피 재료 생성
-        createRecipeIngredient(recipeForm, recipe);
+        List<RecipeStep> recipeSteps = RecipeStep.createRecipeSteps(
+                stepThumbnailUrls,
+                recipeForm.getStepInstruction());
+
+        // 레시피 생성
+        Recipe recipe = Recipe.createRecipe(recipeIngredients, recipeSteps, recipeForm.getInstruction(),
+                member, recipeForm.getTitle(), recipeThumbnailUrl);
+        recipeRepository.save(recipe);
     }
 
-    private void createRecipeIngredient(RecipeForm recipeForm, Recipe recipe) {
-        List<String> ingredientName = recipeForm.getIngredientName();
-        List<Unit> unit = recipeForm.getUnit();
-        List<Integer> quantity = recipeForm.getQuantity();
-
-        for (int i = 0; i < ingredientName.size(); i++) {
-            Ingredient ingredient = new Ingredient(ingredientName.get(i));
-            ingredientRepository.save(ingredient);
-
-            RecipeIngredient recipeIngredient =
-                    new RecipeIngredient(recipe, ingredient, quantity.get(i), unit.get(i));
-            recipeIngredientRepository.save(recipeIngredient);
-        }
-    }
-
-    private void createRecipeStep(RecipeForm recipeForm, Recipe recipe) throws IOException {
-        List<String> stepInstruction = recipeForm.getStepInstruction();
-        List<MultipartFile> stepThumbnail = recipeForm.getStepThumbnail();
-        List<UploadFile> uploadStepThumbnail = fileStore.addThumbnail(stepThumbnail);
-        for (int i = 0; i < stepInstruction.size(); i++) {
-            recipeStepRepository.save(
-                    new RecipeStep(
-                            recipe, i + 1,
-                            uploadStepThumbnail.get(i)
-                            ,stepInstruction.get(i)
-                    )
-            );
-        }
-    }
 }

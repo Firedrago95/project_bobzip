@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import project.bobzip.global.entity.UploadFile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 public class RecipeStep {
@@ -27,10 +30,23 @@ public class RecipeStep {
     @Column(name = "instruction")
     private String instruction;
 
-    public RecipeStep(Recipe recipe, int stepNumber, UploadFile thumbnail, String instruction) {
+
+    //==생성 메서드==//
+    public static List<RecipeStep> createRecipeSteps(List<UploadFile> images,
+                                              List<String> instructions) {
+        List<RecipeStep> steps = new ArrayList<>();
+        for (int i = 0; i < images.size(); i++) {
+            RecipeStep recipeStep = new RecipeStep();
+            recipeStep.stepNumber = i +1;
+            recipeStep.thumbnail = images.get(i);
+            recipeStep.instruction = instructions.get(i);
+            steps.add(recipeStep);
+        }
+        return steps;
+    }
+
+    //==연관 메서드==//
+    public void addRecipe(Recipe recipe) {
         this.recipe = recipe;
-        this.stepNumber = stepNumber;
-        this.thumbnail = thumbnail;
-        this.instruction = instruction;
     }
 }

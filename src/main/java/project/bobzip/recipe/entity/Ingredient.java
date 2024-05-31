@@ -3,6 +3,9 @@ package project.bobzip.recipe.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 public class Ingredient {
@@ -17,5 +20,11 @@ public class Ingredient {
 
     public Ingredient(String name) {
         this.name = name;
+    }
+
+    public static List<Ingredient> createIngredients(List<String> names) {
+        List<Ingredient> ingredients = new ArrayList<>();
+        names.forEach(name -> ingredients.add(new Ingredient(name)));
+        return ingredients;
     }
 }

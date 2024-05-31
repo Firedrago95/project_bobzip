@@ -2,7 +2,11 @@ package project.bobzip.recipe.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,10 +31,25 @@ public class RecipeIngredient {
     @Column(length = 2)
     private Unit unit;
 
-    public RecipeIngredient(Recipe recipe, Ingredient ingredient, int quantity, Unit unit) {
-        this.recipe = recipe;
-        this.ingredient = ingredient;
-        this.quantity = quantity;
-        this.unit = unit;
+    //==생성 메서드==//
+    public static List<RecipeIngredient> createRecipeIngredient(List<Ingredient> ingredients,
+                                                                List<Integer> quantities,
+                                                                List<Unit> units) {
+        List<RecipeIngredient> recipeIngredients = new ArrayList<>();
+        for (int i = 0; i < ingredients.size(); i++) {
+            RecipeIngredient recipeIngredient = new RecipeIngredient();
+            recipeIngredient.ingredient = ingredients.get(i);
+            recipeIngredient.unit = units.get(i);
+            recipeIngredient.quantity = quantities.get(i);
+            recipeIngredients.add(recipeIngredient);
+        }
+        return recipeIngredients;
     }
+
+
+    //==연관관계 메서드==//
+    public void addRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
+
 }
