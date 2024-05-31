@@ -11,9 +11,7 @@ import project.bobzip.member.entity.Member;
 import project.bobzip.recipe.dto.RecipeForm;
 import project.bobzip.recipe.entity.*;
 import project.bobzip.recipe.repository.IngredientRepository;
-import project.bobzip.recipe.repository.RecipeIngredientRepository;
 import project.bobzip.recipe.repository.RecipeRepository;
-import project.bobzip.recipe.repository.RecipeStepRepository;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,9 +23,7 @@ import java.util.List;
 public class RecipeService {
 
     private final RecipeRepository recipeRepository;
-    private final RecipeStepRepository recipeStepRepository;
     private final IngredientRepository ingredientRepository;
-    private final RecipeIngredientRepository recipeIngredientRepository;
     private final FileStore fileStore;
 
     @Transactional

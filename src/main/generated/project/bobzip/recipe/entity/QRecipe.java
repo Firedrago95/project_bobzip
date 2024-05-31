@@ -28,6 +28,10 @@ public class QRecipe extends EntityPathBase<Recipe> {
 
     public final project.bobzip.member.entity.QMember member;
 
+    public final ListPath<RecipeIngredient, QRecipeIngredient> recipeIngredients = this.<RecipeIngredient, QRecipeIngredient>createList("recipeIngredients", RecipeIngredient.class, QRecipeIngredient.class, PathInits.DIRECT2);
+
+    public final ListPath<RecipeStep, QRecipeStep> recipeSteps = this.<RecipeStep, QRecipeStep>createList("recipeSteps", RecipeStep.class, QRecipeStep.class, PathInits.DIRECT2);
+
     public final project.bobzip.global.entity.QUploadFile thumbnail;
 
     public final StringPath title = createString("title");
