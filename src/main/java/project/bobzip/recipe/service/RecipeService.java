@@ -30,24 +30,24 @@ public class RecipeService {
     public void addRecipe(RecipeForm recipeForm, Member member) throws IOException {
         // 파일 저장
         MultipartFile thumbnail = recipeForm.getThumbnail();
-        List<MultipartFile> stepThumbnails = recipeForm.getStepThumbnail();
+        List<MultipartFile> stepThumbnails = recipeForm.getStepThumbnails();
         UploadFile recipeThumbnailUrl = fileStore.addThumbnail(thumbnail);
         List<UploadFile> stepThumbnailUrls = fileStore.addThumbnail(stepThumbnails);
 
         // 재료 생성
-        List<Ingredient> ingredients = Ingredient.createIngredients(recipeForm.getIngredientName());
+        List<Ingredient> ingredients = Ingredient.createIngredients(recipeForm.getIngredientNames());
         ingredientRepository.saveAll(ingredients);
 
         // 레시피 재료 생성
         List<RecipeIngredient> recipeIngredients = RecipeIngredient.createRecipeIngredient(
                 ingredients,
-                recipeForm.getQuantity(),
-                recipeForm.getUnit());
+                recipeForm.getQuantities(),
+                recipeForm.getUnits());
 
         // 레시피 단계 생성
         List<RecipeStep> recipeSteps = RecipeStep.createRecipeSteps(
                 stepThumbnailUrls,
-                recipeForm.getStepInstruction());
+                recipeForm.getStepInstructions());
 
         // 레시피 생성
         Recipe recipe = Recipe.createRecipe(recipeIngredients, recipeSteps, recipeForm.getInstruction(),

@@ -2,8 +2,6 @@ package project.bobzip.recipe.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jdk.jfr.Category;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,18 +15,21 @@ public class RecipeForm {
 
     @NotEmpty(message = "요리명을 입력해주세요")
     private String title;
+
     @NotEmpty(message = "요리 설명을 입력해주세요")
     private String instruction;
+
+    @NotNull
     private MultipartFile thumbnail;
 
-    @NotEmpty(message = "재료명을 입력해주세요")
-    private List<String> ingredientName;
-    @NotEmpty(message = "재료 수량을 입력해주세요")
-    private List<Integer> quantity;
-    @NotEmpty(message = "단위를 입력해주세요")
-    private List<Unit> unit;
+    private List<@NotEmpty(message = "재료명을 입력해주세요")String> ingredientNames;
 
-    @NotEmpty(message = "조리 단계를 입력해주세요")
-    private List<String> stepInstruction;
-    private List<MultipartFile> stepThumbnail;
+    private List<@NotNull(message = "재료수량을 입력해주세요")Integer> quantities;
+
+    private List<@NotNull(message = "단위를 입력해주세요")Unit> units;
+
+    private List<@NotEmpty(message = "조리법을 입력해주세요")String> stepInstructions;
+
+    private List<@NotNull(message = "조리법 이미지를 등록해주세요")MultipartFile> stepThumbnails;
+
 }
