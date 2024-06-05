@@ -1,17 +1,14 @@
 package project.bobzip.recipe.controller;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import project.bobzip.member.dto.LoginConst;
 import project.bobzip.member.entity.Member;
-import project.bobzip.recipe.dto.RecipeForm;
+import project.bobzip.recipe.dto.RecipeAddForm;
 import project.bobzip.recipe.entity.Unit;
 import project.bobzip.recipe.service.RecipeService;
 
@@ -35,7 +32,7 @@ public class RecipeController {
     }
 
     @GetMapping("/add")
-    public String recipeForm(@ModelAttribute("recipeForm")RecipeForm recipeForm,
+    public String recipeForm(@ModelAttribute("recipeForm") RecipeAddForm recipeAddForm,
                              @SessionAttribute(name = LoginConst.LOGIN, required = false) Member loginMember) {
         // 로그인 검증
         if (loginMember == null) {return "redirect:/members/login";}
@@ -43,7 +40,7 @@ public class RecipeController {
     }
 
     @PostMapping("/add")
-    public String addRecipe(@Validated @ModelAttribute RecipeForm recipeForm,
+    public String addRecipe(@Validated @ModelAttribute RecipeAddForm recipeAddForm,
                             BindingResult bindingResult,
                             @SessionAttribute(name = LoginConst.LOGIN, required = false) Member loginMember) throws IOException {
         // 로그인 검증
@@ -53,7 +50,12 @@ public class RecipeController {
             return "/recipe/recipeForm";
         }
 
-        recipeService.addRecipe(recipeForm, loginMember);
+        recipeService.addRecipe(recipeAddForm, loginMember);
         return "redirect:/";
+    }
+
+    @GetMapping("/all")
+    public String allRecipe() {
+        return "/recipe/allRecipe";
     }
 }

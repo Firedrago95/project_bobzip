@@ -11,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class RecipeForm {
+public class RecipeAddForm {
 
     @NotEmpty(message = "요리명을 입력해주세요")
     private String title;
