@@ -56,4 +56,9 @@ public class RecipeService {
                 member, recipeAddForm.getTitle(), recipeThumbnailUrl);
         recipeRepository.save(recipe);
     }
+
+    public List<Recipe> readAllRecipes(Pageable pageable) {
+        return recipeRepository.findPagingRecipes(pageable).getContent();
+    }
+
 }

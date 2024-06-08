@@ -2,13 +2,17 @@ package project.bobzip.recipe.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import project.bobzip.member.dto.LoginConst;
 import project.bobzip.member.entity.Member;
 import project.bobzip.recipe.dto.RecipeAddForm;
+import project.bobzip.recipe.entity.Recipe;
 import project.bobzip.recipe.entity.Unit;
 import project.bobzip.recipe.service.RecipeService;
 
@@ -55,7 +59,10 @@ public class RecipeController {
     }
 
     @GetMapping("/all")
-    public String allRecipe() {
+    public String readAllRecipes(@PageableDefault(size = 1, sort = "title") Pageable pageable,
+                                 Model model) {
+        List<Recipe> allRecipes = recipeService.readAllRecipes(pageable);
+        model.addAttribute("recipes", allRecipes);
         return "/recipe/allRecipe";
     }
 }
