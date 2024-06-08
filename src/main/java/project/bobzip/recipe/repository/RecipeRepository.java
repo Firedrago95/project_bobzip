@@ -9,5 +9,5 @@ import project.bobzip.recipe.entity.RecipeStep;
 
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
-    Page<Recipe> findPagingRecipes(Pageable pageable);
+    Page<Recipe> findAll(Pageable pageable);
 }

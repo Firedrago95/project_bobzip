@@ -41,26 +41,26 @@ public class Recipe {
     private List<RecipeStep> recipeSteps = new ArrayList<>();
 
     //==생성 메서드==//
-    public static Recipe createRecipe(List<RecipeIngredient> recipeIngredients,
-                                List<RecipeStep> recipeSteps, String instruction,
-                                Member member, String title, UploadFile uploadFile) {
-        Recipe recipe = new Recipe();
-        recipe.member = member;
-        recipe.title = title;
-        recipe.instruction = instruction;
-        recipe.thumbnail = uploadFile;
+    @Builder
+    public Recipe(List<RecipeIngredient> recipeIngredients,
+                   List<RecipeStep> recipeSteps, String instruction,
+                   Member member, String title, UploadFile uploadFile) {
+        this.member = member;
+        this.title = title;
+        this.instruction = instruction;
+        this.thumbnail = uploadFile;
 
-        for (RecipeStep recipeStep : recipeSteps) {
-            recipe.addRecipeStep(recipeStep);
+        if (recipeSteps != null) {
+            for (RecipeStep recipeStep : recipeSteps) {
+                addRecipeStep(recipeStep);
+            }
         }
-
-        for (RecipeIngredient recipeIngredient : recipeIngredients) {
-            recipe.addRecipeIngredient(recipeIngredient);
+        if (recipeIngredients != null) {
+            for (RecipeIngredient recipeIngredient : recipeIngredients) {
+                addRecipeIngredient(recipeIngredient);
+            }
         }
-
-        return recipe;
     }
-
 
     //==연관관계 메서드==//
     public void addRecipeStep(RecipeStep recipeStep) {

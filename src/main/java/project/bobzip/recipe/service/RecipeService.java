@@ -52,13 +52,19 @@ public class RecipeService {
                 recipeAddForm.getStepInstructions());
 
         // 레시피 생성
-        Recipe recipe = Recipe.createRecipe(recipeIngredients, recipeSteps, recipeAddForm.getInstruction(),
-                member, recipeAddForm.getTitle(), recipeThumbnailUrl);
+        Recipe recipe = Recipe.builder()
+                .recipeIngredients(recipeIngredients)
+                .recipeSteps(recipeSteps)
+                .instruction(recipeAddForm.getInstruction())
+                .member(member)
+                .title(recipeAddForm.getTitle())
+                .uploadFile(recipeThumbnailUrl)
+                .build();
         recipeRepository.save(recipe);
     }
 
-    public List<Recipe> readAllRecipes(Pageable pageable) {
-        return recipeRepository.findPagingRecipes(pageable).getContent();
+    public List<Recipe> findAllRecipes(Pageable pageable) {
+        return recipeRepository.findAll(pageable).getContent();
     }
 
 }

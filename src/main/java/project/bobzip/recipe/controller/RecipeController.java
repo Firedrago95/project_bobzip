@@ -61,7 +61,7 @@ public class RecipeController {
     @GetMapping("/all")
     public String readAllRecipes(@PageableDefault(size = 1, sort = "title") Pageable pageable,
                                  Model model) {
-        List<Recipe> allRecipes = recipeService.readAllRecipes(pageable);
+        List<Recipe> allRecipes = recipeService.findAllRecipes(pageable);
         model.addAttribute("recipes", allRecipes);
         return "/recipe/allRecipe";
     }
