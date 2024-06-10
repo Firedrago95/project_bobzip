@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import project.bobzip.ingredient.entity.Ingredient;
+import project.bobzip.ingredient.service.IngredientService;
 import project.bobzip.member.dto.LoginConst;
 import project.bobzip.member.entity.Member;
 import project.bobzip.recipe.dto.RecipeAddForm;
@@ -28,6 +30,7 @@ import java.util.List;
 public class RecipeController {
 
     private final RecipeService recipeService;
+    private final IngredientService ingredientService;
 
     @ModelAttribute("units")
     public List<Unit> units() {
@@ -53,8 +56,10 @@ public class RecipeController {
         if (bindingResult.hasErrors()) {
             return "/recipe/recipeForm";
         }
-
-        recipeService.addRecipe(recipeAddForm, loginMember);
+        // 재료 등록 후 반환
+        List<Ingredient> ingredients = ingredientService.addIngredients(recipeAddForm.getIngredientNames());
+        // 반환받은 재료와 로그인 멤버, 입력정보를 바탕으로 레시피 등록
+        recipeService.addRecipe(recipeAddForm, loginMember, ingredients);
         return "redirect:/";
     }
 

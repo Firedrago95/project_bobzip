@@ -1,9 +1,8 @@
 package project.bobzip.recipe.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
-import lombok.Builder;
 import lombok.Getter;
+import project.bobzip.ingredient.entity.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
