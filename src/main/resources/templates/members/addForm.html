@@ -3,12 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
 </head>
 <body>
     <form action="" th:action th:object="${member}" method="post">
         <input type="text" th:field="*{userId}" placeholder="ID">
+        <div class="field-error" th:errors="*{userId}"/>
         <input type="text" th:field="*{password}" placeholder="Password">
+        <div class="field-error" th:errors="*{password}"/>
         <input type="text" th:field="*{username}" placeholder="username">
+        <div class="field-error" th:errors="*{username}"/>
         <input type="submit" value="회원가입">
     </form>
 </body>
