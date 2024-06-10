@@ -1,4 +1,4 @@
-package project.bobzip.recipe.entity;
+package project.bobzip.ingredient.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
