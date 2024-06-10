@@ -18,7 +18,7 @@ public class IngredientService {
 
     @Transactional
     public List<Ingredient> addIngredients(List<String> ingredientNames) {
-        // 재료명 중복 검사 및 재료 등록
+        // 새로운 재료는 등록후 리스트 추가, 기존 재료는 db에서 꺼내온뒤 추가
         List<Ingredient> ingredients = new ArrayList<>();
         for (String ingredientName : ingredientNames) {
             if (!ingredientRepository.existsByName(ingredientName)) {
