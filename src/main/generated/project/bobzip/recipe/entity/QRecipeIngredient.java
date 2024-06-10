@@ -24,7 +24,7 @@ public class QRecipeIngredient extends EntityPathBase<RecipeIngredient> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final QIngredient ingredient;
+    public final project.bobzip.ingredient.entity.QIngredient ingredient;
 
     public final NumberPath<Integer> quantity = createNumber("quantity", Integer.class);
 
@@ -50,7 +50,7 @@ public class QRecipeIngredient extends EntityPathBase<RecipeIngredient> {
 
     public QRecipeIngredient(Class<? extends RecipeIngredient> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.ingredient = inits.isInitialized("ingredient") ? new QIngredient(forProperty("ingredient")) : null;
+        this.ingredient = inits.isInitialized("ingredient") ? new project.bobzip.ingredient.entity.QIngredient(forProperty("ingredient")) : null;
         this.recipe = inits.isInitialized("recipe") ? new QRecipe(forProperty("recipe"), inits.get("recipe")) : null;
     }
 

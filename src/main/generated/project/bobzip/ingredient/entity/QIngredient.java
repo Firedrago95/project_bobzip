@@ -1,4 +1,4 @@
-package project.bobzip.recipe.entity;
+package project.bobzip.ingredient.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -7,7 +7,6 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
-import project.bobzip.ingredient.entity.Ingredient;
 
 
 /**
@@ -16,7 +15,7 @@ import project.bobzip.ingredient.entity.Ingredient;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QIngredient extends EntityPathBase<Ingredient> {
 
-    private static final long serialVersionUID = 260931593L;
+    private static final long serialVersionUID = 900440844L;
 
     public static final QIngredient ingredient = new QIngredient("ingredient");
 
