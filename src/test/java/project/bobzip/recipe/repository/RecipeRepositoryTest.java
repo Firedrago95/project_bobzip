@@ -66,6 +66,8 @@ class RecipeRepositoryTest {
         // then
         List<Recipe> contents = findRecipePages.getContent();
         assertThat(contents.size()).isEqualTo(1);
+        assertThat(findRecipePages.getNumber()).isEqualTo(0);
+        assertThat(findRecipePages.getSize()).isEqualTo(1);
     }
 
     private static List<Recipe> createTestRecipes() {
