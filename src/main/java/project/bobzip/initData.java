@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import project.bobzip.member.dto.LoginForm;
 import project.bobzip.member.entity.Member;
 import project.bobzip.member.service.MemberService;
+import project.bobzip.recipe.service.RecipeService;
 
 @Component
 @RequiredArgsConstructor
