@@ -1,6 +1,5 @@
 package project.bobzip.recipe.repository;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,18 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
-import project.bobzip.member.entity.Member;
-import project.bobzip.member.repository.MemberRepository;
-import project.bobzip.member.service.MemberService;
 import project.bobzip.recipe.entity.Recipe;
-import project.bobzip.recipe.entity.RecipeStep;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
@@ -29,16 +22,10 @@ class RecipeRepositoryTest {
     @Autowired
     RecipeRepository recipeRepository;
 
-    @Autowired
-    MemberRepository memberRepository;
-
     @Test
     void recipeSaveTest() {
         // given
-        Recipe kimchiStew = Recipe.builder()
-                .title("김치찌개")
-                .instruction("맛있는 김치찌개를 끓여봅시다!")
-                .build();
+        Recipe kimchiStew = createRecipe("김치찌개", "맛있는 김치찌개를 끓여봅시다!");
 
         // when
         recipeRepository.save(kimchiStew);
@@ -71,25 +58,17 @@ class RecipeRepositoryTest {
     }
 
     private static List<Recipe> createTestRecipes() {
-        List<Recipe> recipes = new ArrayList<>();
-        recipes.add(
-                Recipe.builder()
-                    .title("김치찌개")
-                    .instruction("맛있는 김치찌개를 끓여봅시다~")
-                    .build()
+        return Arrays.asList(
+                createRecipe("김치찌개", "맛있는 김치찌개를 끓여봅시다~"),
+                createRecipe("된장찌개", "보글보글 맛있는 된장찌개"),
+                createRecipe("제육볶음", "매콤하고 맛있는 밥도둑 제육볶음!")
         );
-        recipes.add(
-                Recipe.builder()
-                        .title("된장찌개")
-                        .instruction("보글보글 맛있는 된장찌개")
-                        .build()
-        );
-        recipes.add(
-                Recipe.builder()
-                        .title("제육볶음")
-                        .instruction("매콤하고 맛있는 밥도둑 제육볶음!")
-                        .build()
-        );
-        return recipes;
+    }
+
+    private static Recipe createRecipe(String title, String instruction) {
+        return Recipe.builder()
+                .title(title)
+                .instruction(instruction)
+                .build();
     }
 }
