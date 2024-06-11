@@ -39,19 +39,14 @@ public class RecipeController {
     }
 
     @GetMapping("/add")
-    public String recipeForm(@ModelAttribute("recipeForm") RecipeAddForm recipeAddForm,
-                             @SessionAttribute(name = LoginConst.LOGIN, required = false) Member loginMember) {
-        // 로그인 검증
-        if (loginMember == null) {return "redirect:/members/login";}
+    public String recipeForm(@ModelAttribute("recipeAddForm") RecipeAddForm recipeAddForm) {
         return "/recipe/recipeForm";
     }
 
     @PostMapping("/add")
     public String addRecipe(@Validated @ModelAttribute RecipeAddForm recipeAddForm,
                             BindingResult bindingResult,
-                            @SessionAttribute(name = LoginConst.LOGIN, required = false) Member loginMember) throws IOException {
-        // 로그인 검증
-        if (loginMember == null) {return "redirect:/members/login";}
+                            @SessionAttribute(name = LoginConst.LOGIN) Member loginMember) throws IOException {
         // 입력 정보 오류 있다면 입력폼으로
         if (bindingResult.hasErrors()) {
             return "/recipe/recipeForm";

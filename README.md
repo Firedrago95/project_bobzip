@@ -13,7 +13,7 @@
   * [x] 회원 가입
     * [x] 회원 중복 검사 => [사용자정의 Validation으로 중복검사 하기](https://flowerdragon95.tistory.com/196)
   * [x] 회원 탈퇴 
-  * [ ] 로그인 검증 
+  * [x] 로그인 검증 => [로그인 확인 공통관심사 (인터셉터)](https://flowerdragon95.tistory.com/197) 
 * 재료
   * [ ] 재료 등록
     * [ ] 재료 중복 검증
@@ -29,5 +29,5 @@
   * [ ] 냉장고 삭제
   
 
-## ER 다이어그램 
+## ER 다이어그램
 ![img.png](img.png)

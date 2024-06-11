@@ -3,17 +3,17 @@ package project.bobzip.member.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import project.bobzip.member.dto.LoginConst;
 import project.bobzip.member.dto.LoginForm;
 import project.bobzip.member.entity.Member;
 import project.bobzip.member.service.MemberService;
 
+@Slf4j
 @Controller
 @RequestMapping("/members")
 @RequiredArgsConstructor
@@ -27,9 +27,10 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@Validated @ModelAttribute("memberForm") LoginForm loginForm,
-                        BindingResult bindingResult,
+    public String login(@Validated @ModelAttribute("memberForm") LoginForm loginForm, BindingResult bindingResult,
+                        @RequestParam(name = "redirectURL", defaultValue = "/") String redirectURL,
                         HttpSession session) {
+        log.info("redirectURL={}", redirectURL);
         if (bindingResult.hasErrors()) {
             return "members/loginForm";
         }
@@ -40,9 +41,9 @@ public class LoginController {
             return "members/loginForm";
         }
 
-        session.setAttribute("loginMember", loginMember);
+        session.setAttribute(LoginConst.LOGIN, loginMember);
 
-        return "redirect:/";
+        return "redirect:" + redirectURL;
     }
 
     @GetMapping("/logout")
