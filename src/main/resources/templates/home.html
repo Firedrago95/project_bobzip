@@ -10,6 +10,7 @@
     <button th:if="${session.loginMember == null}" th:onclick="|location.href='@{/members/add}'|">회원가입</button>
     <button th:if="${session.loginMember == null}" th:onclick="|location.href='@{/members/login}'|">로그인</button>
     <button th:if="${session.loginMember != null}" th:onclick="|location.href='@{/members/logout}'|">로그아웃</button>
+    <button th:if="${session.loginMember != null}" th:onclick="|location.href='@{/members/delete}'|">회원탈퇴</button>
 </div>
 
 <div>

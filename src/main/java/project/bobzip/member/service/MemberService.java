@@ -23,4 +23,8 @@ public class MemberService {
                 .filter(m -> m.getPassword().equals(password))
                 .orElse(null);
     }
+
+    public void delete(Member member) {
+        memberRepository.delete(member);
+    }
 }
