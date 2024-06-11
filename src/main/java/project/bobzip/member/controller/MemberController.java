@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import project.bobzip.member.dto.SignForm;
 import project.bobzip.member.entity.Member;
 import project.bobzip.member.service.MemberService;
-import project.bobzip.member.validation.SignValidator;
+import project.bobzip.member.validator.SignValidator;
 
 @Slf4j
 @Controller
