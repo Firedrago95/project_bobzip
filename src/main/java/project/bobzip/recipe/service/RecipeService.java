@@ -30,7 +30,7 @@ public class RecipeService {
     public void addRecipe(RecipeAddForm recipeAddForm, Member member, List<Ingredient> ingredients) throws IOException {
         // 파일 저장
         UploadFile recipeThumbnailUrl = fileStore.addThumbnail(recipeAddForm.getThumbnail());
-        List<UploadFile> stepThumbnailUrls = fileStore.addThumbnail(recipeAddForm.getStepThumbnails());
+        List<UploadFile> stepThumbnailUrls = fileStore.addStepThumbnails(recipeAddForm.getStepThumbnails());
 
         // 레시피 재료 생성
         List<RecipeIngredient> recipeIngredients = RecipeIngredient.createRecipeIngredient(

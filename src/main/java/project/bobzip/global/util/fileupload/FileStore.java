@@ -34,7 +34,7 @@ public class FileStore {
         return new UploadFile(originalFilename, storeFilename);
     }
 
-    public List<UploadFile> addThumbnail(List<MultipartFile> stepThumbnail) throws IOException {
+    public List<UploadFile> addStepThumbnails(List<MultipartFile> stepThumbnail) throws IOException {
         ArrayList<UploadFile> uploadFiles = new ArrayList<>();
         for (MultipartFile multipartFile : stepThumbnail) {
             uploadFiles.add(addStepThumbnail(multipartFile));
