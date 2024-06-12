@@ -19,37 +19,27 @@ public class FileStore {
     @Value("${stepThumbnail.dir}")
     private String stepThumbnailDir;
 
-    public String getRecipeThumbnailPath(String filename) {return recipeThumbnailDir + filename;}
-
-    public String getStepThumbnailPath(String filename) {return stepThumbnailDir + filename;}
 
     public UploadFile addThumbnail(MultipartFile thumbnail) throws IOException {
-        if (thumbnail.isEmpty()) {
-            return null;
-        }
-
-        String originalFilename = thumbnail.getOriginalFilename();
-        String storeFilename = createStoreFilename(originalFilename);
-        thumbnail.transferTo(new File(getRecipeThumbnailPath(storeFilename)));
-        return new UploadFile(originalFilename, storeFilename);
+        return addFile(thumbnail, recipeThumbnailDir);
     }
 
     public List<UploadFile> addStepThumbnails(List<MultipartFile> stepThumbnail) throws IOException {
         ArrayList<UploadFile> uploadFiles = new ArrayList<>();
         for (MultipartFile multipartFile : stepThumbnail) {
-            uploadFiles.add(addStepThumbnail(multipartFile));
+            uploadFiles.add(addFile(multipartFile, stepThumbnailDir));
         }
         return uploadFiles;
     }
 
-    private UploadFile addStepThumbnail(MultipartFile thumbnail) throws IOException {
+    private UploadFile addFile(MultipartFile thumbnail, String fileDir) throws IOException{
         if (thumbnail.isEmpty()) {
             return null;
         }
 
         String originalFilename = thumbnail.getOriginalFilename();
         String storeFilename = createStoreFilename(originalFilename);
-        thumbnail.transferTo(new File(getStepThumbnailPath(storeFilename)));
+        thumbnail.transferTo(new File(getStorePath(fileDir, storeFilename)));
         return new UploadFile(originalFilename, storeFilename);
     }
 
@@ -62,5 +52,9 @@ public class FileStore {
     private String extractExt(String originalFilename) {
         int index = originalFilename.lastIndexOf(".");
         return originalFilename.substring(index + 1);
+    }
+
+    private String getStorePath(String fileDir, String storeFilename) {
+        return fileDir + storeFilename;
     }
 }
