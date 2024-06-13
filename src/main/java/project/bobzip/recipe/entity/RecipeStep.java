@@ -32,8 +32,10 @@ public class RecipeStep {
 
 
     //==생성 메서드==//
+    public RecipeStep() {}
+
     public static List<RecipeStep> createRecipeSteps(List<UploadFile> images,
-                                              List<String> instructions) {
+                                                     List<String> instructions) {
         List<RecipeStep> steps = new ArrayList<>();
         for (int i = 0; i < images.size(); i++) {
             RecipeStep recipeStep = new RecipeStep();

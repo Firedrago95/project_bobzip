@@ -31,6 +31,8 @@ public class RecipeIngredient {
     private Unit unit;
 
     //==생성 메서드==//
+    public RecipeIngredient() {}
+
     public static List<RecipeIngredient> createRecipeIngredient(List<Ingredient> ingredients,
                                                                 List<Integer> quantities,
                                                                 List<Unit> units) {

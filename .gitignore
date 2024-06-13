@@ -168,6 +168,8 @@ $RECYCLE.BIN/
 
 **/application.yml
 **/application.properties
+**/stepThumbnail
+**/thumbnail
 
 ### Gradle ###
 .gradle

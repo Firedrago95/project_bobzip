@@ -41,6 +41,7 @@ public class Recipe {
     private List<RecipeStep> recipeSteps = new ArrayList<>();
 
     //==생성 메서드==//
+    public Recipe() {}
     @Builder
     public Recipe(List<RecipeIngredient> recipeIngredients,
                    List<RecipeStep> recipeSteps, String instruction,

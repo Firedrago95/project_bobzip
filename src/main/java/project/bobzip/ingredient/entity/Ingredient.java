@@ -18,6 +18,7 @@ public class Ingredient {
     @Column(name = "name", length = 20)
     private String name;
 
+    public Ingredient() {}
     public Ingredient(String name) {
         this.name = name;
     }
