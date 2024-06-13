@@ -65,4 +65,12 @@ public class RecipeController {
         model.addAttribute("recipes", allRecipes);
         return "/recipe/allRecipe";
     }
+
+    @GetMapping("/{id}")
+    public String viewRecipe(@PathVariable("id") Long id,
+                             Model model) {
+        Recipe recipe = recipeService.findRecipe(id);
+        model.addAttribute("recipe", recipe);
+        return "/recipe/recipeView";
+    }
 }

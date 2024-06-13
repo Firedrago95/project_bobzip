@@ -5,10 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-    <div th:each="recipe : ${recipes}">
-        <img th:src="|/Users/ekore/file/${recipe.thumbnail.storedFileName}|">
+    <a th:each="recipe : ${recipes}" th:href="@{/recipe/{id}(id = ${recipe.id})}">
+        <img th:src="|/Users/ekore/file/${recipe.thumbnail.storedFileName}|" width="300" height="300">
         <h2 th:text="${recipe.title}"></h2>
         <p th:text="${recipe.instruction}"></p>
-    </div>
+    </a>
 </body>
 </html>

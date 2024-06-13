@@ -59,4 +59,7 @@ public class RecipeService {
         return recipeRepository.findAll(pageable).getContent();
     }
 
+    public Recipe findRecipe(Long id) {
+        return recipeRepository.findById(id).orElse(null);
+    }
 }
