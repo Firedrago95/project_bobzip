@@ -2,6 +2,7 @@ package project.bobzip;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import project.bobzip.global.interceptor.LoginCheckInterceptor;
 
@@ -13,5 +14,11 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
                 .addPathPatterns("/recipe/add", "/members/delete");
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/Users/ekore/file/**")
+                .addResourceLocations("file:C:/Users/ekore/file/");
     }
 }
