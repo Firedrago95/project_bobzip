@@ -1,5 +1,6 @@
 package project.bobzip.recipe.repository;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +23,29 @@ class RecipeRepositoryTest {
     @Autowired
     RecipeRepository recipeRepository;
 
+    Recipe testRecipe;
+    List<Recipe> testRecipes;
+
+    @BeforeEach
+    void initTestData() {
+        testRecipe = createRecipe("김치찌개", "맛있는 김치찌개를 끓여봅시다!");
+        testRecipes = Arrays.asList(
+                createRecipe("짜파게티", "오늘은 내가 짜파게티 요리사~"),
+                createRecipe("된장찌개", "보글보글 맛있는 된장찌개"),
+                createRecipe("제육볶음", "매콤하고 맛있는 밥도둑 제육볶음!"));
+
+        recipeRepository.save(testRecipe);
+        recipeRepository.saveAll(testRecipes);
+    }
+
     @Test
     void recipeSaveTest() {
-        // given
-        Recipe kimchiStew = createRecipe("김치찌개", "맛있는 김치찌개를 끓여봅시다!");
-
         // when
-        recipeRepository.save(kimchiStew);
+        recipeRepository.save(testRecipe);
 
         // then
-        Recipe findRecipe = recipeRepository.findById(kimchiStew.getId()).get();
-        assertThat(findRecipe).isEqualTo(kimchiStew);
+        Recipe findRecipe = recipeRepository.findById(testRecipe.getId()).get();
+        assertThat(findRecipe).isEqualTo(testRecipe);
         assertThat(findRecipe.getTitle()).isEqualTo("김치찌개");
         assertThat(findRecipe.getInstruction()).isEqualTo("맛있는 김치찌개를 끓여봅시다!");
     }
@@ -40,12 +53,6 @@ class RecipeRepositoryTest {
     @Test
     @DisplayName("페이징 테스트")
     void findAllTest() {
-        // given
-        List<Recipe> testRecipes = createTestRecipes();
-        for (Recipe testRecipe : testRecipes) {
-            recipeRepository.save(testRecipe);
-        }
-
         // when
         Pageable pageable = PageRequest.of(0, 1); // 첫 페이지(0부터시작), 페이지당 1개의 항목
         Page<Recipe> findRecipePages = recipeRepository.findAll(pageable);
@@ -57,12 +64,13 @@ class RecipeRepositoryTest {
         assertThat(findRecipePages.getSize()).isEqualTo(1);
     }
 
-    private static List<Recipe> createTestRecipes() {
-        return Arrays.asList(
-                createRecipe("김치찌개", "맛있는 김치찌개를 끓여봅시다~"),
-                createRecipe("된장찌개", "보글보글 맛있는 된장찌개"),
-                createRecipe("제육볶음", "매콤하고 맛있는 밥도둑 제육볶음!")
-        );
+    @Test
+    void findByIdTest() {
+        // when
+        Recipe findRecipe = recipeRepository.findById(testRecipe.getId()).get();
+
+        // then
+        assertThat(testRecipe).isEqualTo(findRecipe);
     }
 
     private static Recipe createRecipe(String title, String instruction) {
