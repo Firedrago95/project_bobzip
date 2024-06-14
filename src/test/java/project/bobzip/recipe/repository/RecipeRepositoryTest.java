@@ -13,6 +13,7 @@ import project.bobzip.recipe.entity.Recipe;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,6 +37,13 @@ class RecipeRepositoryTest {
 
         recipeRepository.save(testRecipe);
         recipeRepository.saveAll(testRecipes);
+    }
+
+    private static Recipe createRecipe(String title, String instruction) {
+        return Recipe.builder()
+                .title(title)
+                .instruction(instruction)
+                .build();
     }
 
     @Test
@@ -73,10 +81,13 @@ class RecipeRepositoryTest {
         assertThat(testRecipe).isEqualTo(findRecipe);
     }
 
-    private static Recipe createRecipe(String title, String instruction) {
-        return Recipe.builder()
-                .title(title)
-                .instruction(instruction)
-                .build();
+    @Test
+    void deleteTest() {
+        // when
+        recipeRepository.delete(testRecipe);
+
+        // then
+        Optional<Recipe> result = recipeRepository.findById(testRecipe.getId());
+        assertThat(result).isEmpty();
     }
 }
