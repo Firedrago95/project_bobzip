@@ -62,4 +62,10 @@ public class RecipeService {
     public Recipe findRecipe(Long id) {
         return recipeRepository.findById(id).orElse(null);
     }
+
+    @Transactional
+    public void deleteRecipe(Long id) {
+        Recipe recipe = recipeRepository.findById(id).get();
+        recipeRepository.delete(recipe);
+    }
 }

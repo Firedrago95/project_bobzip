@@ -7,7 +7,11 @@
 <body>
     <h1 th:text="${recipe.title}"></h1>
     <p th:text="${recipe.instruction}"></p>
-    <img th:src="|/Users/ekore/file/${recipe.thumbnail.storedFileName}|">
+    <div th:if="${isWriter}" >
+        <a th:href="@{/recipe/delete/{id}(id = ${recipe.id})}">레시피 삭제하기</a>
+    </div>
+    <img th:src="|/file/${recipe.thumbnail.storedFileName}|">
+
 
     <div th:each="recipeIngredient : ${recipe.recipeIngredients}">
         <p>

@@ -4,13 +4,15 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.Data;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
+
+import java.util.Objects;
 
 @Entity
 @Getter
+@Slf4j
 public class Member {
 
     @Id
@@ -33,5 +35,20 @@ public class Member {
         this.userId = userId;
         this.password = password;
         this.username = username;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || Hibernate.getClass(this) != Hibernate.getClass(obj)) {
+            return false;
+        }
+        Member member = (Member) obj;
+        return Objects.equals(id, member.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

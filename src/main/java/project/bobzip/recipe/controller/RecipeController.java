@@ -68,9 +68,21 @@ public class RecipeController {
 
     @GetMapping("/{id}")
     public String viewRecipe(@PathVariable("id") Long id,
-                             Model model) {
+                             @SessionAttribute(value = LoginConst.LOGIN, required = false) Member member, Model model) {
         Recipe recipe = recipeService.findRecipe(id);
+        // 게시글 작성자와 현재 로그인 유저가 같으면 isWriter 전달, 수정, 삭제 버튼 표시
+        if (member.equals(recipe.getMember())) {
+            log.info("작성자 확인");
+            model.addAttribute("isWriter", true);
+        }
         model.addAttribute("recipe", recipe);
         return "/recipe/recipeView";
     }
+
+    @GetMapping("/delete/{id}")
+    public String deleteRecipe(@PathVariable("id") Long id) {
+        recipeService.deleteRecipe(id);
+        return "redirect:/recipe/all";
+    }
+
 }
