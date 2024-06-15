@@ -17,7 +17,7 @@
     </div>
 
     <div th:each="recipeStep : ${recipe.recipeSteps}">
-        <img th:src="|/Users/ekore/file/step/${recipeStep.thumbnail.storedFileName}|">
+        <img th:src="|/file/step/${recipeStep.thumbnail.storedFileName}|">
         <p th:text="|${recipeStep.stepNumber} ${recipeStep.instruction}|"></p>
     </div>
 </body>

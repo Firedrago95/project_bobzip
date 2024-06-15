@@ -18,7 +18,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/Users/ekore/file/**")
+        registry.addResourceHandler("/file/**")
                 .addResourceLocations("file:C:/Users/ekore/file/");
     }
 }

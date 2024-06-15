@@ -6,7 +6,7 @@
 </head>
 <body>
     <a th:each="recipe : ${recipes}" th:href="@{/recipe/{id}(id = ${recipe.id})}">
-        <img th:src="|/Users/ekore/file/${recipe.thumbnail.storedFileName}|" width="300" height="300">
+        <img th:src="|/file/${recipe.thumbnail.storedFileName}|" width="300" height="300">
         <h2 th:text="${recipe.title}"></h2>
         <p th:text="${recipe.instruction}"></p>
     </a>
