@@ -1,6 +1,5 @@
 package project.bobzip.recipe.service;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,8 +12,7 @@ import project.bobzip.recipe.repository.RecipeRepository;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
@@ -22,7 +20,6 @@ class RecipeServiceTest {
 
     @Autowired
     RecipeService recipeService;
-
     @Autowired
     RecipeRepository recipeRepository;
 
@@ -54,6 +51,13 @@ class RecipeServiceTest {
         assertThat(pagingRecipes.size()).isEqualTo(2);
     }
 
+    private static Recipe createRecipe(String title, String instruction) {
+        return Recipe.builder()
+                .title(title)
+                .instruction(instruction)
+                .build();
+    }
+
     @Test
     void findRecipeTest() {
         // given
@@ -67,10 +71,17 @@ class RecipeServiceTest {
         assertThat(findRecipe).isEqualTo(testRecipe);
     }
 
-    private static Recipe createRecipe(String title, String instruction) {
-        return Recipe.builder()
-                .title(title)
-                .instruction(instruction)
-                .build();
+    @Test
+    void deleteRecipe() {
+        // given
+        Recipe testRecipe = createRecipe("김치찌개", "맛있는 김치찌개를 끓여봅시다!");
+        recipeRepository.save(testRecipe);
+
+        // when
+        recipeService.deleteRecipe(testRecipe.getId());
+
+        // then
+        Recipe findRecipe = recipeService.findRecipe(testRecipe.getId());
+        assertThat(findRecipe).isNull();
     }
 }
