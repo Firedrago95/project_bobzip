@@ -3,6 +3,7 @@ package project.bobzip.recipe.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,11 +45,15 @@ class RecipeServiceTest {
         recipeRepository.saveAll(testRecipes);
 
         // when
-        Pageable pageable = PageRequest.of(0, 2);
-        List<Recipe> pagingRecipes = recipeService.findAllRecipes(pageable);
+        Pageable pageable = PageRequest.of(0, 1);
+        Page<Recipe> page = recipeService.findAllRecipes(pageable);
 
         // then
-        assertThat(pagingRecipes.size()).isEqualTo(2);
+        int totalPages = page.getTotalPages();
+        List<Recipe> content = page.getContent();
+
+        assertThat(totalPages).isEqualTo(3);
+        assertThat(content.size()).isEqualTo(1);
     }
 
     private static Recipe createRecipe(String title, String instruction) {
