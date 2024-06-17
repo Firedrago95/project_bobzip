@@ -50,9 +50,11 @@ class RecipeServiceTest {
 
         // then
         int totalPages = page.getTotalPages();
+        int currentPage = page.getNumber();
         List<Recipe> content = page.getContent();
 
         assertThat(totalPages).isEqualTo(3);
+        assertThat(currentPage).isEqualTo(0);
         assertThat(content.size()).isEqualTo(1);
     }
 
