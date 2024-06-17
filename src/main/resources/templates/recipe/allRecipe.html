@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="/js/pagination.js" defer></script>
 </head>
 <body>
     <a th:each="recipe : ${recipes}" th:href="@{/recipe/{id}(id = ${recipe.id})}">
@@ -10,5 +11,7 @@
         <h2 th:text="${recipe.title}"></h2>
         <p th:text="${recipe.instruction}"></p>
     </a>
+
+    <div id="pagination" th:data-total-pages="${totalPages}" th:data-current-page="${currentPage}"></div>
 </body>
 </html>

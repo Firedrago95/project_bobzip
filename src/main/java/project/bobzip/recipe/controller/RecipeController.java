@@ -2,6 +2,7 @@ package project.bobzip.recipe.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -59,10 +60,14 @@ public class RecipeController {
     }
 
     @GetMapping("/all")
-    public String readAllRecipes(@PageableDefault(size = 1, sort = "title") Pageable pageable,
+    public String readAllRecipes(@PageableDefault(size = 2) Pageable pageable,
                                  Model model) {
-        List<Recipe> allRecipes = recipeService.findAllRecipes(pageable);
+        Page<Recipe> page = recipeService.findAllRecipes(pageable);
+        List<Recipe> allRecipes = page.getContent();
+
         model.addAttribute("recipes", allRecipes);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("currentPage", page.getNumber() + 1);
         return "/recipe/allRecipe";
     }
 

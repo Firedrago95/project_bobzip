@@ -2,6 +2,7 @@ package project.bobzip.recipe.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,8 +56,8 @@ public class RecipeService {
         recipeRepository.save(recipe);
     }
 
-    public List<Recipe> findAllRecipes(Pageable pageable) {
-        return recipeRepository.findAll(pageable).getContent();
+    public Page<Recipe> findAllRecipes(Pageable pageable) {
+        return recipeRepository.findAll(pageable);
     }
 
     public Recipe findRecipe(Long id) {

@@ -22,8 +22,8 @@
   * [x] 레시피 등록 => [테스트하기 편한 엔티티 생성 (Builder)](https://flowerdragon95.tistory.com/195)
     * [x] 등록 정보 검증
   * [x] 모든 레시피 조회
-    * [x] 페이징
-    * [x] 레시피 작성자와 로그인 사용자 일치 확인 => [JPA 엔티티의 equals, hashCode (동등성)](https://flowerdragon95.tistory.com/200)
+    * [x] 페이징 => [타임리프 페이지네이션 만들기](https://flowerdragon95.tistory.com/201)
+    * [x] 레시피 작성자와 로그인 사용자 일치 확인 => [JPA 엔티티의 equals 오버라이딩](https://flowerdragon95.tistory.com/200)
   * [x] 레시피 정보 상세보기 => [로컬에 저장된 이미지를 참조하기 (ResourceHandler)](https://flowerdragon95.tistory.com/199)
   * [x] 레시피 삭제 
   * [ ] 레시피 검색 
@@ -34,6 +34,3 @@
 
 ## ER 다이어그램
 ![img.png](img.png)
-
-## 문제해결
-[JPA 엔티티의 equals와 hashCode]()
