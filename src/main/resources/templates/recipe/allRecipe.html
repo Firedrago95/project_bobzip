@@ -4,8 +4,43 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="/js/pagination.js" defer></script>
+    <style>
+        /* Pagination link styles */
+        #pagination a {
+            margin: 0 5px;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        /* Selected page styles */
+        #pagination a.selected {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        /* Disabled ellipsis styles */
+        #pagination span {
+            margin: 0 5px;
+            padding: 8px 16px;
+            color: #999;
+            cursor: default;
+        }
+    </style>
 </head>
 <body>
+    <div>
+        <form action="/recipe/search">
+            <select name="type">
+                <option value="ingredient">재료명</option>
+                <option value="recipe">요리명</option>
+            </select>
+            <input type="text" name="q"  value="검색어를 입력하세요"/>
+            <button type="submit">검색</button>
+        </form>
+    </div>
+
     <a th:each="recipe : ${recipes}" th:href="@{/recipe/{id}(id = ${recipe.id})}">
         <img th:src="|/file/${recipe.thumbnail.storedFileName}|" width="300" height="300">
         <h2 th:text="${recipe.title}"></h2>
