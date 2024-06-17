@@ -11,7 +11,11 @@ public class UploadFile {
     private String uploadFileName;
     private String storedFileName;
 
-    public UploadFile() {}
+    public UploadFile() {
+        uploadFileName = "default.jpg";
+        storedFileName = "default.jpg";
+    }
+
     public UploadFile(String uploadFileName, String storedFileName) {
         this.uploadFileName = uploadFileName;
         this.storedFileName = storedFileName;
