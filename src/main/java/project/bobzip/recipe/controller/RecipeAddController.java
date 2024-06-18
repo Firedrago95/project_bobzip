@@ -2,9 +2,6 @@ package project.bobzip.recipe.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,7 +12,6 @@ import project.bobzip.ingredient.service.IngredientService;
 import project.bobzip.member.dto.LoginConst;
 import project.bobzip.member.entity.Member;
 import project.bobzip.recipe.dto.RecipeAddForm;
-import project.bobzip.recipe.entity.Recipe;
 import project.bobzip.recipe.entity.Unit;
 import project.bobzip.recipe.service.RecipeService;
 
@@ -28,7 +24,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/recipe")
 @RequiredArgsConstructor
-public class RecipeController {
+public class RecipeAddController {
 
     private final RecipeService recipeService;
     private final IngredientService ingredientService;
@@ -58,36 +54,4 @@ public class RecipeController {
         recipeService.addRecipe(recipeAddForm, loginMember, ingredients);
         return "redirect:/";
     }
-
-    @GetMapping("/all")
-    public String readAllRecipes(@PageableDefault(size = 2) Pageable pageable,
-                                 Model model) {
-        Page<Recipe> page = recipeService.findAllRecipes(pageable);
-        List<Recipe> allRecipes = page.getContent();
-
-        model.addAttribute("recipes", allRecipes);
-        model.addAttribute("totalPages", page.getTotalPages());
-        model.addAttribute("currentPage", page.getNumber() + 1);
-        return "/recipe/allRecipe";
-    }
-
-    @GetMapping("/{id}")
-    public String viewRecipe(@PathVariable("id") Long id,
-                             @SessionAttribute(value = LoginConst.LOGIN, required = false) Member member, Model model) {
-        Recipe recipe = recipeService.findRecipe(id);
-        // 게시글 작성자와 현재 로그인 유저가 같으면 isWriter 전달, 수정, 삭제 버튼 표시
-        if (member.equals(recipe.getMember())) {
-            log.info("작성자 확인");
-            model.addAttribute("isWriter", true);
-        }
-        model.addAttribute("recipe", recipe);
-        return "/recipe/recipeView";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String deleteRecipe(@PathVariable("id") Long id) {
-        recipeService.deleteRecipe(id);
-        return "redirect:/recipe/all";
-    }
-
 }
