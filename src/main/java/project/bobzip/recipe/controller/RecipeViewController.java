@@ -47,4 +47,16 @@ public class RecipeViewController {
         model.addAttribute("recipe", recipe);
         return "/recipe/recipeView";
     }
+
+    @GetMapping("/search")
+    public String searchRecipe(@RequestParam(name = "q", defaultValue = "")String q, Model model,
+                               @PageableDefault(size = 2) Pageable pageable) {
+        Page<Recipe> page = recipeService.searchRecipe(q, pageable);
+        List<Recipe> allRecipes = page.getContent();
+
+        model.addAttribute("recipes", allRecipes);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("currentPage", page.getNumber() + 1);
+        return "/recipe/allRecipe";
+    }
 }

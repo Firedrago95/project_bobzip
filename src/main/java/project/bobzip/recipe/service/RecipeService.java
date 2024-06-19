@@ -12,8 +12,8 @@ import project.bobzip.ingredient.entity.Ingredient;
 import project.bobzip.member.entity.Member;
 import project.bobzip.recipe.dto.RecipeAddForm;
 import project.bobzip.recipe.entity.*;
-import project.bobzip.ingredient.repository.IngredientRepository;
 import project.bobzip.recipe.repository.RecipeRepository;
+import project.bobzip.recipe.repository.RecipeSearchRepository;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,6 +26,7 @@ public class RecipeService {
 
     private final RecipeRepository recipeRepository;
     private final FileStore fileStore;
+    private final RecipeSearchRepository recipeSearchRepository;
 
     @Transactional
     public void addRecipe(RecipeAddForm recipeAddForm, Member member, List<Ingredient> ingredients) throws IOException {
@@ -68,5 +69,9 @@ public class RecipeService {
     public void deleteRecipe(Long id) {
         Recipe recipe = recipeRepository.findById(id).get();
         recipeRepository.delete(recipe);
+    }
+
+    public Page<Recipe> searchRecipe(String q, Pageable pageable) {
+        return recipeSearchRepository.searchRecipes(q, pageable);
     }
 }

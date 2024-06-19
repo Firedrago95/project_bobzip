@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const totalPages = parseInt(document.getElementById('pagination').dataset.totalPages);
-    const currentPage = parseInt(document.getElementById('pagination').dataset.currentPage);
+    const paginationContainer = document.getElementById('pagination');
+    const totalPages = parseInt(paginationContainer.dataset.totalPages);
+    const currentPage = parseInt(paginationContainer.dataset.currentPage);
     generatePagination(totalPages, currentPage);
 });
 
@@ -17,7 +18,7 @@ function generatePagination(totalPages, currentPage) {
             paginationContainer.innerHTML += createEllipsis();
         }
 
-        // 페이지 생성 최종페이지 바로 앞 페이지까지
+        // 2페이지 ~ 마지막 바로앞 페이지 생성
         for (let i = Math.max(2, currentPage - 3); i <= Math.min(totalPages - 1, currentPage + 3); i++) {
             paginationContainer.innerHTML += createPageLink(i, currentPage === i);
         }
@@ -32,8 +33,12 @@ function generatePagination(totalPages, currentPage) {
     }
 }
 
-function createPageLink(pageNum, isCurrent = false) {
-    return `<a href='?page=${pageNum - 1}' class='${isCurrent ? "selected" : ""}'>${pageNum}</a>`
+function createPageLink(pageNum, isCurrent) {
+    const url = new URL(window.location);
+    const params = new URLSearchParams(url.search);
+    params.set('page', pageNum - 1);
+    url.search = params.toString();
+    return `<a href='${url.toString()}' class='${isCurrent ? "selected" : ""}'>${pageNum}</a>`
 }
 
 function createEllipsis() {
