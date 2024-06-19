@@ -58,13 +58,6 @@ class RecipeServiceTest {
         assertThat(content.size()).isEqualTo(1);
     }
 
-    private static Recipe createRecipe(String title, String instruction) {
-        return Recipe.builder()
-                .title(title)
-                .instruction(instruction)
-                .build();
-    }
-
     @Test
     void findRecipeTest() {
         // given
@@ -90,5 +83,32 @@ class RecipeServiceTest {
         // then
         Recipe findRecipe = recipeService.findRecipe(testRecipe.getId());
         assertThat(findRecipe).isNull();
+    }
+
+    @Test
+    void searchRecipeTest() {
+        // given
+        List<Recipe> testRecipes = Arrays.asList(
+                createRecipe("김치찌개", "맛있는 김치찌개"),
+                createRecipe("된장찌개", "보글보글 된장찌개"),
+                createRecipe("고추장찌개", "고추장찌개는 맛있다.")
+        );
+        recipeRepository.saveAll(testRecipes);
+        PageRequest pageRequest = PageRequest.of(0, 1);
+
+        // when
+        Page<Recipe> result = recipeService.searchRecipe("김치", pageRequest);
+
+        // then
+        List<Recipe> findRecipes = result.getContent();
+        assertThat(findRecipes.size()).isEqualTo(1);
+        assertThat(findRecipes.get(0).getTitle()).isEqualTo("김치찌개");
+    }
+
+    private static Recipe createRecipe(String title, String instruction) {
+        return Recipe.builder()
+                .title(title)
+                .instruction(instruction)
+                .build();
     }
 }
