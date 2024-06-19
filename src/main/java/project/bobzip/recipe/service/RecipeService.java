@@ -12,6 +12,7 @@ import project.bobzip.ingredient.entity.Ingredient;
 import project.bobzip.member.entity.Member;
 import project.bobzip.recipe.dto.RecipeAddForm;
 import project.bobzip.recipe.entity.*;
+import project.bobzip.recipe.exception.NoSearchResultException;
 import project.bobzip.recipe.repository.RecipeRepository;
 import project.bobzip.recipe.repository.RecipeSearchRepository;
 
@@ -72,6 +73,11 @@ public class RecipeService {
     }
 
     public Page<Recipe> searchRecipe(String q, Pageable pageable) {
-        return recipeSearchRepository.searchRecipes(q, pageable);
+        Page<Recipe> recipes = recipeSearchRepository.searchRecipes(q, pageable);
+        List<Recipe> content = recipes.getContent();
+        if (content.isEmpty()) {
+            throw new NoSearchResultException(q);
+        }
+        return recipes;
     }
 }
