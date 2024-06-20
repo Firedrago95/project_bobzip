@@ -1,4 +1,4 @@
-package project.bobzip;
+package project.bobzip.global.config;
 
 import com.querydsl.core.QueryFactory;
 import com.querydsl.jpa.impl.JPAQueryFactory;

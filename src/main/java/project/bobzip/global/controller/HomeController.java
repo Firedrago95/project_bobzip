@@ -1,4 +1,4 @@
-package project.bobzip;
+package project.bobzip.global.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
