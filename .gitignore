@@ -175,4 +175,3 @@ $RECYCLE.BIN/
 .gradle
 build/
 # End of https://www.toptal.com/developers/gitignore/api/windows,java,intellijgenerated\
-**/generated
