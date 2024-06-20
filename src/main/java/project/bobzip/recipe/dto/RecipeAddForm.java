@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
-import project.bobzip.recipe.entity.Unit;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class RecipeAddForm {
 
     private List<@NotNull(message = "재료수량을 입력해주세요")Integer> quantities;
 
-    private List<@NotNull(message = "단위를 입력해주세요")Unit> units;
+    private List<@NotNull(message = "단위를 입력해주세요")String> units;
 
     private List<@NotEmpty(message = "조리법을 입력해주세요")String> stepInstructions;
 

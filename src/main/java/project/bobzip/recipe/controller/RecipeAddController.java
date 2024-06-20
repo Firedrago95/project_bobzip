@@ -3,7 +3,6 @@ package project.bobzip.recipe.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +11,9 @@ import project.bobzip.ingredient.service.IngredientService;
 import project.bobzip.member.dto.LoginConst;
 import project.bobzip.member.entity.Member;
 import project.bobzip.recipe.dto.RecipeAddForm;
-import project.bobzip.recipe.entity.Unit;
 import project.bobzip.recipe.service.RecipeService;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -29,11 +25,6 @@ public class RecipeAddController {
     private final RecipeService recipeService;
     private final IngredientService ingredientService;
 
-    @ModelAttribute("units")
-    public List<Unit> units() {
-        Unit[] values = Unit.values();
-        return new ArrayList<>(Arrays.asList(values));
-    }
 
     @GetMapping("/add")
     public String recipeForm(@ModelAttribute("recipeAddForm") RecipeAddForm recipeAddForm) {

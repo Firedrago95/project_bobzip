@@ -58,11 +58,7 @@
         <li>
             <input type="text" th:field="*{ingredientNames}" placeholder="(재료명)">
             <input type="number" th:field="*{quantities}" placeholder="(수량)">
-            <select th:field="*{units}">
-                <option value="">==단위 선택==</option>
-                <option th:each="unit : ${units}" th:value="${unit.symbol}"
-                        th:text="${unit.symbol}">FAST</option>
-            </select>
+            <input type="text" th:field="*{units}" placeholder="(단위)">
             <div class="field-error" th:errors="*{ingredientNames}"/>
             <div class="field-error" th:errors="*{quantities}"/>
             <div class="field-error" th:errors="*{units}"/>

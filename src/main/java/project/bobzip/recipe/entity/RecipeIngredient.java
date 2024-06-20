@@ -26,16 +26,15 @@ public class RecipeIngredient {
     @Column(name = "quantity")
     private int quantity;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 2)
-    private Unit unit;
+    @Column(length = 10)
+    private String unit;
 
     //==생성 메서드==//
     public RecipeIngredient() {}
 
     public static List<RecipeIngredient> createRecipeIngredient(List<Ingredient> ingredients,
                                                                 List<Integer> quantities,
-                                                                List<Unit> units) {
+                                                                List<String> units) {
         List<RecipeIngredient> recipeIngredients = new ArrayList<>();
         for (int i = 0; i < ingredients.size(); i++) {
             RecipeIngredient recipeIngredient = new RecipeIngredient();
