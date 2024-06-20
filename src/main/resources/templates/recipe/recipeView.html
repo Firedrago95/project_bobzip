@@ -10,6 +10,7 @@
     <div th:if="${isWriter}" >
         <a th:href="@{/recipe/delete/{id}(id = ${recipe.id})}">레시피 삭제하기</a>
     </div>
+    <p th:text="${#temporals.format(recipe.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></p>
     <img th:src="|/file/${recipe.thumbnail.storedFileName}|">
 
 

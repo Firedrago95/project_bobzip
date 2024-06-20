@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
+import project.bobzip.global.entity.BaseEntity;
 import project.bobzip.global.entity.UploadFile;
 import project.bobzip.member.entity.Member;
 
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Getter
-public class Recipe {
+public class Recipe extends BaseEntity {
 
     @Id
     @GeneratedValue
