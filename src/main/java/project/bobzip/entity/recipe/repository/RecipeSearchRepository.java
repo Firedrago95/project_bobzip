@@ -11,7 +11,7 @@ import project.bobzip.entity.recipe.entity.Recipe;
 
 import java.util.List;
 
-import static project.bobzip.recipe.entity.QRecipe.recipe;
+import static project.bobzip.entity.recipe.entity.QRecipe.recipe;
 
 @Slf4j
 @Repository

@@ -9,66 +9,36 @@
             color: #dc3545;
         }
     </style>
-    <script>
-        function readURL(input, id) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById(id).src = e.target.result;
-                };
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                document.getElementById(id).src = "";
-            }
-        }
-
-        function addIngredient(id) {
-            var ingredientList = document.getElementById(id);
-            var newIngredient = document.querySelector("#"+id+" li").cloneNode(true);
-
-            newIngredient.querySelectorAll("input, select").forEach(function(element) {
-                element.value = "";
-            });
-
-            ingredientList.appendChild(newIngredient);
-        }
-
-        function deleteIngredient(obj, id) {
-            const ingredientList = document.getElementById(id);
-            const childCount = ingredientList.children.length;
-
-            if (childCount != 1) {
-                ingredientList.removeChild(obj.parentNode);
-            }
-        }
-    </script>
+    <script src="/js/addForm.js"></script>
 </head>
 <body>
 <form action="" method="post" th:object="${recipeAddForm}" enctype="multipart/form-data">
-    요리명 <input type="text" th:field="*{title}" >
-    <div class="field-error" th:errors="*{title}"/>
-    요리 소개 <input type="text" th:field="*{instruction}" >
-    <div class="field-error" th:errors="*{instruction}"/>
+    요리명 <input type="text" th:field="*{title}">
+    <p class="field-error" th:errors="*{title}"></p>
+    요리 소개 <input type="text" th:field="*{instruction}">
+    <p class="field-error" th:errors="*{instruction}"></p>
     요리 이미지 <input type="file" th:field="*{thumbnail}" onchange="readURL(this, 'preview')">
-    <div class="field-error" th:errors="*{thumbnail}"/>
+    <p class="field-error" th:errors="*{thumbnail}"></p>
     <img id="preview" width="400" height="300"/>
 
     <div id="ingredient">
         재료정보
+        <div class="field-error" th:errors="*{ingredientNames}"></div>
+        <div class="field-error" th:errors="*{quantities}"></div>
+        <div class="field-error" th:errors="*{units}"></div>
         <li>
             <input type="text" th:field="*{ingredientNames}" placeholder="(재료명)">
             <input type="number" th:field="*{quantities}" placeholder="(수량)">
             <input type="text" th:field="*{units}" placeholder="(단위)">
-            <div class="field-error" th:errors="*{ingredientNames}"/>
-            <div class="field-error" th:errors="*{quantities}"/>
-            <div class="field-error" th:errors="*{units}"/>
-            <button type="button" onclick="deleteIngredient(this, 'ingredient')">X</button>
+            <button type="button" onclick="deleteForm(this, 'ingredient')">X</button>
         </li>
     </div>
     <button type="button" onclick="addIngredient('ingredient')">재료추가</button>
 
     <div id="cooking_step">
         조리과정
+        <div class="field-error" th:errors="*{stepInstructions}"></div>
+        <div class="field-error" th:errors="*{stepThumbnails}"></div>
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
         </div>
@@ -76,12 +46,11 @@
             <input type="text" th:field="*{stepInstructions}" placeholder="(조리법)">
             <input type="file" th:field="*{stepThumbnails}" onchange="readURL(this, 'step')">
             <img id="step" width="250" height="150"/>
-            <button type="button" onclick="deleteIngredient(this, 'cooking_step')">X</button>
+            <button type="button" onclick="deleteForm(this, 'cooking_step')">X</button>
         </li>
-        <div class="field-error" th:errors="*{stepInstructions}"/>
-        <div class="field-error" th:errors="*{stepThumbnails}"/>
+
     </div>
-    <button type="button" onclick="addIngredient('cooking_step')">과정 추가</button>
+    <button type="button" onclick="addRecipeStep('cooking_step')">과정 추가</button>
     <input type="submit" value="레시피 등록">
 </form>
 </body>
