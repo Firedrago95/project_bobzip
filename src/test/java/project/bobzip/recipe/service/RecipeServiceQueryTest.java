@@ -14,26 +14,17 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @Transactional
-class RecipeServiceTest {
+class RecipeServiceQueryTest {
 
     @Autowired
     RecipeService recipeService;
     @Autowired
     RecipeRepository recipeRepository;
 
-    @Test
-    void addRecipeTest() {
-        // given
-
-
-        // when
-
-
-        // then
-    }
 
     @Test
     void findAllRecipesTest() {
@@ -69,20 +60,6 @@ class RecipeServiceTest {
 
         // then
         assertThat(findRecipe).isEqualTo(testRecipe);
-    }
-
-    @Test
-    void deleteRecipe() {
-        // given
-        Recipe testRecipe = createRecipe("김치찌개", "맛있는 김치찌개를 끓여봅시다!");
-        recipeRepository.save(testRecipe);
-
-        // when
-        recipeService.deleteRecipe(testRecipe.getId());
-
-        // then
-        Recipe findRecipe = recipeService.findRecipe(testRecipe.getId());
-        assertThat(findRecipe).isNull();
     }
 
     @Test
