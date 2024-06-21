@@ -1,19 +1,19 @@
 package project.bobzip.recipe.repository;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
-import project.bobzip.recipe.entity.Recipe;
+import project.bobzip.entity.recipe.entity.Recipe;
+import project.bobzip.entity.recipe.repository.RecipeRepository;
+import project.bobzip.entity.recipe.repository.RecipeSearchRepository;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional

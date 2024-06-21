@@ -5,8 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import project.bobzip.ingredient.entity.Ingredient;
-import project.bobzip.ingredient.repository.IngredientRepository;
+import project.bobzip.entity.ingredient.entity.Ingredient;
+import project.bobzip.entity.ingredient.repository.IngredientRepository;
+import project.bobzip.entity.ingredient.service.IngredientService;
 
 import java.util.List;
 

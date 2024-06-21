@@ -9,7 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
-import project.bobzip.recipe.entity.Recipe;
+import project.bobzip.entity.recipe.entity.Recipe;
+import project.bobzip.entity.recipe.repository.RecipeRepository;
 
 import java.util.Arrays;
 import java.util.List;

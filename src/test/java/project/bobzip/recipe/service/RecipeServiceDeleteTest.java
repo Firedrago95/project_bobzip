@@ -5,11 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import project.bobzip.member.entity.Member;
-import project.bobzip.member.repository.MemberRepository;
-import project.bobzip.recipe.entity.Recipe;
-import project.bobzip.recipe.exception.UnauthorizedAccessException;
-import project.bobzip.recipe.repository.RecipeRepository;
+import project.bobzip.entity.member.entity.Member;
+import project.bobzip.entity.member.repository.MemberRepository;
+import project.bobzip.entity.recipe.entity.Recipe;
+import project.bobzip.entity.recipe.exception.UnauthorizedAccessException;
+import project.bobzip.entity.recipe.repository.RecipeRepository;
+import project.bobzip.entity.recipe.service.RecipeService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
