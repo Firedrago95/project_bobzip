@@ -13,6 +13,7 @@ import project.bobzip.member.entity.Member;
 import project.bobzip.recipe.dto.RecipeAddForm;
 import project.bobzip.recipe.entity.*;
 import project.bobzip.recipe.exception.NoSearchResultException;
+import project.bobzip.recipe.exception.UnauthorizedAccessException;
 import project.bobzip.recipe.repository.RecipeRepository;
 import project.bobzip.recipe.repository.RecipeSearchRepository;
 
@@ -67,8 +68,11 @@ public class RecipeService {
     }
 
     @Transactional
-    public void deleteRecipe(Long id) {
+    public void deleteRecipe(Long id, Member loginMember) {
         Recipe recipe = recipeRepository.findById(id).get();
+        if (!(loginMember.equals(recipe.getMember()))) {
+            throw new UnauthorizedAccessException("레시피 삭제");
+        }
         recipeRepository.delete(recipe);
     }
 
