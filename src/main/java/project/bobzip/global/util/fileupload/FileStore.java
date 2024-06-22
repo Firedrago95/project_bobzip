@@ -32,6 +32,16 @@ public class FileStore {
         return uploadFiles;
     }
 
+    public UploadFile updateStepThumbnail(UploadFile uploadFile, MultipartFile multipartFile) throws IOException {
+        deleteFile(stepThumbnailDir, uploadFile.getStoredFileName());
+        return addFile(multipartFile, stepThumbnailDir);
+    }
+
+    public UploadFile updateRecipeThumbnail(UploadFile uploadFile, MultipartFile multipartFile) {
+        deleteFile(recipeThumbnailDir, uploadFile.getStoredFileName());
+        return addFile(multipartFile, recipeThumbnailDir)
+    }
+
     private UploadFile addFile(MultipartFile thumbnail, String fileDir) throws IOException{
         if (thumbnail.isEmpty()) {
             return null;
@@ -56,5 +66,12 @@ public class FileStore {
 
     private String getStorePath(String fileDir, String storeFilename) {
         return fileDir + storeFilename;
+    }
+
+    private void deleteFile(String fileDir, String storeFilename) {
+        File file = new File(getStorePath(fileDir, storeFilename));
+        if (file.exists()) {
+            file.delete();
+        }
     }
 }

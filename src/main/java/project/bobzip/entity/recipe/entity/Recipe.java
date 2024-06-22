@@ -74,4 +74,37 @@ public class Recipe extends BaseEntity {
         recipeIngredients.add(recipeIngredient);
         recipeIngredient.addRecipe(this);
     }
+
+    //==업데이트 메서드==//
+    public void updateTitle(String title) {
+        this.title = title;
+    }
+
+    public void updateInstruction(String instruction) {
+        this.instruction = instruction;
+    }
+
+    public void updateRecipeThumbnail(UploadFile newRecipeThumbnail) {
+        this.thumbnail = newRecipeThumbnail;
+    }
+
+    public void updateRecipeIngredient(List<RecipeIngredient> recipeIngredients) {
+        this.recipeIngredients.clear();
+
+        if (recipeIngredients != null) {
+            for (RecipeIngredient recipeIngredient : recipeIngredients) {
+                addRecipeIngredient(recipeIngredient);
+            }
+        }
+    }
+
+    public void updateRecipeSteps(List<RecipeStep> recipeSteps) {
+        this.recipeSteps.clear();
+
+        if (recipeSteps != null) {
+            for (RecipeStep recipeStep : recipeSteps) {
+                addRecipeStep(recipeStep);
+            }
+        }
+    }
 }
