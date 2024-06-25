@@ -134,7 +134,7 @@ public class RecipeService {
         recipe.updateRecipeIngredient(recipeIngredient);
     }
 
-    private void updateRecipeBasicInfo(RecipeEditForm recipeEditForm, Recipe recipe) {
+    private void updateRecipeBasicInfo(RecipeEditForm recipeEditForm, Recipe recipe) throws IOException {
         recipe.updateTitle(recipeEditForm.getTitle());
         recipe.updateInstruction(recipeEditForm.getInstruction());
         if (recipeEditForm.isChangedRecipeThumbnail()) {

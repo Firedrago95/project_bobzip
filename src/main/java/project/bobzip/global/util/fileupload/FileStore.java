@@ -37,9 +37,9 @@ public class FileStore {
         return addFile(multipartFile, stepThumbnailDir);
     }
 
-    public UploadFile updateRecipeThumbnail(UploadFile uploadFile, MultipartFile multipartFile) {
+    public UploadFile updateRecipeThumbnail(UploadFile uploadFile, MultipartFile multipartFile) throws IOException {
         deleteFile(recipeThumbnailDir, uploadFile.getStoredFileName());
-        return addFile(multipartFile, recipeThumbnailDir)
+        return addFile(multipartFile, recipeThumbnailDir);
     }
 
     private UploadFile addFile(MultipartFile thumbnail, String fileDir) throws IOException{

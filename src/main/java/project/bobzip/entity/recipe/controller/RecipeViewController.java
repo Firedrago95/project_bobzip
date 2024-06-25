@@ -12,6 +12,7 @@ import project.bobzip.entity.member.dto.LoginConst;
 import project.bobzip.entity.member.entity.Member;
 import project.bobzip.entity.recipe.service.RecipeService;
 import project.bobzip.entity.recipe.entity.Recipe;
+import project.bobzip.entity.reply.entity.Reply;
 
 import java.util.List;
 
