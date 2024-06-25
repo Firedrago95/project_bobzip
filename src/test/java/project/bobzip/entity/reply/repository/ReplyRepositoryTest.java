@@ -14,6 +14,7 @@ import project.bobzip.entity.reply.entity.Reply;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -43,6 +44,31 @@ class ReplyRepositoryTest {
         List<Reply> content = pagingReply.getContent();
         assertThat(pagingReply.getTotalPages()).isEqualTo(2);
         assertThat(content.size()).isEqualTo(1);
+    }
+
+    @Test
+    void saveTest() {
+        // given
+        Member testMember = createTestMember();
+        Recipe testRecipe = createTestRecipe();
+        Reply testReply = createTestReply(testMember, testRecipe);
+
+        // when
+        replyRepository.save(testReply);
+
+        // then
+        Optional<Reply> result = replyRepository.findById(testReply.getId());
+        assertThat(result.isPresent()).isTrue();
+        assertThat(result.get().getComment()).isEqualTo("정말 맛있는 요리입니다.");
+    }
+
+    private Reply createTestReply(Member testMember, Recipe testRecipe) {
+        Reply testReply = Reply.builder()
+                .recipe(testRecipe)
+                .member(testMember)
+                .comment("정말 맛있는 요리입니다.")
+                .build();
+        return testReply;
     }
 
     private void createTestReplies(Recipe recipe, Member member) {

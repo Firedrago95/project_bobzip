@@ -1,5 +1,7 @@
 package project.bobzip.entity.reply.service;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +12,7 @@ import project.bobzip.entity.member.entity.Member;
 import project.bobzip.entity.member.repository.MemberRepository;
 import project.bobzip.entity.recipe.entity.Recipe;
 import project.bobzip.entity.recipe.repository.RecipeRepository;
+import project.bobzip.entity.reply.dto.request.ReplyAddForm;
 import project.bobzip.entity.reply.entity.Reply;
 import project.bobzip.entity.reply.repository.ReplyRepository;
 
@@ -49,21 +52,52 @@ public class ReplyServiceTest {
         assertThat(content.size()).isEqualTo(1);
 
     }
-private void createTestReplies(Recipe recipe, Member member) {
-    List<Reply> testReplies = Arrays.asList(
-            Reply.builder()
-                    .recipe(recipe)
-                    .member(member)
-                    .comment("정말 맛있는 요리입니다.")
-                    .build(),
-            Reply.builder()
-                    .recipe(recipe)
-                    .member(member)
-                    .comment("조리법 대로 요리하니 간이 좀 맞지 않네요...")
-                    .build()
-    );
-    replyRepository.saveAll(testReplies);
-}
+
+    @Test
+    void addReplyTest() {
+        // given
+        Recipe testRecipe = createTestRecipe();
+        Member testMember = createTestMember();
+        ReplyAddForm replyAddForm = new ReplyAddForm(testRecipe.getId(), "조리법 정말 좋아요");
+
+        // when
+        replyService.addReply(replyAddForm, testMember);
+
+        // then
+        Page<Reply> result = replyRepository.findByRecipeId(testRecipe.getId(), PageRequest.of(0, 10));
+        List<Reply> content = result.getContent();
+        assertThat(content.size()).isEqualTo(1);
+        assertThat(content.get(0).getComment()).isEqualTo("조리법 정말 좋아요");
+    }
+
+    @Test
+    @DisplayName("댓글 추가 예외발생")
+    void addReplyExceptionTest() {
+        // given
+        Long wrongRecipeId = 2L;
+        Member testMember = createTestMember();
+        ReplyAddForm replyAddForm = new ReplyAddForm(wrongRecipeId, "존재하지 않는 레시피에 댓글 등록 예외발생");
+
+        // then
+        Assertions.assertThatThrownBy(() ->replyService.addReply(replyAddForm, testMember))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    private void createTestReplies(Recipe recipe, Member member) {
+        List<Reply> testReplies = Arrays.asList(
+                Reply.builder()
+                        .recipe(recipe)
+                        .member(member)
+                        .comment("정말 맛있는 요리입니다.")
+                        .build(),
+                Reply.builder()
+                        .recipe(recipe)
+                        .member(member)
+                        .comment("조리법 대로 요리하니 간이 좀 맞지 않네요...")
+                        .build()
+        );
+        replyRepository.saveAll(testReplies);
+    }
 
     private Member createTestMember() {
         Member member = new Member("test", "123", "test");
