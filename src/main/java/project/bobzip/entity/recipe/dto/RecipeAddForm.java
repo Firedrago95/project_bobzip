@@ -22,14 +22,23 @@ public class RecipeAddForm {
     @NotNull
     private MultipartFile thumbnail;
 
-    private List<@NotEmpty(message = "재료명을 입력해주세요")String> ingredientNames = new ArrayList<>();
+    private List<@NotEmpty(message = "재료명을 입력해주세요") String> ingredientNames = new ArrayList<>();
 
-    private List<@NotNull(message = "재료수량을 입력해주세요")Integer> quantities = new ArrayList<>();
+    private List<@NotNull(message = "재료수량을 입력해주세요") Integer> quantities = new ArrayList<>();
 
-    private List<@NotNull(message = "단위를 입력해주세요")String> units = new ArrayList<>();
+    private List<@NotNull(message = "단위를 입력해주세요") String> units = new ArrayList<>();
 
-    private List<@NotEmpty(message = "조리법을 입력해주세요")String> stepInstructions = new ArrayList<>();
+    private List<Step> steps = new ArrayList<>();
 
-    private List<@NotNull(message = "조리법 이미지를 등록해주세요")MultipartFile> stepThumbnails = new ArrayList<>();
+    @Getter
+    @Setter
+    public static class Step {
 
+        private Integer stepNumber;
+
+        @NotEmpty(message = "조리법을 입력해주세요")
+        private String instruction;
+
+        private MultipartFile thumbnail;  // 이미지 업로드는 선택 사항
+    }
 }

@@ -20,16 +20,11 @@ public class FileStore {
     private String stepThumbnailDir;
 
 
-    public UploadFile addThumbnail(MultipartFile thumbnail) throws IOException {
-        return addFile(thumbnail, recipeThumbnailDir);
-    }
-
-    public List<UploadFile> addStepThumbnails(List<MultipartFile> stepThumbnail) throws IOException {
-        ArrayList<UploadFile> uploadFiles = new ArrayList<>();
-        for (MultipartFile multipartFile : stepThumbnail) {
-            uploadFiles.add(addFile(multipartFile, stepThumbnailDir));
+    public UploadFile addThumbnail(MultipartFile thumbnail, boolean isRecipeThumbnail) throws IOException {
+        if (isRecipeThumbnail) {
+            return addFile(thumbnail, recipeThumbnailDir);
         }
-        return uploadFiles;
+        return addFile(thumbnail, stepThumbnailDir);
     }
 
     public UploadFile updateStepThumbnail(UploadFile uploadFile, MultipartFile multipartFile) throws IOException {
