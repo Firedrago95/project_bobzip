@@ -30,9 +30,6 @@ function addRecipeStep(containerId) {
         input.value = "";
         input.name = "";
     });
-    newForm.querySelectorAll("img").forEach(input => {
-            input.src = "/image/noImage.png";
-    });
 
     container.appendChild(newForm);
 
@@ -54,13 +51,11 @@ function updateStepNumbers(containerId) {
     steps.forEach((step, index) => {
         step.querySelector(".step-number").value = index + 1;
         step.querySelector(".step-number").name = `steps[${index}].stepNumber`;
-
         step.querySelector("textarea").name = `steps[${index}].instruction`;
 
         const fileInput = step.querySelector("input[type=file]");
         fileInput.name = `steps[${index}].thumbnail`;
         fileInput.setAttribute("onchange", `readURL(this, 'step${index}')`);
-
         step.querySelector(".img-thumbnail").id = `step${index}`;
     });
 }

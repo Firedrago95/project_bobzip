@@ -1,10 +1,13 @@
 package project.bobzip.entity.recipe.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
+import project.bobzip.entity.recipe.validation.NotEmptyFile;
+import project.bobzip.entity.recipe.validation.NotEmptyList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +22,19 @@ public class RecipeAddForm {
     @NotEmpty(message = "요리 설명을 입력해주세요")
     private String instruction;
 
-    @NotNull
+    @NotEmptyFile(message = "요리 이미지를 첨부해주세요")
     private MultipartFile thumbnail;
 
-    private List<@NotEmpty(message = "재료명을 입력해주세요") String> ingredientNames = new ArrayList<>();
+    @NotEmptyList(message = "재료를 입력해주세요")
+    private List<String> ingredientNames = new ArrayList<>();
 
-    private List<@NotNull(message = "재료수량을 입력해주세요") Integer> quantities = new ArrayList<>();
+    @NotEmptyList(message = "수량을 입력해주세요")
+    private List<Integer> quantities = new ArrayList<>();
 
-    private List<@NotNull(message = "단위를 입력해주세요") String> units = new ArrayList<>();
+    @NotEmptyList(message = "단위를 입력해주세요")
+    private List<String> units = new ArrayList<>();
 
+    @NotNull @Valid
     private List<Step> steps = new ArrayList<>();
 
     @Getter

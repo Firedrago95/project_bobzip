@@ -32,7 +32,7 @@
                     <textarea th:field="*{instruction}" class="form-control" style="resize:none;"></textarea>
                     <p class="field-error" th:errors="*{instruction}"></p>
                 </div>
-                <div>
+                <div class="mt-2">
                     <label th:for="thumbnail">요리 이미지:</label>
                     <input type="file" th:field="*{thumbnail}" class="form-control-file"
                            onchange="readURL(this, 'preview')">
@@ -47,17 +47,17 @@
         <div class="form-group row px-5 py-4 border rounded mt-2">
             <div id="ingredient">
                 <h5>재료정보</h5>
-                <div class="field-error" th:errors="*{ingredientNames}"></div>
-                <div class="field-error" th:errors="*{quantities}"></div>
-                <div class="field-error" th:errors="*{units}"></div>
+                <p class="field-error" th:errors="*{ingredientNames}"></p>
+                <p class="field-error" th:errors="*{quantities}"></p>
+                <p class="field-error" th:errors="*{units}"></p>
                 <div class="row mb-2 ingredientForm">
-                    <div class="col-sm-3">
+                    <div class="col-sm">
                         <input type="text" th:field="*{ingredientNames}" class="form-control" placeholder="재료명">
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm">
                         <input type="number" th:field="*{quantities}" class="form-control" placeholder="수량 (숫자)">
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm">
                         <input type="text" th:field="*{units}" class="form-control" placeholder="단위 (g,ml)">
                     </div>
                     <div class="col-sm-auto">
@@ -81,21 +81,22 @@
                 <div th:if="${#fields.hasGlobalErrors()}">
                     <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
                 </div>
-                <div class="row mb-2 cookingStepForm">
+                <div class="row mb-2 g-4 cookingStepForm">
                     <div class="col-sm-7">
                         <div>
-                            <input type="hidden" class="step-number">
-                            <textarea th:field="*{steps[0].instruction}" class="form-control"
-                                      style="height:190px; resize:none"></textarea>
-                            <p class="field-error" th:errors="*{steps[0].instruction}"></p>
+                            <div th:each="step, iterStat : *{steps}">
+                                <p class="field-error" th:if="${#fields.hasErrors('steps[' + iterStat.index + '].instruction')}" th:errors="*{steps[__${iterStat.index}__].instruction}"></p>
+                            </div>
+                            <input type="hidden" th:field="*{steps[0].stepNumber}" class="step-number">
+                            <textarea th:field="*{steps[0].instruction}" class="form-control" style="resize:none"></textarea>
                         </div>
                         <div class="mt-2">
-                            <input type="file" class="form-control-file" onchange="readURL(this, 'step0')">
+                            <input type="file" th:field="*{steps[0].thumbnail}" class="form-control-file" onchange="readURL(this, 'step0')">
                             <p class="field-error" th:errors="*{steps[0].thumbnail}"></p>
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <img src="/image/noImage.png" id="step0" class="img-thumbnail" width="260" height="200"/>
+                        <img id="step0" class="img-thumbnail" width="380" height="240"/>
                     </div>
                     <div class="col-sm-auto">
                         <button type="button" class="btn btn-danger" onclick="deleteRecipeStep(this, 'cooking_step')">X</button>
