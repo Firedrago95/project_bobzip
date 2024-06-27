@@ -1,3 +1,25 @@
+function readRecipeThumbnail(input, targetId) {
+    readURL(input, targetId);
+
+    const parentNode = document.getElementById(targetId).parentNode;
+    const newInput = document.createElement('input');
+    newInput.type = 'hidden';
+    newInput.name = 'changedRecipeThumbnail';
+    newInput.value = 'true';
+    parentNode.appendChild(newInput);
+}
+
+function readStepThumbnails(input, targetId, stepNumber) {
+    readURL(input, targetId);
+
+    const parentNode = document.getElementById(targetId).parentNode;
+    const newInput = document.createElement('input');
+    newInput.type = 'hidden';
+    newInput.name = 'changedStepThumbnail[]';
+    newInput.value = stepNumber;
+    parentNode.appendChild(newInput);
+}
+
 function readURL(input, targetId) {
     if (input.files && input.files[0]) {
         const reader = new FileReader();
@@ -58,7 +80,7 @@ function updateStepNumbers(containerId) {
 
         const fileInput = step.querySelector("input[type=file]");
         fileInput.name = `steps[${index}].thumbnail`;
-        fileInput.setAttribute("onchange", `readURL(this, 'step${index}')`);
+        fileInput.setAttribute("onchange", `readStepThumbnails(this, 'step${index}', ${index + 1})`);
         step.querySelector(".img-thumbnail").id = `step${index}`;
     });
 }

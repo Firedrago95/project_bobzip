@@ -12,8 +12,8 @@ public class UploadFile {
     private String storedFileName;
 
     public UploadFile() {
-        uploadFileName = "default.jpg";
-        storedFileName = "default.jpg";
+        uploadFileName = "default.png";
+        storedFileName = "default.png";
     }
 
     public UploadFile(String uploadFileName, String storedFileName) {

@@ -97,54 +97,61 @@ public class RecipeService {
         return recipes;
     }
 
-//    @Transactional
-//    public void updateRecipe(Long id, RecipeEditForm recipeEditForm, List<Ingredient> ingredients) throws IOException {
-//        Recipe recipe = recipeRepository.findById(id).get();
-//
-//        updateRecipeBasicInfo(recipeEditForm, recipe);
-//        updateRecipeIngredients(recipeEditForm, ingredients, recipe);
-//        updateRecipeSteps(recipeEditForm, recipe);
-//    }
-//
-//    private void updateRecipeSteps(RecipeEditForm recipeEditForm, Recipe recipe) throws IOException {
-//        List<String> stepInstructions = recipeEditForm.getStepInstructions();
-//        List<Integer> changedStepThumbnail = recipeEditForm.getChangedStepThumbnail();
-//        List<MultipartFile> stepThumbnails = recipeEditForm.getStepThumbnails();
-//        List<UploadFile> thumbnails = new ArrayList<>(recipe.getRecipeSteps().stream()
-//                .map(RecipeStep::getThumbnail)
-//                .toList());
-//
-//        for (int i = 0; i < changedStepThumbnail.size(); i++) {
-//            int indexToChange = changedStepThumbnail.get(i) - 1;
-//
-//            if (indexToChange < thumbnails.size()) {
-//                MultipartFile multipartFile = stepThumbnails.get(i);
-//                UploadFile newThumbnail = fileStore.updateStepThumbnail(thumbnails.get(i), multipartFile);
-//                thumbnails.set(indexToChange, newThumbnail);
-//            } else {
-//                thumbnails.add(fileStore.addThumbnail(stepThumbnails.get(i)));
-//            }
-//        }
-//
-//        List<RecipeStep> recipeSteps = RecipeStep.createRecipeSteps(thumbnails, stepInstructions);
-//        recipe.updateRecipeSteps(recipeSteps);
-//    }
-//
-//    private static void updateRecipeIngredients(RecipeEditForm recipeEditForm, List<Ingredient> ingredients, Recipe recipe) {
-//        List<RecipeIngredient> recipeIngredient = RecipeIngredient.createRecipeIngredient(
-//                ingredients,
-//                recipeEditForm.getQuantities(),
-//                recipeEditForm.getUnits());
-//
-//        recipe.updateRecipeIngredient(recipeIngredient);
-//    }
-//
-//    private void updateRecipeBasicInfo(RecipeEditForm recipeEditForm, Recipe recipe) throws IOException {
-//        recipe.updateTitle(recipeEditForm.getTitle());
-//        recipe.updateInstruction(recipeEditForm.getInstruction());
-//        if (recipeEditForm.isChangedRecipeThumbnail()) {
-//            UploadFile newRecipeThumbnail = fileStore.updateRecipeThumbnail(recipe.getThumbnail(), recipeEditForm.getThumbnail());
-//            recipe.updateRecipeThumbnail(newRecipeThumbnail);
-//        }
-//    }
+    @Transactional
+    public void updateRecipe(Long id, RecipeEditForm recipeEditForm, List<Ingredient> ingredients) throws IOException {
+        Recipe recipe = recipeRepository.findById(id).get();
+
+        updateRecipeBasicInfo(recipeEditForm, recipe);
+        updateRecipeIngredients(recipeEditForm, ingredients, recipe);
+        updateRecipeSteps(recipeEditForm, recipe);
+    }
+
+    private void updateRecipeSteps(RecipeEditForm recipeEditForm, Recipe recipe) throws IOException {
+        List<RecipeEditForm.Step> inputSteps = recipeEditForm.getSteps();
+        List<Integer> changedStepThumbnails = recipeEditForm.getChangedStepThumbnail();
+        List<RecipeStep> oldRecipeSteps = recipe.getRecipeSteps();
+
+        List<RecipeStep> updatedRecipeSteps = new ArrayList<>();
+        for (RecipeEditForm.Step inputStep : inputSteps) {
+            Integer stepNumber = inputStep.getStepNumber();
+            RecipeStep existingRecipeStep = oldRecipeSteps.stream()
+                    .filter(rs -> stepNumber.equals(rs.getStepNumber()))
+                    .findFirst()
+                    .orElse(null);
+
+            UploadFile uploadFile = getUploadFile(inputStep, existingRecipeStep, changedStepThumbnails);
+
+            RecipeStep recipeStep = RecipeStep.createRecipeStep(uploadFile, inputStep.getInstruction(), stepNumber);
+            updatedRecipeSteps.add(recipeStep);
+        }
+        recipe.updateRecipeSteps(updatedRecipeSteps);
+    }
+
+    private UploadFile getUploadFile(RecipeEditForm.Step step, RecipeStep existingRecipeStep, List<Integer> changedStepThumbnails) throws IOException {
+        if (changedStepThumbnails.contains(step.getStepNumber())) {
+            return (existingRecipeStep != null)
+                    ? fileStore.updateStepThumbnail(existingRecipeStep.getThumbnail(), step.getThumbnail())
+                    : fileStore.addThumbnail(step.getThumbnail(), false);
+        } else {
+            return (existingRecipeStep != null) ? existingRecipeStep.getThumbnail() : new UploadFile();
+        }
+    }
+
+    private static void updateRecipeIngredients(RecipeEditForm recipeEditForm, List<Ingredient> ingredients, Recipe recipe) {
+        List<RecipeIngredient> recipeIngredient = RecipeIngredient.createRecipeIngredient(
+                ingredients,
+                recipeEditForm.getQuantities(),
+                recipeEditForm.getUnits());
+
+        recipe.updateRecipeIngredient(recipeIngredient);
+    }
+
+    private void updateRecipeBasicInfo(RecipeEditForm recipeEditForm, Recipe recipe) throws IOException {
+        recipe.updateTitle(recipeEditForm.getTitle());
+        recipe.updateInstruction(recipeEditForm.getInstruction());
+        if (recipeEditForm.isChangedRecipeThumbnail()) {
+            UploadFile newRecipeThumbnail = fileStore.updateRecipeThumbnail(recipe.getThumbnail(), recipeEditForm.getThumbnail());
+            recipe.updateRecipeThumbnail(newRecipeThumbnail);
+        }
+    }
 }

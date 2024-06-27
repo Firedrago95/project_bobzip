@@ -37,17 +37,8 @@ public class RecipeEditController {
         if (!(loginMember.equals(recipe.getMember()))) {
             throw new UnauthorizedAccessException("레시피 수정");
         }
-        List<RecipeStep> recipeSteps = recipe.getRecipeSteps();
-        List<RecipeIngredient> recipeIngredients = recipe.getRecipeIngredients();
-
-        List<Ingredient> ingredients = recipeIngredients.stream()
-                .map(RecipeIngredient::getIngredient)
-                .collect(Collectors.toList());
-
-        model.addAttribute("recipe", recipe);
-        model.addAttribute("recipeSteps", recipeSteps);
-        model.addAttribute("recipeIngredients", recipeIngredients);
-        model.addAttribute("ingredients", ingredients);
+        RecipeEditForm recipeEditForm = RecipeEditForm.createEditForm(recipe);
+        model.addAttribute("recipeEditForm", recipeEditForm);
         return "/recipe/recipeEdit";
     }
 
@@ -55,6 +46,7 @@ public class RecipeEditController {
     public String editRecipe(@PathVariable("id") Long id,
                              @SessionAttribute(LoginConst.LOGIN) Member loginMember,
                              @ModelAttribute("recipeEditForm") RecipeEditForm recipeEditForm) throws IOException {
+        log.info("changedThumbnail = {}", recipeEditForm.isChangedRecipeThumbnail());
         Recipe recipe = recipeService.findRecipe(id);
         if (!(loginMember.equals(recipe.getMember()))) {
             throw new UnauthorizedAccessException("레시피 수정");
