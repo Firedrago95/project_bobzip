@@ -55,6 +55,7 @@ public class RecipeServiceDeleteTest {
     void noAuthorizerDeleteRecipeTest() {
         // given
         Recipe testRecipe = createRecipeWithWriter("김치찌개", "맛있는 김치찌개를 끓여봅시다!", writer);
+        recipeRepository.save(testRecipe);
 
         // then
         assertThatThrownBy(()->recipeService.deleteRecipe(testRecipe.getId(), noAuthorizer))
