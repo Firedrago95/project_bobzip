@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class ReplyDto {
 
     private Long id;
+    private Long recipeId;
     private String username;
     private String comment;
     private LocalDateTime createdTime;
@@ -21,6 +22,7 @@ public class ReplyDto {
     public static Page<ReplyDto> toDtoReplyPage(Page<Reply> replyPage) {
         return replyPage.map(r -> ReplyDto.builder()
                 .id(r.getId())
+                .recipeId(r.getRecipe().getId())
                 .username(r.getMember().getUsername())
                 .comment(r.getComment())
                 .createdTime(r.getCreatedTime())

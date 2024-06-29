@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import project.bobzip.entity.member.dto.LoginConst;
 import project.bobzip.entity.member.entity.Member;
@@ -15,7 +16,7 @@ import project.bobzip.entity.reply.dto.response.ReplyDto;
 import project.bobzip.entity.reply.entity.Reply;
 import project.bobzip.entity.reply.service.ReplyService;
 
-@RestController
+@Controller
 @RequestMapping("/reply")
 @RequiredArgsConstructor
 public class ReplyController {
@@ -23,6 +24,7 @@ public class ReplyController {
     private final ReplyService replyService;
 
     @GetMapping("/all")
+    @ResponseBody
     public Page<ReplyDto> getRepliesByRecipeId(@PathVariable("recipeId") Long recipeId,
                                                @PageableDefault(size = 10, page = 0, sort = "createdTime") Pageable pageable) {
         Page<Reply> replyPage = replyService.findAll(recipeId, pageable);
@@ -31,13 +33,11 @@ public class ReplyController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Page<ReplyDto>> addReply(@ModelAttribute("replyAddForm")ReplyAddForm replyAddForm,
-                                   @SessionAttribute(LoginConst.LOGIN) Member loginMember) {
+    public String addReply(
+            @ModelAttribute("replyAddForm")ReplyAddForm replyAddForm,
+            @SessionAttribute(LoginConst.LOGIN) Member loginMember) {
         replyService.addReply(replyAddForm, loginMember);
-
-        Page<ReplyDto> updatedReplies = getRepliesByRecipeId(replyAddForm.getRecipeId(),
-                PageRequest.of(0, 10,Sort.by("createdTime").ascending()));
-        return ResponseEntity.ok(updatedReplies);
+        return "redirect:/recipe/" + replyAddForm.getRecipeId();
     }
 
 }
