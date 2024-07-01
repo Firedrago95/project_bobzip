@@ -28,4 +28,14 @@ public class ReplyDto {
                 .createdTime(r.getCreatedTime())
                 .build());
     }
+
+    public static ReplyDto toDtoReply(Reply reply) {
+        return ReplyDto.builder()
+                .id(reply.getId())
+                .recipeId(reply.getRecipe().getId())
+                .username(reply.getMember().getUsername())
+                .comment(reply.getComment())
+                .createdTime(reply.getCreatedTime())
+                .build();
+    }
 }

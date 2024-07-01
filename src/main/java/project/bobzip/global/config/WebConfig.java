@@ -13,8 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
-                .addPathPatterns("/recipe/add", "/members/delete", "/recipe/delete/*", "/recipe/edit/*"
-                , "/reply/add");
+                .addPathPatterns("/recipe/add", "/members/delete", "/recipe/delete/*", "/recipe/edit/*");
     }
 
     @Override

@@ -27,7 +27,7 @@ public class ReplyService {
     }
 
     @Transactional
-    public void addReply(ReplyAddForm replyAddForm, Member loginMember) {
+    public Reply addReply(ReplyAddForm replyAddForm, Member loginMember) {
         Recipe findRecipe = recipeRepository.findById(replyAddForm.getRecipeId())
                 .orElseThrow(()-> new IllegalArgumentException("레시피를 찾을 수 없습니다."));
 
@@ -38,5 +38,6 @@ public class ReplyService {
                 .build();
 
         replyRepository.save(reply);
+        return reply;
     }
 }

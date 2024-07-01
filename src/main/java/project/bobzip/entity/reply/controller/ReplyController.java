@@ -1,11 +1,14 @@
 package project.bobzip.entity.reply.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,15 +19,15 @@ import project.bobzip.entity.reply.dto.response.ReplyDto;
 import project.bobzip.entity.reply.entity.Reply;
 import project.bobzip.entity.reply.service.ReplyService;
 
-@Controller
+@Slf4j
+@RestController
 @RequestMapping("/reply")
 @RequiredArgsConstructor
 public class ReplyController {
 
     private final ReplyService replyService;
 
-    @GetMapping("/all")
-    @ResponseBody
+    @GetMapping("/all/{recipeId}")
     public Page<ReplyDto> getRepliesByRecipeId(@PathVariable("recipeId") Long recipeId,
                                                @PageableDefault(size = 10, page = 0, sort = "createdTime") Pageable pageable) {
         Page<Reply> replyPage = replyService.findAll(recipeId, pageable);
@@ -33,11 +36,15 @@ public class ReplyController {
     }
 
     @PostMapping("/add")
-    public String addReply(
-            @ModelAttribute("replyAddForm")ReplyAddForm replyAddForm,
-            @SessionAttribute(LoginConst.LOGIN) Member loginMember) {
-        replyService.addReply(replyAddForm, loginMember);
-        return "redirect:/recipe/" + replyAddForm.getRecipeId();
+    public ResponseEntity<?> addReply(
+            @RequestBody ReplyAddForm replyAddForm, HttpSession session) {
+        Member loginMember = (Member) session.getAttribute(LoginConst.LOGIN);
+        if (loginMember == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("댓글을 작성하려면, 로그인 해주세요");
+        }
+        Reply reply = replyService.addReply(replyAddForm, loginMember);
+        ReplyDto replyDto = ReplyDto.toDtoReply(reply);
+        return ResponseEntity.ok(replyDto);
     }
 
 }

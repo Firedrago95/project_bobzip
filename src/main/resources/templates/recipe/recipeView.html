@@ -7,6 +7,8 @@
           crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/js/recipeView.js"></script>
     <style>
         .recipe-main-img {
             height: 600px;
@@ -27,16 +29,6 @@
             color: green;
             font-weight: bold;
             margin-right: 10px;
-        }
-         .comment-placeholder {
-            display: flex;
-            flex-direction: column;
-            padding: 0.5rem;
-            border: 1px solid #ced4da;
-            border-radius: 0.25rem;
-            background-color: #f8f9fa;
-            color: #6c757d;
-            text-decoration: none;
         }
     </style>
 </head>
@@ -96,26 +88,19 @@
                     <h3>댓글</h3>
                 </div>
                 <div class="card-body">
-                    <div th:each="comment : ${comments}">
-                        <div class="mb-3">
-                            <h5 th:text="${comment.userName}" class="mb-1"></h5>
-                            <p th:text="${comment.text}"></p>
-                            <p class="text-muted small" th:text="${#temporals.format(comment.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></p>
-                        </div>
-                    </div>
+                    <div id="comments-container" th:data-recipe-id="${recipe.id}">
 
-                    <form th:if="${session.loginMember != null}" th:action="@{/reply/add}" method="post">
+                    </div>
+                    <div id="pagination" class="mt-4 d-flex justify-content-center" th:data-recipe-id="${recipe.id}">
+
+                    </div>
+                    <form method="post" id="comment-form">
                         <div class="mb-3">
                             <label for="commentText" class="form-label">댓글 입력</label>
-                            <textarea class="form-control" id="commentText" name="comment" rows="3"></textarea>
-                            <input type="hidden" name="recipeId" th:value="${recipe.id}">
+                            <textarea class="form-control" id="commentText" name="text" rows="3"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">댓글 등록</button>
                     </form>
-                    <a th:if="${session.loginMember == null}" class="comment-placeholder" href="/members/login">
-                        <label class="form-label">댓글 입력</label>
-                        <div class="form-control" rows="3" style="height:auto;">댓글을 작성하려면 로그인 해주세요</div>
-                    </a>
                 </div>
             </div>
         </div>
