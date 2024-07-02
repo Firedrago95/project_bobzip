@@ -47,4 +47,19 @@ public class ReplyController {
         return ResponseEntity.ok(replyDto);
     }
 
+    @PostMapping("/edit/{commentId}")
+    public ResponseEntity<?> editReply(
+            @PathVariable("commentId") Long commentId,
+            @ModelAttribute("comment") String comment,
+            HttpSession session) {
+        log.info("comment = {}", comment);
+        Reply reply = replyService.findById(commentId);
+        Member loginMember = (Member) session.getAttribute(LoginConst.LOGIN);
+        if (loginMember == null || !(reply.getMember().equals(loginMember))) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("댓글 작성자만 수정 할 수 있습니다.");
+        }
+
+        replyService.updateReply(reply, comment);
+        return ResponseEntity.ok("댓글 수정 완료");
+    }
 }

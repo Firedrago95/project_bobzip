@@ -50,16 +50,16 @@ function loadComments(recipeId, page=0) {
                 }).format(date);
 
                 $('#comments-container').append(`
-                    <div class="p-2 position-relative">
+                    <div class="p-2 position-relative" id="comment-${comment.id}">
                         <div class="d-flex justify-content-between">
                             <p class="mb-1 fs-5"><strong>${comment.username}</strong></p>
                             <div>
-                                <button class="btn btn-sm btn-link" onclick="editComment(${comment.id})">수정</button>
+                                <button class="btn btn-sm btn-link" onclick="editComment(${comment.id}, '${comment.comment}')">수정</button>
                                 <button class="btn btn-sm btn-link text-danger" onclick="deleteComment(${comment.id})">삭제</button>
                             </div>
                         </div>
                         <p class="text-muted small">${formattedDate}</p>
-                        <p class="fs-6">${comment.comment}</p>
+                        <p class="fs-6" id="comment-text">${comment.comment}</p>
                     </div>
                     <hr>
                 `);
@@ -76,6 +76,52 @@ function loadComments(recipeId, page=0) {
             }
         }
     });
+}
+
+function editComment(commentId, currentText) {
+    // 기존 폼이 있으면 제거
+    $('#edit-form').remove();
+
+    const editFormHtml = `
+        <form id="edit-form" class="mt-3">
+            <textarea id="edit-comment-text" class="form-control mb-2">${currentText}</textarea>
+            <button type="button" class="btn btn-primary" onclick="submitEdit(${commentId})">수정하기</button>
+            <button type="button" class="btn btn-secondary" onclick="cancelEdit()">닫기</button>
+        </form>
+    `;
+
+    // 댓글 아래에 수정 폼 추가
+    $(`#comment-${commentId}`).append(editFormHtml);
+}
+
+function submitEdit(commentId) {
+    const updatedText = $('#edit-comment-text').val();
+
+    $.ajax({
+        url: `/reply/edit/${commentId}`,
+        method: "POST",
+        contentType: "application/x-www-form-urlencoded",
+        data: {
+            comment: updatedText
+        },
+        success: function(response) {
+            // 댓글 내용을 업데이트
+            $(`#comment-${commentId} #comment-text`).text(updatedText);
+            // 수정 폼 제거
+            $('#edit-form').remove();
+        },
+        error: function(xhr) {
+            if (xhr.status == 401) {
+                alert(xhr.responseText);
+            } else {
+                alert("댓글 수정중 문제가 발생했습니다.")
+            }
+        }
+    });
+}
+
+function cancelEdit() {
+    $('#edit-form').remove();
 }
 
 function generatePagination(totalPages, currentPage, recipeId) {

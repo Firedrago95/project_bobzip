@@ -35,4 +35,8 @@ public class Reply extends BaseEntity {
         this.recipe = recipe;
         this.comment = comment;
     }
+
+    public void update(String comment) {
+        this.comment = comment;
+    }
 }

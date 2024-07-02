@@ -40,4 +40,13 @@ public class ReplyService {
         replyRepository.save(reply);
         return reply;
     }
+
+    public Reply findById(Long commentId) {
+        return replyRepository.findById(commentId).orElse(null);
+    }
+
+    @Transactional
+    public void updateReply(Reply reply, String comment) {
+        reply.update(comment);
+    }
 }
