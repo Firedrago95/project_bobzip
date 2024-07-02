@@ -50,10 +50,16 @@ function loadComments(recipeId, page=0) {
                 }).format(date);
 
                 $('#comments-container').append(`
-                    <div class="p-2">
-                        <p class="mb-1"><strong>${comment.username}</strong></p>
+                    <div class="p-2 position-relative">
+                        <div class="d-flex justify-content-between">
+                            <p class="mb-1 fs-5"><strong>${comment.username}</strong></p>
+                            <div>
+                                <button class="btn btn-sm btn-link" onclick="editComment(${comment.id})">수정</button>
+                                <button class="btn btn-sm btn-link text-danger" onclick="deleteComment(${comment.id})">삭제</button>
+                            </div>
+                        </div>
                         <p class="text-muted small">${formattedDate}</p>
-                        <p>${comment.comment}</p>
+                        <p class="fs-6">${comment.comment}</p>
                     </div>
                     <hr>
                 `);
@@ -100,7 +106,7 @@ function generatePagination(totalPages, currentPage, recipeId) {
 function createPageLink(pageNum, isCurrent, recipeId) {
     const selectedClass = isCurrent ? 'selected' : '';
     return `
-        <a class="page-link ${selectedClass}" href="#" onclick="loadComments(${recipeId}, ${pageNum - 1})" return false;>
+        <a class="page-link ${selectedClass}" onclick="loadComments(${recipeId}, ${pageNum - 1})" return false;>
             ${pageNum}
         </a>
     `;
