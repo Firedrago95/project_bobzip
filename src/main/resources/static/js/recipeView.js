@@ -6,64 +6,41 @@ $(document).ready(function() {
     // 댓글 작성 폼 제출 이벤트 핸들러
     $('#comment-form').submit(function(event) {
         event.preventDefault();
-
         const commentText = $('#commentText').val();
-
-        $.ajax({
-            url: "/reply/add",
-            method: "POST",
-            contentType: "application/json",
-            data: JSON.stringify({
-                comment: commentText,
-                recipeId: recipeId
-            }),
-            success: function(response) {
-                // 댓글 작성 후 댓글 목록을 다시 불러옴
-                loadComments(recipeId);
-                $('#commentText').val('');
-            },
-            error: function(xhr) {
-                if (xhr.status == 401) {
-                    alert(xhr.responseText);
-                } else {
-                    alert("댓글 작성중 문제가 발생했습니다.")
-                }
-            }
-        });
+        addComment(recipeId, commentText);
     });
 });
 
-function loadComments(recipeId, page=0) {
+function addComment(recipeId, commentText) {
+    $.ajax({
+        url: "/reply/add",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({
+            comment: commentText,
+            recipeId: recipeId
+        }),
+        success: function(comment) {
+            // 댓글 작성 후 댓글 목록을 다시 불러옴
+            appendCommentHtml(comment);
+            $('#commentText').val('');
+        },
+        error: function(xhr) {
+            if (xhr.status == 401) {
+                alert(xhr.responseText);
+            } else {
+                alert("댓글 작성중 문제가 발생했습니다.")
+            }
+        }
+    });
+}
+
+function loadComments(recipeId, page = 0) {
     $.ajax({
         url: `/reply/all/${recipeId}?page=${page}`,
         method: 'GET',
         success: function(response) {
-            $('#comments-container').empty();
-            response.content.forEach(function(comment) {
-                const date = new Date(comment.createdTime);
-                const formattedDate =  new Intl.DateTimeFormat('ko-KR', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                }).format(date);
-
-                $('#comments-container').append(`
-                    <div class="p-2 position-relative" id="comment-${comment.id}">
-                        <div class="d-flex justify-content-between">
-                            <p class="mb-1 fs-5"><strong>${comment.username}</strong></p>
-                            <div>
-                                <button class="btn btn-sm btn-link" onclick="editComment(${comment.id}, '${comment.comment}')">수정</button>
-                                <button class="btn btn-sm btn-link text-danger" onclick="deleteComment(${comment.id})">삭제</button>
-                            </div>
-                        </div>
-                        <p class="text-muted small">${formattedDate}</p>
-                        <p class="fs-6" id="comment-text">${comment.comment}</p>
-                    </div>
-                    <hr>
-                `);
-            });
+            renderComments(response);
 
             // 페이지네이션 업데이트
             const totalPages = response.totalPages;
@@ -72,10 +49,41 @@ function loadComments(recipeId, page=0) {
         },
         error: function(error) {
             if (error.response) {
-                error.response.data
+                error.response.data;
             }
         }
     });
+}
+
+function renderComments(response) {
+    $('#comments-container').empty();
+    response.content.forEach(appendCommentHtml);
+}
+
+function appendCommentHtml(comment) {
+    const date = new Date(comment.createdTime);
+    const formattedDate = new Intl.DateTimeFormat('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+    }).format(date);
+
+    $('#comments-container').append(`
+        <div class="p-2 position-relative" id="comment-${comment.id}">
+            <div class="d-flex justify-content-between">
+                <p class="mb-1 fs-5"><strong>${comment.username}</strong></p>
+                <div>
+                    <button class="btn btn-sm btn-link" onclick="editComment(${comment.id}, '${comment.comment}')">수정</button>
+                    <button class="btn btn-sm btn-link text-danger" onclick="deleteComment(${comment.id})">삭제</button>
+                </div>
+            </div>
+            <p class="text-muted small">${formattedDate}</p>
+            <p class="fs-6" id="comment-text">${comment.comment}</p>
+        </div>
+        <hr>
+    `);
 }
 
 function editComment(commentId, currentText) {
