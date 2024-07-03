@@ -6,11 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import project.bobzip.entity.member.dto.LoginConst;
 import project.bobzip.entity.member.entity.Member;
@@ -25,6 +23,7 @@ import project.bobzip.entity.reply.service.ReplyService;
 @RequiredArgsConstructor
 public class ReplyController {
 
+    public static final int PAGE_SIZE = 10;
     private final ReplyService replyService;
 
     @GetMapping("/all/{recipeId}")
@@ -43,11 +42,11 @@ public class ReplyController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         Long recipeId = replyAddForm.getRecipeId();
-        Reply reply = replyService.addReply(replyAddForm, loginMember);
+        replyService.addReply(replyAddForm, loginMember);
         Long replyCounts = replyService.countAllReplies(recipeId);
-        int lastPage = ((int) Math.ceil((double) replyCounts / 10)) - 1;
+        int lastPage = ((int) Math.ceil((double) replyCounts / PAGE_SIZE)) - 1;
 
-        Page<ReplyDto> replyDtoPage = getRepliesByRecipeId(recipeId, PageRequest.of(lastPage, 10));
+        Page<ReplyDto> replyDtoPage = getRepliesByRecipeId(recipeId, PageRequest.of(lastPage, PAGE_SIZE));
         return ResponseEntity.ok(replyDtoPage);
     }
 
@@ -56,7 +55,6 @@ public class ReplyController {
             @PathVariable("commentId") Long commentId,
             @ModelAttribute("comment") String comment,
             HttpSession session) {
-        log.info("comment = {}", comment);
         Reply reply = replyService.findById(commentId);
         Member loginMember = (Member) session.getAttribute(LoginConst.LOGIN);
         if (loginMember == null || !(reply.getMember().equals(loginMember))) {
@@ -65,5 +63,23 @@ public class ReplyController {
 
         replyService.updateReply(reply, comment);
         return ResponseEntity.ok("댓글 수정 완료");
+    }
+
+    @PostMapping("/delete/{commentId}")
+    public ResponseEntity<Page<ReplyDto>> deleteReply(@PathVariable("commentId") Long commentId, HttpSession session) {
+        Reply reply = replyService.findById(commentId);
+        Member loginMember = (Member) session.getAttribute(LoginConst.LOGIN);
+        if (loginMember == null || !(reply.getMember().equals(loginMember))) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        replyService.deleteReply(reply);
+
+        Long recipeId = reply.getRecipe().getId();
+        Long replyCounts = replyService.countAllReplies(recipeId);
+        int lastPage = ((int) Math.ceil((double) replyCounts / PAGE_SIZE)) - 1;
+
+        Page<ReplyDto> replyDtoPage = getRepliesByRecipeId(recipeId, PageRequest.of(lastPage, PAGE_SIZE));
+        return ResponseEntity.ok(replyDtoPage);
     }
 }

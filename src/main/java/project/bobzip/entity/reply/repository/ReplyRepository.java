@@ -5,7 +5,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import project.bobzip.entity.member.entity.Member;
 import project.bobzip.entity.reply.entity.Reply;
+
+import java.util.Optional;
 
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
 

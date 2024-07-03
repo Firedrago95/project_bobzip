@@ -20,10 +20,15 @@ function addComment(recipeId, commentText) {
             comment: commentText,
             recipeId: recipeId
         }),
-        success: function(comment) {
-            // 댓글 작성 후 댓글 목록을 다시 불러옴
-            appendCommentHtml(comment);
+        success: function(response) {
+            // 댓글 작성 후, 댓글 HTML 추가
+            renderComments(response);
             $('#commentText').val('');
+
+            // 페이지네이션 업데이트
+            const totalPages = response.totalPages;
+            const currentPage = response.number;
+            generatePagination(totalPages, currentPage, recipeId);
         },
         error: function(xhr) {
             if (xhr.status == 401) {
@@ -168,4 +173,29 @@ function createPageLink(pageNum, isCurrent, recipeId) {
 
 function createEllipsis() {
     return "<span>...</span>";
+}
+
+function deleteComment(commentId) {
+    if (window.confirm("댓글을 삭제하시겠습니까?")) {
+        $.ajax({
+            url: `/reply/delete/${commentId}`,
+            method: "POST",
+            success: function(response) {
+                // 댓글 작성 후, 댓글 HTML 추가
+                renderComments(response);
+
+                // 페이지네이션 업데이트
+                const totalPages = response.totalPages;
+                const currentPage = response.number;
+                generatePagination(totalPages, currentPage, recipeId);
+            },
+            error: function(xhr) {
+                if (xhr.status == 401) {
+                    alert(xhr.responseText);
+                } else {
+                    alert("댓글을 삭제하는 도중 문제가 발생했습니다.");
+                }
+            }
+        });
+    }
 }
