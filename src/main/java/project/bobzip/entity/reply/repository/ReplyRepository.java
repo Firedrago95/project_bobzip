@@ -11,4 +11,7 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
     @Query("select r from Reply r JOIN FETCH r.member where r.recipe.id = :recipeId")
     Page<Reply> findByRecipeId(@Param("recipeId") Long recipeId, Pageable pageable);
+
+    @Query("select count(r) from Reply r where r.recipe.id = :recipeId")
+    Long countByRecipeId(@Param("recipeId")Long recipeId);
 }

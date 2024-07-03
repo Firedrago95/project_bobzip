@@ -49,4 +49,8 @@ public class ReplyService {
     public void updateReply(Reply reply, String comment) {
         reply.update(comment);
     }
+
+    public Long countAllReplies(Long recipeId) {
+        return replyRepository.countByRecipeId(recipeId);
+    }
 }

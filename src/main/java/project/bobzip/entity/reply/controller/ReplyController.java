@@ -36,15 +36,19 @@ public class ReplyController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addReply(
+    public ResponseEntity<Page<ReplyDto>> addReply(
             @RequestBody ReplyAddForm replyAddForm, HttpSession session) {
         Member loginMember = (Member) session.getAttribute(LoginConst.LOGIN);
         if (loginMember == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("댓글을 작성하려면, 로그인 해주세요");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
+        Long recipeId = replyAddForm.getRecipeId();
         Reply reply = replyService.addReply(replyAddForm, loginMember);
-        ReplyDto replyDto = ReplyDto.toDtoReply(reply);
-        return ResponseEntity.ok(replyDto);
+        Long replyCounts = replyService.countAllReplies(recipeId);
+        int lastPage = ((int) Math.ceil((double) replyCounts / 10)) - 1;
+
+        Page<ReplyDto> replyDtoPage = getRepliesByRecipeId(recipeId, PageRequest.of(lastPage, 10));
+        return ResponseEntity.ok(replyDtoPage);
     }
 
     @PostMapping("/edit/{commentId}")
