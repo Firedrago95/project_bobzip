@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Main Page</title>
+    <link rel="stylesheet" href="/css/home.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
           crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -12,17 +13,47 @@
 <body>
     <div th:replace="~{/fragment/header :: header}"></div>
 
-    <div>
-        <p th:if="${session.loginMember != null}" th:text="|${session.loginMember.username}님 반갑습니다.|"></p>
-        <button th:if="${session.loginMember == null}" th:onclick="|location.href='@{/members/add}'|">회원가입</button>
-        <button th:if="${session.loginMember == null}" th:onclick="|location.href='@{/members/login}'|">로그인</button>
-        <button th:if="${session.loginMember != null}" th:onclick="|location.href='@{/members/logout}'|">로그아웃</button>
-        <button th:if="${session.loginMember != null}" th:onclick="|location.href='@{/members/delete}'|">회원탈퇴</button>
-    </div>
+    <section class="main">
+        <div class="container">
+            <p>배달어플 끄자!</p>
+            <h1>이제 만들어먹자!</h1>
+            <form id="foodSearchForm" action="/recipe/search" method="GET">
+                <div class="search-container">
+                    <input type="text" id="foodSearch" name="q" placeholder="만들고 싶은 음식 레시피를 검색하세요">
+                    <button type="submit" id="searchButton">검색</button>
+                </div>
+            </form>
+        </div>
+    </section>
 
-    <div>
-        <button th:if="${session.loginMember != null}" th:onclick="|location.href='@{/recipe/add}'|">레시피 등록</button>
-        <button th:onclick="|location.href='@{/recipe/all}'|">레시피 보기</button>
-    </div>
+    <!-- Introduce Section -->
+    <section class="introduce">
+        <div class="container">
+            <div class="boot">
+                <h1>레시피와 냉장고 관리를 한번에!</h1>
+                <p>배달음식 규모는 26조 시대! 우리가 배달음식을 먹는동안 건강은 더 나빠졌고,<br>
+                    일회용품의 사용으로 환경도 파괴되고 있습니다. 우리 밥집 서비스를 통해<br>
+                    냉장고에 남는 식재료를 관리하고, 그에맞는 레시피도 검색해보세요!</p>
+            </div>
+            <div id="abouts">
+                <div class="about">
+                    <img src="/image/refridge.png" alt="냉장고 관리하기">
+                    <h5>냉장고 관리하기</h5>
+                    <p>여러분의 냉장고에는 어떤 식재료가 있나요?<br>
+                        지금 냉장고에 식재료를 업로드 해주세요. <br>
+                        알맞은 레시피를 추천해드릴께요</p>
+                    <a href="your_fridge_link"><p>냉장고 관리하기 ⟶</p></a>
+                </div>
+                <div class="about">
+                    <img src="/image/recipe.png" alt="레시피 찾기">
+                    <h5>레시피 찾기</h5>
+                    <p>다양한 음식 레시피가 준비되어 있습니다.<br>
+                        음식이름 입력하면 레시피를 찾아드려요<br>
+                        오늘 저녁메뉴를 밥집에서 찾아보세요!</p>
+                    <a href="/recipe/all"><p>레시피 보기 ⟶</p></a>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

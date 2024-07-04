@@ -40,9 +40,8 @@ public class RecipeViewController {
     public String viewRecipe(@PathVariable("id") Long id,
                              @SessionAttribute(value = LoginConst.LOGIN, required = false) Member member, Model model) {
         Recipe recipe = recipeService.findRecipe(id);
-        // 게시글 작성자와 현재 로그인 유저가 같으면 isWriter 전달, 수정, 삭제 버튼 표시
+
         if (member != null && member.equals(recipe.getMember())) {
-            log.info("작성자 확인");
             model.addAttribute("isWriter", true);
         }
         model.addAttribute("recipe", recipe);
