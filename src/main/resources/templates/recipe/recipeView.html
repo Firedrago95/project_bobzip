@@ -108,7 +108,7 @@
                     <h3>댓글</h3>
                 </div>
                 <div class="card-body">
-                    <div id="comments-container" th:data-recipe-id="${recipe.id}">
+                    <div id="comments-container" th:data-recipe-id="${recipe.id}" th:data-writer="${isWriter}">
 
                     </div>
                     <div id="pagination" class="mt-4 d-flex justify-content-center" th:data-recipe-id="${recipe.id}">

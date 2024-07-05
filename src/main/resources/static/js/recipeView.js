@@ -66,6 +66,7 @@ function renderComments(response) {
 }
 
 function appendCommentHtml(comment) {
+    const isWriter = $('#comments-container').data('writer');
     const date = new Date(comment.createdTime);
     const formattedDate = new Intl.DateTimeFormat('ko-KR', {
         year: 'numeric',
@@ -75,20 +76,30 @@ function appendCommentHtml(comment) {
         minute: '2-digit'
     }).format(date);
 
-    $('#comments-container').append(`
-        <div class="p-2 position-relative" id="comment-${comment.id}">
-            <div class="d-flex justify-content-between">
-                <p class="mb-1 fs-5"><strong>${comment.username}</strong></p>
-                <div>
-                    <button class="btn btn-sm btn-link" onclick="editComment(${comment.id}, '${comment.comment}')">수정</button>
-                    <button class="btn btn-sm btn-link text-danger" onclick="deleteComment(${comment.id})">삭제</button>
+    let commentHtml = `
+            <div class="p-2 position-relative" id="comment-${comment.id}">
+                <div class="d-flex justify-content-between">
+                    <p class="mb-1 fs-5"><strong>${comment.username}</strong></p>
+        `;
+
+        if (isWriter) {
+            commentHtml += `
+                    <div>
+                        <button class="btn btn-sm btn-link" onclick="editComment(${comment.id}, '${comment.comment}')">수정</button>
+                        <button class="btn btn-sm btn-link text-danger" onclick="deleteComment(${comment.id})">삭제</button>
+                    </div>
+            `;
+        }
+
+        commentHtml += `
                 </div>
+                <p class="text-muted small">${formattedDate}</p>
+                <p class="fs-6" id="comment-text">${comment.comment}</p>
             </div>
-            <p class="text-muted small">${formattedDate}</p>
-            <p class="fs-6" id="comment-text">${comment.comment}</p>
-        </div>
-        <hr>
-    `);
+            <hr>
+        `;
+
+        $('#comments-container').append(commentHtml);
 }
 
 function editComment(commentId, currentText) {
