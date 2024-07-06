@@ -49,11 +49,11 @@
 - [ ] **냉장고 보관 재료로 레시피 검색**
 
 ### 댓글 관리
-- [AJAX 요청을 통한 댓글 조회](https://flowerdragon95.tistory.com/204), [댓글 작성](https://flowerdragon95.tistory.com/205), [댓글 수정](https://flowerdragon95.tistory.com/206)
 - [x] **댓글 조회**
 - [x] **댓글 작성**
 - [x] **댓글 수정**
 - [x] **댓글 삭제**
+- [AJAX 요청을 통한 댓글 조회](https://flowerdragon95.tistory.com/204), [댓글 작성](https://flowerdragon95.tistory.com/205), [댓글 수정](https://flowerdragon95.tistory.com/206)
 
 
 ## ER 다이어그램
