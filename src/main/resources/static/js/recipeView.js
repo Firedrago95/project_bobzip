@@ -32,7 +32,9 @@ function addComment(recipeId, commentText) {
         },
         error: function(xhr) {
             if (xhr.status == 401) {
+                const currentUrl = window.location.href;
                 alert(xhr.responseText);
+                window.location.href = "/members/login?redirectURL=" + encodeURIComponent(currentUrl);
             } else {
                 alert("댓글 작성중 문제가 발생했습니다.")
             }
@@ -136,7 +138,9 @@ function submitEdit(commentId) {
         },
         error: function(xhr) {
             if (xhr.status == 401) {
+                const currentUrl = window.location.href;
                 alert(xhr.responseText);
+                window.location.href = "/members/login?redirectUrl=" + encodeURIComponent(currentUrl);
             } else {
                 alert("댓글 수정중 문제가 발생했습니다.")
             }
@@ -202,7 +206,9 @@ function deleteComment(commentId) {
             },
             error: function(xhr) {
                 if (xhr.status == 401) {
-                    alert(xhr.responseText);
+                   const currentUrl = window.location.href;
+                   alert(xhr.responseText);
+                   window.location.href = "/members/login?redirectUrl=" + encodeURIComponent(currentUrl);
                 } else {
                     alert("댓글을 삭제하는 도중 문제가 발생했습니다.");
                 }

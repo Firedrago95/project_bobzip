@@ -35,12 +35,8 @@ public class ReplyController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addReply(@RequestBody ReplyAddForm replyAddForm, HttpSession session) {
-        Member loginMember = (Member) session.getAttribute(LoginConst.LOGIN);
-        if (loginMember == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("댓글을 작성하려면, 로그인이 필요합니다.");
-        }
-
+    public ResponseEntity<?> addReply(@RequestBody ReplyAddForm replyAddForm,
+                                      @SessionAttribute(LoginConst.LOGIN) Member loginMember) {
         try {
             Page<ReplyDto> replyDtoPage = replyService.addReply(replyAddForm, loginMember, PAGE_SIZE);
             return ResponseEntity.ok(replyDtoPage);
@@ -51,9 +47,8 @@ public class ReplyController {
 
     @PostMapping("/edit/{commentId}")
     public ResponseEntity<String> editReply(
-            @PathVariable("commentId") Long commentId, @ModelAttribute("comment") String comment, HttpSession session) {
-        Member loginMember = (Member) session.getAttribute(LoginConst.LOGIN);
-
+            @PathVariable("commentId") Long commentId, @ModelAttribute("comment") String comment,
+            @SessionAttribute(LoginConst.LOGIN) Member loginMember) {
         try {
             replyService.editReply(commentId, comment, loginMember);
             return ResponseEntity.ok("댓글 수정 완료");
@@ -65,9 +60,8 @@ public class ReplyController {
     }
 
     @PostMapping("/delete/{commentId}")
-    public ResponseEntity<?> deleteReply(@PathVariable("commentId") Long commentId, HttpSession session) {
-        Member loginMember = (Member) session.getAttribute(LoginConst.LOGIN);
-
+    public ResponseEntity<?> deleteReply(@PathVariable("commentId") Long commentId,
+                                         @SessionAttribute(LoginConst.LOGIN) Member loginMember) {
         try {
             Page<ReplyDto> replyDtoPage = replyService.deleteReply(commentId, loginMember, PAGE_SIZE);
             return ResponseEntity.ok(replyDtoPage);
