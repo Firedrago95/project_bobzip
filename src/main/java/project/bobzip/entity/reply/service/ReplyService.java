@@ -67,7 +67,7 @@ public class ReplyService {
         Reply reply = replyRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("댓글을 찾을 수 없습니다."));
 
-        if (loginMember == null || !reply.getMember().equals(loginMember)) {
+        if (!(reply.getMember().equals(loginMember))) {
             throw new UnauthorizedAccessException("댓글 수정");
         }
 
@@ -83,7 +83,7 @@ public class ReplyService {
         Reply reply = replyRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("댓글을 찾을 수 없습니다."));
 
-        if (loginMember == null || !reply.getMember().equals(loginMember)) {
+        if (!(reply.getMember().equals(loginMember))) {
             throw new UnauthorizedAccessException("댓글 삭제");
         }
 

@@ -19,7 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(new ApiLoginCheckInterceptor())
                 .order(2)
-                .addPathPatterns("/reply/*")
+                .addPathPatterns("/reply/*", "/fridge/all")
                 .excludePathPatterns("/reply/all/*"); {
 
         }
