@@ -21,4 +21,11 @@ public class FridgeIngredient {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    protected FridgeIngredient() {}
+
+    public FridgeIngredient(Ingredient ingredient, Member member) {
+        this.ingredient = ingredient;
+        this.member = member;
+    }
 }
