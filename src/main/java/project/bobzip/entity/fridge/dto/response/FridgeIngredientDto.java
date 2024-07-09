@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.Getter;
 import project.bobzip.entity.fridge.entity.FridgeIngredient;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

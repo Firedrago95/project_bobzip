@@ -1,4 +1,4 @@
-package project.bobzip.entity.recipe.dto;
+package project.bobzip.entity.recipe.dto.request;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;

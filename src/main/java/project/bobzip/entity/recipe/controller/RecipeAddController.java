@@ -10,7 +10,7 @@ import project.bobzip.entity.ingredient.entity.Ingredient;
 import project.bobzip.entity.ingredient.service.IngredientService;
 import project.bobzip.entity.member.dto.LoginConst;
 import project.bobzip.entity.member.entity.Member;
-import project.bobzip.entity.recipe.dto.RecipeAddForm;
+import project.bobzip.entity.recipe.dto.request.RecipeAddForm;
 import project.bobzip.entity.recipe.service.RecipeService;
 
 import java.io.IOException;

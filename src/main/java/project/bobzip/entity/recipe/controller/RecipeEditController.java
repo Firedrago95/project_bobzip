@@ -9,16 +9,13 @@ import project.bobzip.entity.ingredient.entity.Ingredient;
 import project.bobzip.entity.ingredient.service.IngredientService;
 import project.bobzip.entity.member.dto.LoginConst;
 import project.bobzip.entity.member.entity.Member;
-import project.bobzip.entity.recipe.dto.RecipeEditForm;
+import project.bobzip.entity.recipe.dto.request.RecipeEditForm;
 import project.bobzip.entity.recipe.entity.Recipe;
-import project.bobzip.entity.recipe.entity.RecipeIngredient;
-import project.bobzip.entity.recipe.entity.RecipeStep;
 import project.bobzip.entity.recipe.exception.UnauthorizedAccessException;
 import project.bobzip.entity.recipe.service.RecipeService;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
