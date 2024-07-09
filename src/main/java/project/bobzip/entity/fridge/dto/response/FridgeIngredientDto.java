@@ -6,6 +6,7 @@ import project.bobzip.entity.fridge.entity.FridgeIngredient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Getter
@@ -14,10 +15,9 @@ public class FridgeIngredientDto {
     private List<String> ingredientNames;
 
     public FridgeIngredientDto(List<FridgeIngredient> ingredients) {
-        List<String> strings = new ArrayList<>();
-        for (String string : strings) {
-            strings.add(string);
-        }
-        ingredientNames = strings;
+        List<String> names = ingredients.stream()
+                .map(fi -> fi.getIngredient().getName())
+                .collect(Collectors.toList());
+        this.ingredientNames = names;
     }
 }
