@@ -1,15 +1,13 @@
 package project.bobzip.entity.recipe.service;
 
-import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-import project.bobzip.entity.recipe.dto.RecipeEditForm;
+import project.bobzip.entity.recipe.dto.request.RecipeEditForm;
+import project.bobzip.entity.recipe.dto.response.RecipeSearchDTO;
 import project.bobzip.entity.recipe.entity.Recipe;
 import project.bobzip.entity.recipe.entity.RecipeIngredient;
 import project.bobzip.entity.recipe.entity.RecipeStep;
@@ -17,7 +15,7 @@ import project.bobzip.global.entity.UploadFile;
 import project.bobzip.global.util.fileupload.FileStore;
 import project.bobzip.entity.ingredient.entity.Ingredient;
 import project.bobzip.entity.member.entity.Member;
-import project.bobzip.entity.recipe.dto.RecipeAddForm;
+import project.bobzip.entity.recipe.dto.request.RecipeAddForm;
 import project.bobzip.entity.recipe.exception.NoSearchResultException;
 import project.bobzip.entity.recipe.exception.UnauthorizedAccessException;
 import project.bobzip.entity.recipe.repository.RecipeRepository;
@@ -26,7 +24,6 @@ import project.bobzip.entity.recipe.repository.RecipeSearchRepository;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -153,5 +150,9 @@ public class RecipeService {
             UploadFile newRecipeThumbnail = fileStore.updateRecipeThumbnail(recipe.getThumbnail(), recipeEditForm.getThumbnail());
             recipe.updateRecipeThumbnail(newRecipeThumbnail);
         }
+    }
+
+    public Page<RecipeSearchDTO> searchByIngredient(List<String> ingredientNames, Pageable pageable) {
+        return recipeSearchRepository.searchByIngredient(ingredientNames, pageable);
     }
 }
