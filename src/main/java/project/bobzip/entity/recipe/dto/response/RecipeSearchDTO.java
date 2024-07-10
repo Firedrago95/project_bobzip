@@ -2,6 +2,7 @@ package project.bobzip.entity.recipe.dto.response;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -11,13 +12,22 @@ public class RecipeSearchDTO {
 
     private String recipeName;
 
-    private List<String> ingredients;
+    private List<String> availableIngredients = new ArrayList<>();
+
+    private List<String> requiredIngredients = new ArrayList<>();
 
     protected  RecipeSearchDTO() {}
 
-    public RecipeSearchDTO(Long recipeId, String recipeName, List<String> ingredients) {
+    public RecipeSearchDTO(Long recipeId, String recipeName) {
         this.recipeId = recipeId;
         this.recipeName = recipeName;
-        this.ingredients = ingredients;
+    }
+
+    public void addAvailableIngredients(String ingredientName) {
+        availableIngredients.add(ingredientName);
+    }
+
+    public void addRequiredIngredients(String ingredientName) {
+        requiredIngredients.add(ingredientName);
     }
 }

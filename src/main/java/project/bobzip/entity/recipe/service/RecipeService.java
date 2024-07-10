@@ -1,29 +1,37 @@
 package project.bobzip.entity.recipe.service;
 
+import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project.bobzip.entity.ingredient.entity.Ingredient;
+import project.bobzip.entity.member.entity.Member;
+import project.bobzip.entity.recipe.dto.request.RecipeAddForm;
 import project.bobzip.entity.recipe.dto.request.RecipeEditForm;
 import project.bobzip.entity.recipe.dto.response.RecipeSearchDTO;
 import project.bobzip.entity.recipe.entity.Recipe;
 import project.bobzip.entity.recipe.entity.RecipeIngredient;
 import project.bobzip.entity.recipe.entity.RecipeStep;
-import project.bobzip.global.entity.UploadFile;
-import project.bobzip.global.util.fileupload.FileStore;
-import project.bobzip.entity.ingredient.entity.Ingredient;
-import project.bobzip.entity.member.entity.Member;
-import project.bobzip.entity.recipe.dto.request.RecipeAddForm;
 import project.bobzip.entity.recipe.exception.NoSearchResultException;
 import project.bobzip.entity.recipe.exception.UnauthorizedAccessException;
 import project.bobzip.entity.recipe.repository.RecipeRepository;
 import project.bobzip.entity.recipe.repository.RecipeSearchRepository;
+import project.bobzip.global.entity.UploadFile;
+import project.bobzip.global.util.fileupload.FileStore;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static project.bobzip.entity.ingredient.entity.QIngredient.ingredient;
+import static project.bobzip.entity.recipe.entity.QRecipe.recipe;
 
 @Slf4j
 @Service
@@ -150,9 +158,5 @@ public class RecipeService {
             UploadFile newRecipeThumbnail = fileStore.updateRecipeThumbnail(recipe.getThumbnail(), recipeEditForm.getThumbnail());
             recipe.updateRecipeThumbnail(newRecipeThumbnail);
         }
-    }
-
-    public Page<RecipeSearchDTO> searchByIngredient(List<String> ingredientNames, Pageable pageable) {
-        return recipeSearchRepository.searchByIngredient(ingredientNames, pageable);
     }
 }

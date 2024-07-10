@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import project.bobzip.entity.member.dto.LoginConst;
 import project.bobzip.entity.member.entity.Member;
 import project.bobzip.entity.recipe.dto.response.RecipeSearchDTO;
+import project.bobzip.entity.recipe.service.RecipeSearchService;
 import project.bobzip.entity.recipe.service.RecipeService;
 import project.bobzip.entity.recipe.entity.Recipe;
 
@@ -24,6 +25,7 @@ import java.util.List;
 public class RecipeViewController {
 
     private final RecipeService recipeService;
+    private final RecipeSearchService recipeSearchService;
 
     @GetMapping("/all")
     public String readAllRecipes(@PageableDefault(size = 2) Pageable pageable,
@@ -65,10 +67,12 @@ public class RecipeViewController {
     @PostMapping("/searchByIngredients")
     public ResponseEntity<Page<RecipeSearchDTO>> searchByIngredient(@RequestBody List<String> ingredientNames,
                                                                   @PageableDefault(size = 5) Pageable pageable) {
-        Page<RecipeSearchDTO> searchRecipes = recipeService.searchByIngredient(ingredientNames, pageable);
-        searchRecipes.getContent().forEach(rs -> {log.info("ingredient = {}", rs.getIngredients());
-        log.info("recipe.id {}", rs.getRecipeId());;
-        log.info("recipe.id {}", (rs.getRecipeName()));});
+        Page<RecipeSearchDTO> searchRecipes = recipeSearchService.searchByIngredient(ingredientNames, pageable);
+        searchRecipes.getContent().forEach(rs -> {
+            log.info("availableIngredient = {}", rs.getAvailableIngredients());
+            log.info("requiredIngredient = {}", rs.getRequiredIngredients());
+            log.info("recipe.id {}", rs.getRecipeId());;
+            log.info("recipe.id {}", (rs.getRecipeName()));});
 
         return ResponseEntity.ok().body(searchRecipes);
     }
