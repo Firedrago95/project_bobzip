@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.bobzip.entity.recipe.dto.response.RecipeSearchDTO;
+import project.bobzip.entity.recipe.entity.Recipe;
+import project.bobzip.entity.recipe.exception.NoSearchResultException;
 import project.bobzip.entity.recipe.repository.RecipeSearchRepository;
 
 import java.util.ArrayList;
@@ -26,6 +28,16 @@ import static project.bobzip.entity.recipe.entity.QRecipe.recipe;
 public class RecipeSearchService {
 
     private final RecipeSearchRepository recipeSearchRepository;
+
+
+    public Page<Recipe> searchRecipe(String q, Pageable pageable) {
+        Page<Recipe> recipes = recipeSearchRepository.searchRecipes(q, pageable);
+        List<Recipe> content = recipes.getContent();
+        if (content.isEmpty()) {
+            throw new NoSearchResultException(q);
+        }
+        return recipes;
+    }
 
     public Page<RecipeSearchDTO> searchByIngredient(List<String>ingredientNames, Pageable pageable) {
         List<Tuple> sortedRecipes = recipeSearchRepository.findAllSortedRecipes(ingredientNames);

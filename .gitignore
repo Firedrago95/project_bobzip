@@ -175,4 +175,4 @@ $RECYCLE.BIN/
 .gradle
 build/
 .idea/
-# End of https://www.toptal.com/developers/gitignore/api/windows,java,intellijgenerated\
+**/P6spyConfig.java

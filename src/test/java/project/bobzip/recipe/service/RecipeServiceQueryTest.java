@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import project.bobzip.entity.recipe.entity.Recipe;
 import project.bobzip.entity.recipe.repository.RecipeRepository;
+import project.bobzip.entity.recipe.service.RecipeSearchService;
 import project.bobzip.entity.recipe.service.RecipeService;
 
 import java.util.Arrays;
@@ -23,6 +24,8 @@ class RecipeServiceQueryTest {
 
     @Autowired
     RecipeService recipeService;
+    @Autowired
+    RecipeSearchService recipeSearchService;
     @Autowired
     RecipeRepository recipeRepository;
 
@@ -75,7 +78,7 @@ class RecipeServiceQueryTest {
         PageRequest pageRequest = PageRequest.of(0, 1);
 
         // when
-        Page<Recipe> result = recipeService.searchRecipe("김치", pageRequest);
+        Page<Recipe> result = recipeSearchService.searchRecipe("김치", pageRequest);
 
         // then
         List<Recipe> findRecipes = result.getContent();

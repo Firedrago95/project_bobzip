@@ -54,14 +54,14 @@ public class ReplyServiceTest {
     }
 
     @Test
-    void addReplyTest() {
+    void addReplyEntityTest() {
         // given
         Recipe testRecipe = createTestRecipe();
         Member testMember = createTestMember();
         ReplyAddForm replyAddForm = new ReplyAddForm(testRecipe.getId(), "조리법 정말 좋아요");
 
         // when
-        replyService.addReply(replyAddForm, testMember);
+        replyService.addReplyEntity(replyAddForm, testMember);
 
         // then
         Page<Reply> result = replyRepository.findByRecipeId(testRecipe.getId(), PageRequest.of(0, 10));
@@ -79,7 +79,7 @@ public class ReplyServiceTest {
         ReplyAddForm replyAddForm = new ReplyAddForm(wrongRecipeId, "존재하지 않는 레시피에 댓글 등록 예외발생");
 
         // then
-        Assertions.assertThatThrownBy(() ->replyService.addReply(replyAddForm, testMember))
+        Assertions.assertThatThrownBy(() ->replyService.addReplyEntity(replyAddForm, testMember))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
