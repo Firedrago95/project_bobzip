@@ -12,7 +12,6 @@ import project.bobzip.entity.recipe.entity.Recipe;
 
 import java.util.List;
 
-import static com.querydsl.core.types.dsl.Expressions.list;
 import static project.bobzip.entity.ingredient.entity.QIngredient.ingredient;
 import static project.bobzip.entity.recipe.entity.QRecipe.recipe;
 import static project.bobzip.entity.recipe.entity.QRecipeIngredient.recipeIngredient;
@@ -40,7 +39,7 @@ public class RecipeSearchRepository {
         return new PageImpl<>(contents, pageable, counts);
     }
 
-    public List<Tuple> findAllSortedRecipes(List<String> ingredientNames) {
+    public List<Tuple> findAllSortedRecipes(List<String> ingredientNames, Pageable pageable) {
         return queryFactory
                 .select(recipe.id, recipe.title, recipeIngredient.ingredient.name.count())
                 .from(recipe)
@@ -48,7 +47,9 @@ public class RecipeSearchRepository {
                 .join(recipeIngredient.ingredient, ingredient)
                 .where(ingredient.name.in(ingredientNames))
                 .groupBy(recipe.id, recipe.title)
-                .orderBy(recipeIngredient.ingredient.name.count().desc())
+                .orderBy(recipeIngredient.ingredient.name.count().desc(), recipe.id.asc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
     }
 

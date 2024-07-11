@@ -40,7 +40,7 @@ public class RecipeSearchService {
     }
 
     public Page<RecipeSearchDTO> searchByIngredient(List<String>ingredientNames, Pageable pageable) {
-        List<Tuple> sortedRecipes = recipeSearchRepository.findAllSortedRecipes(ingredientNames);
+        List<Tuple> sortedRecipes = recipeSearchRepository.findAllSortedRecipes(ingredientNames, pageable);
         List<Long> paginatedRecipeIds = findPaginatedRecipeIds(sortedRecipes, pageable);
         
         List<Tuple> ingredientTuples = recipeSearchRepository.findIngredientTuples(paginatedRecipeIds);
@@ -55,14 +55,9 @@ public class RecipeSearchService {
     }
 
     private List<Long> findPaginatedRecipeIds(List<Tuple> sortedRecipes, Pageable pageable) {
-        List<Long> allRecipeIds = sortedRecipes.stream()
+        return sortedRecipes.stream()
                 .map(tuple -> tuple.get(recipe.id))
                 .toList();
-
-        int start = (int) pageable.getOffset();
-        int end = Math.min(start + pageable.getPageSize(), sortedRecipes.size());
-        List<Long> paginatedRecipeIds = allRecipeIds.subList(start, end);
-        return paginatedRecipeIds;
     }
 
     private void createRecipeSearchDto(List<Tuple> sortedRecipes, Map<Long, RecipeSearchDTO> recipeMap) {
