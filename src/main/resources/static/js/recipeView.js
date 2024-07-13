@@ -2,6 +2,7 @@ $(document).ready(function() {
     const recipeId = $('#comments-container').data('recipe-id');
 
     loadComments(recipeId);
+    searchRecipeLikeCount();
 
     // 댓글 작성 폼 제출 이벤트 핸들러
     $('#comment-form').submit(function(event) {
@@ -32,9 +33,7 @@ function addComment(recipeId, commentText) {
         },
         error: function(xhr) {
             if (xhr.status == 401) {
-                const currentUrl = window.location.href;
                 alert(xhr.responseText);
-                window.location.href = "/members/login?redirectURL=" + encodeURIComponent(currentUrl);
             } else {
                 alert("댓글 작성중 문제가 발생했습니다.")
             }
@@ -68,7 +67,6 @@ function renderComments(response) {
 }
 
 function appendCommentHtml(comment) {
-    const isWriter = $('#comments-container').data('writer');
     const date = new Date(comment.createdTime);
     const formattedDate = new Intl.DateTimeFormat('ko-KR', {
         year: 'numeric',
@@ -78,30 +76,20 @@ function appendCommentHtml(comment) {
         minute: '2-digit'
     }).format(date);
 
-    let commentHtml = `
-            <div class="p-2 position-relative" id="comment-${comment.id}">
-                <div class="d-flex justify-content-between">
-                    <p class="mb-1 fs-5"><strong>${comment.username}</strong></p>
-        `;
-
-        if (isWriter) {
-            commentHtml += `
-                    <div>
-                        <button class="btn btn-sm btn-link" onclick="editComment(${comment.id}, '${comment.comment}')">수정</button>
-                        <button class="btn btn-sm btn-link text-danger" onclick="deleteComment(${comment.id})">삭제</button>
-                    </div>
-            `;
-        }
-
-        commentHtml += `
+    $('#comments-container').append(`
+        <div class="p-2 position-relative" id="comment-${comment.id}">
+            <div class="d-flex justify-content-between">
+                <p class="mb-1 fs-5"><strong>${comment.username}</strong></p>
+                <div>
+                    <button class="btn btn-sm btn-link" onclick="editComment(${comment.id}, '${comment.comment}')">수정</button>
+                    <button class="btn btn-sm btn-link text-danger" onclick="deleteComment(${comment.id})">삭제</button>
                 </div>
-                <p class="text-muted small">${formattedDate}</p>
-                <p class="fs-6" id="comment-text">${comment.comment}</p>
             </div>
-            <hr>
-        `;
-
-        $('#comments-container').append(commentHtml);
+            <p class="text-muted small">${formattedDate}</p>
+            <p class="fs-6" id="comment-text">${comment.comment}</p>
+        </div>
+        <hr>
+    `);
 }
 
 function editComment(commentId, currentText) {
@@ -138,9 +126,7 @@ function submitEdit(commentId) {
         },
         error: function(xhr) {
             if (xhr.status == 401) {
-                const currentUrl = window.location.href;
                 alert(xhr.responseText);
-                window.location.href = "/members/login?redirectUrl=" + encodeURIComponent(currentUrl);
             } else {
                 alert("댓글 수정중 문제가 발생했습니다.")
             }
@@ -206,13 +192,96 @@ function deleteComment(commentId) {
             },
             error: function(xhr) {
                 if (xhr.status == 401) {
-                   const currentUrl = window.location.href;
-                   alert(xhr.responseText);
-                   window.location.href = "/members/login?redirectUrl=" + encodeURIComponent(currentUrl);
+                    alert(xhr.responseText);
                 } else {
                     alert("댓글을 삭제하는 도중 문제가 발생했습니다.");
                 }
             }
         });
     }
+}
+
+function like() {
+    const likeIcon = $('#likeIcon');
+    const isFillHeart = likeIcon.hasClass('bi-heart-fill');
+
+    if (isFillHeart) {
+        cancelLike(likeIcon);
+    } else {
+        addLike(likeIcon);
+    }
+}
+
+function addLkie(likeIcon) {
+    const result = confirm("레시피 좋아요 하시겠습니까?");
+    const recipeId = likeIcon.data('recipe-id');
+
+    if (result) {
+        likeIcon.toggleClass('bi-heart-fill');
+        $.ajax({
+            url: `/recipe/like/${recipeId}`,
+            method: 'POST',
+            success: function(response) {
+                alert("좋아요했습니다.");
+
+                searchRecipeLikeCount();
+            },
+            error: function(xhr) {
+                if (xhr.status == 401) {
+                    alert(xhr.responseText);
+                } else {
+                    alert("좋아요 하는 도중 문제가 발생했습니다.");
+                }
+            }
+        });
+    }
+}
+
+function cancelLike(likeIcon) {
+    const result = confirm("레시피 좋아요를 취소하시겠습니까?");
+    const recipeId = likeIcon.data('recipe-id');
+
+    if (result) {
+        likeIcon.toggleClass('bi-heart');
+        $.ajax({
+            url: `/recipe/cancelLike/${recipeId}`,
+            method: 'POST',
+            success: function(response) {
+                alert("좋아요를 취소했습니다.");
+
+                searchRecipeLikeCount();
+            },
+            error: function(xhr) {
+                if (xhr.status == 401) {
+                    alert(xhr.responseText);
+                } else {
+                    alert("좋아요를 취소하는 도중 문제가 발생했습니다.");
+                }
+            }
+        });
+    }
+}
+
+function searchRecipeLikeCount() {
+    const recipeId = $('#likeIcon').data('recipe-id');
+
+    $.ajax({
+        url: `/recipe/searchRecipeCount/${recipeId}`,
+        method: "GET",
+        success: function(response) {
+            appendCountHTML(response);
+        },
+        error: function(xhr) {
+            if (xhr.status == 401) {
+                alert(xhr.responseText);
+            } else {
+                alert("조회하는 도중 문제가 발생했습니다.");
+            }
+        }
+    });
+}
+
+function appendCountHTML(response) {
+    const likeCount = $('#likeCounts');
+    likeCount.text(response);
 }
