@@ -212,25 +212,24 @@ function like() {
     }
 }
 
-function addLkie(likeIcon) {
+function addLike(likeIcon) {
     const result = confirm("레시피 좋아요 하시겠습니까?");
     const recipeId = likeIcon.data('recipe-id');
 
     if (result) {
-        likeIcon.toggleClass('bi-heart-fill');
+        likeIcon.toggleClass('bi-heart-fill').toggleClass('bi-heart');
         $.ajax({
-            url: `/recipe/like/${recipeId}`,
+            url: '/recipe/like/' + recipeId,
             method: 'POST',
             success: function(response) {
-                alert("좋아요했습니다.");
-
+                alert("좋아요 했습니다.");
                 searchRecipeLikeCount();
             },
             error: function(xhr) {
                 if (xhr.status == 401) {
                     alert(xhr.responseText);
                 } else {
-                    alert("좋아요 하는 도중 문제가 발생했습니다.");
+                    alert("좋아요 하는 도중 문제가 발생했습니다");
                 }
             }
         });
@@ -242,20 +241,19 @@ function cancelLike(likeIcon) {
     const recipeId = likeIcon.data('recipe-id');
 
     if (result) {
-        likeIcon.toggleClass('bi-heart');
+        likeIcon.toggleClass('bi-heart-fill').toggleClass('bi-heart');
         $.ajax({
-            url: `/recipe/cancelLike/${recipeId}`,
+            url: '/recipe/cancelLike/' + recipeId,
             method: 'POST',
             success: function(response) {
                 alert("좋아요를 취소했습니다.");
-
                 searchRecipeLikeCount();
             },
             error: function(xhr) {
                 if (xhr.status == 401) {
                     alert(xhr.responseText);
                 } else {
-                    alert("좋아요를 취소하는 도중 문제가 발생했습니다.");
+                    alert("좋아요를 취소하는 도중 문제가 발생했습니다");
                 }
             }
         });
@@ -266,7 +264,7 @@ function searchRecipeLikeCount() {
     const recipeId = $('#likeIcon').data('recipe-id');
 
     $.ajax({
-        url: `/recipe/searchRecipeCount/${recipeId}`,
+        url: '/recipe/searchRecipeCount/' + recipeId,
         method: "GET",
         success: function(response) {
             appendCountHTML(response);
@@ -275,7 +273,7 @@ function searchRecipeLikeCount() {
             if (xhr.status == 401) {
                 alert(xhr.responseText);
             } else {
-                alert("조회하는 도중 문제가 발생했습니다.");
+                alert("조회하는 도중 문제가 발생했습니다");
             }
         }
     });

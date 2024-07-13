@@ -77,7 +77,7 @@
                     <div id="recipeLikeContainer" class="d-flex justify-content-center mt-2">
                         <div id="recipeLike" class="d-flex align-items-center">
                             <button id="likeButton" class="btn border p-1 rounded" onclick="like()">
-                                <span id="likeIcon" class="bi bi-heart" data-recipe-id="${recipe.id}"></span>
+                                <span id="likeIcon" class="bi bi-heart" th:data-recipe-id="${recipe.id}"></span>
                             </button>
                             <span id="likeCounts" class="fs-7 fw-bold text-primary border p-1 rounded"></span>
                         </div>
