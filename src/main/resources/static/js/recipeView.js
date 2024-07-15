@@ -267,7 +267,9 @@ function searchRecipeLikeCount() {
         url: '/recipe/searchRecipeCount/' + recipeId,
         method: "GET",
         success: function(response) {
-            appendCountHTML(response);
+            const likeCounts = response.likeCounts;
+            const checkedLiked = response.checkedLike;
+            appendCountHTML(likeCounts, checkedLiked);
         },
         error: function(xhr) {
             if (xhr.status == 401) {
@@ -279,7 +281,14 @@ function searchRecipeLikeCount() {
     });
 }
 
-function appendCountHTML(response) {
+function appendCountHTML(likeCounts, checkedLiked) {
     const likeCount = $('#likeCounts');
-    likeCount.text(response);
+    const likeIcon = $('#likeIcon');
+
+    likeCount.text(likeCounts);
+    if (checkedLiked) {
+        likeIcon.removeClass('bi-heart').addClass('bi-heart-fill');
+    } else {
+        likeIcon.removeClass('bi-heart-fill').addClass('bi-heart');
+    }
 }

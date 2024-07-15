@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.bobzip.entity.member.dto.LoginConst;
 import project.bobzip.entity.member.entity.Member;
+import project.bobzip.entity.recipe.dto.response.RecipeLikeDto;
 import project.bobzip.entity.recipe.service.RecipeLikeService;
 
 @Slf4j
@@ -17,10 +18,11 @@ public class RecipeLikeController {
     private final RecipeLikeService recipeLikeService;
 
     @GetMapping("/recipe/searchRecipeCount/{recipeId}")
-    public ResponseEntity<?> searchRecipeCount(@PathVariable("recipeId") Long recipeId) {
+    public ResponseEntity<?> searchRecipeCount(@PathVariable("recipeId") Long recipeId,
+                                               @SessionAttribute(name = LoginConst.LOGIN, required = false) Member member) {
         try {
-            Long likeCount = recipeLikeService.countLike(recipeId);
-            return ResponseEntity.ok().body(likeCount);
+            RecipeLikeDto recipeLikeDto = recipeLikeService.searchLike(member, recipeId);
+            return ResponseEntity.ok().body(recipeLikeDto);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }

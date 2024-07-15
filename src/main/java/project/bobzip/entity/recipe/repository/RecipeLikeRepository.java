@@ -21,4 +21,8 @@ public interface RecipeLikeRepository extends JpaRepository<RecipeLike, Long> {
     @Query("delete from RecipeLike rl where rl.member = :member and rl.recipe = :recipe")
     void deleteRecipeLike(@Param("member") Member loginMember,
                           @Param("recipe") Recipe recipe);
+
+    @Query("select case when count(rl) > 0 then true else false end from RecipeLike rl where rl.member = :member AND rl.recipe = :recipe")
+    boolean checkLike(@Param("member") Member loginMember,
+                      @Param("recipe") Recipe recipe);
 }

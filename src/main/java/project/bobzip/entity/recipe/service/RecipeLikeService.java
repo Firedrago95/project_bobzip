@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.bobzip.entity.member.entity.Member;
+import project.bobzip.entity.recipe.dto.response.RecipeLikeDto;
 import project.bobzip.entity.recipe.entity.Recipe;
 import project.bobzip.entity.recipe.entity.RecipeLike;
 import project.bobzip.entity.recipe.repository.RecipeLikeRepository;
@@ -32,9 +33,12 @@ public class RecipeLikeService {
         recipeLikeRepository.deleteRecipeLike(loginMember, recipe);
     }
 
-    public Long countLike(Long recipeId) {
+    public RecipeLikeDto searchLike(Member loginMember, Long recipeId) {
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new IllegalArgumentException("Recipe not found"));
-        return recipeLikeRepository.countLikes(recipe);
+        boolean isLiked = (loginMember != null) &&  recipeLikeRepository.checkLike(loginMember, recipe);
+        Long likeCounts = recipeLikeRepository.countLikes(recipe);
+        return new RecipeLikeDto(likeCounts, isLiked);
     }
+
 }
