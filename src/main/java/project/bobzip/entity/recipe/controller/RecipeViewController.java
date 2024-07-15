@@ -70,4 +70,17 @@ public class RecipeViewController {
         Page<RecipeSearchDTO> searchRecipes = recipeSearchService.searchByIngredient(ingredientNames, pageable);
         return ResponseEntity.ok().body(searchRecipes);
     }
+
+    @GetMapping("/myFavorites")
+    public String viewMyFavorites(@SessionAttribute(LoginConst.LOGIN) Member loginMember,
+                                  @PageableDefault(size = 2) Pageable pageable,
+                                  Model model) {
+        Page<Recipe> page = recipeSearchService.findMyFavoriteRecipes(loginMember, pageable);
+        List<Recipe> allRecipes = page.getContent();
+
+        model.addAttribute("recipes", allRecipes);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("currentPage", page.getNumber() + 1);
+        return "/recipe/allRecipe";
+    }
 }

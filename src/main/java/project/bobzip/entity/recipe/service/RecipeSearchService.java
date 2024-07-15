@@ -8,9 +8,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import project.bobzip.entity.member.entity.Member;
 import project.bobzip.entity.recipe.dto.response.RecipeSearchDTO;
 import project.bobzip.entity.recipe.entity.Recipe;
 import project.bobzip.entity.recipe.exception.NoSearchResultException;
+import project.bobzip.entity.recipe.repository.RecipeLikeRepository;
+import project.bobzip.entity.recipe.repository.RecipeRepository;
 import project.bobzip.entity.recipe.repository.RecipeSearchRepository;
 
 import java.util.ArrayList;
@@ -27,7 +30,9 @@ import static project.bobzip.entity.recipe.entity.QRecipe.recipe;
 @Transactional(readOnly = true)
 public class RecipeSearchService {
 
+    private final RecipeRepository recipeRepository;
     private final RecipeSearchRepository recipeSearchRepository;
+    private final RecipeLikeRepository recipeLikeRepository;
 
 
     public Page<Recipe> searchRecipe(String q, Pageable pageable) {
@@ -81,5 +86,13 @@ public class RecipeSearchService {
                 }
             }
         }
+    }
+
+    public Page<Recipe> findMyFavoriteRecipes(Member loginMember, Pageable pageable) {
+        List<Long> recipeIds = recipeLikeRepository.findIdByMember(loginMember);
+        List<Recipe> contents = recipeRepository.findAllById(recipeIds);
+        int count = recipeRepository.countAllById(recipeIds);
+
+        return new PageImpl<>(contents, pageable, count);
     }
 }

@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
                 .addPathPatterns("/recipe/add", "/members/delete", "/recipe/delete/*", "/recipe/edit/*",
-                        "/fridge");
+                        "/fridge", "/recipe/myFavorites");
 
         registry.addInterceptor(new ApiLoginCheckInterceptor())
                 .order(2)
