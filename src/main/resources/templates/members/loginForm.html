@@ -90,6 +90,9 @@
 <div class="login-form-container">
     <form th:action th:object="${memberForm}" method="post">
         <h2>BoB.zip</h2>
+        <div th:if="${#fields.hasGlobalErrors()}" class="field-error">
+            <p th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+        </div>
         <div class="mb-1">
             <input type="text" th:field="*{userId}" id="userId" class="form-control" placeholder="ID">
             <div class="field-error" th:errors="*{userId}"></div>
