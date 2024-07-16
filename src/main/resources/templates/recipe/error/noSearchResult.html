@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        #err {
+            height:100vh;
+        }
+    </style>
 </head>
 <body>
     <div th:replace="~{/fragment/header :: header}"></div>
     <h1 id="err" th:text="${errorMessage}"></h1>
+    <div th:replace="~{/fragment/footer :: footer}"></div>
 </body>
 </html>

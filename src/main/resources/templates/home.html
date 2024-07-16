@@ -15,8 +15,7 @@
 
     <section class="main">
         <div class="container">
-            <p>배달어플 끄자!</p>
-            <h1>이제 만들어먹자!</h1>
+            <h2>배달어플 끄자! 이제 만들어먹자!</h2>
             <form id="foodSearchForm" action="/recipe/search" method="GET">
                 <div class="search-container">
                     <input type="text" id="foodSearch" name="q" placeholder="만들고 싶은 음식 레시피를 검색하세요">
@@ -42,7 +41,7 @@
                     <p>여러분의 냉장고에는 어떤 식재료가 있나요?<br>
                         지금 냉장고에 식재료를 업로드 해주세요. <br>
                         알맞은 레시피를 추천해드릴께요</p>
-                    <a href="your_fridge_link"><p>냉장고 관리하기 ⟶</p></a>
+                    <a href="/fridge"><p>냉장고 관리하기 ⟶</p></a>
                 </div>
                 <div class="about">
                     <img src="/image/recipe.png" alt="레시피 찾기">
@@ -55,5 +54,6 @@
             </div>
         </div>
     </section>
+    <div th:replace="~{/fragment/footer :: footer}"></div>
 </body>
 </html>

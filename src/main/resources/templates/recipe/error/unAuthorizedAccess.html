@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        #err {
+            height:100vh;
+        }
+    </style>
 </head>
 <body>
     <div th:replace="~{/fragment/header :: header}"></div>
-    <div>
+    <div id="err">
         <p th:text="${errorMessage}"></p>
     </div>
+    <div th:replace="~{/fragment/footer :: footer}"></div>
 </body>
 </html>

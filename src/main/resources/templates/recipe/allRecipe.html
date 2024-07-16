@@ -9,33 +9,31 @@
             crossorigin="anonymous"></script>
     <script src="/js/pagination.js" defer></script>
     <style>
-        /* Pagination link styles */
-        #pagination a {
-            margin: 0 5px;
-            padding: 8px 16px;
-            text-decoration: none;
-            color: #007bff;
-        }
-
-        /* Selected page styles */
-        #pagination a.selected {
-            background-color: #007bff;
-            color: white;
-            border-color: #007bff;
-        }
-
-        /* Disabled ellipsis styles */
-        #pagination span {
-            margin: 0 5px;
-            padding: 8px 16px;
-            color: #999;
-            cursor: default;
-        }
+        #recipeContainer {
+           height:100vh;
+       }
+       #pagination a {
+           margin: 0 5px;
+           padding: 8px 16px;
+           text-decoration: none;
+           color: #007bff;
+       }
+       #pagination a.selected {
+           background-color: #007bff;
+           color: white;
+           border-color: #007bff;
+       }
+       #pagination span {
+           margin: 0 5px;
+           padding: 8px 16px;
+           color: #999;
+           cursor: default;
+       }
     </style>
 </head>
 <body>
     <div th:replace="~{/fragment/header :: header}"></div>
-    <div class="container mt-4">
+    <div id="recipeContainer" class="container mt-4">
         <div class="row mt-4">
             <div th:each="recipe : ${recipes}" class="col-md-3 mb-4 py-3 border rounded">
                 <a th:href="@{/recipe/{id}(id = ${recipe.id})}" class="text-dark text-decoration-none">
@@ -49,5 +47,6 @@
 
         <div id="pagination" th:data-total-pages="${totalPages}" th:data-current-page="${currentPage}" class="mt-4 d-flex justify-content-center"></div>
     </div>
+    <div th:replace="~{/fragment/footer :: footer}"></div>
 </body>
 </html>
