@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 import project.bobzip.entity.recipe.exception.NoSearchResultException;
-import project.bobzip.entity.recipe.exception.UnauthorizedAccessException;
+import project.bobzip.global.exception.UnauthorizedAccessException;
 
 @Slf4j
-@ControllerAdvice
+@ControllerAdvice("project.bobzip.entity.recipe")
 public class RecipeExceptionHandler {
 
     @ExceptionHandler(NoSearchResultException.class)

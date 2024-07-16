@@ -1,4 +1,4 @@
-package project.bobzip.entity.recipe.exception;
+package project.bobzip.global.exception;
 
 public class UnauthorizedAccessException extends RuntimeException{
 

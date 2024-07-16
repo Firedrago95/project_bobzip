@@ -11,7 +11,7 @@ import project.bobzip.entity.member.dto.LoginConst;
 import project.bobzip.entity.member.entity.Member;
 import project.bobzip.entity.recipe.dto.request.RecipeEditForm;
 import project.bobzip.entity.recipe.entity.Recipe;
-import project.bobzip.entity.recipe.exception.UnauthorizedAccessException;
+import project.bobzip.global.exception.UnauthorizedAccessException;
 import project.bobzip.entity.recipe.service.RecipeService;
 
 import java.io.IOException;

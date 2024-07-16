@@ -1,20 +1,14 @@
 package project.bobzip.entity.reply.service;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import project.bobzip.entity.member.dto.LoginConst;
 import project.bobzip.entity.member.entity.Member;
 import project.bobzip.entity.recipe.entity.Recipe;
-import project.bobzip.entity.recipe.exception.UnauthorizedAccessException;
+import project.bobzip.global.exception.UnauthorizedAccessException;
 import project.bobzip.entity.recipe.repository.RecipeRepository;
 import project.bobzip.entity.reply.dto.request.ReplyAddForm;
 import project.bobzip.entity.reply.dto.response.ReplyDto;

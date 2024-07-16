@@ -13,7 +13,7 @@ import project.bobzip.entity.recipe.dto.request.RecipeEditForm;
 import project.bobzip.entity.recipe.entity.Recipe;
 import project.bobzip.entity.recipe.entity.RecipeIngredient;
 import project.bobzip.entity.recipe.entity.RecipeStep;
-import project.bobzip.entity.recipe.exception.UnauthorizedAccessException;
+import project.bobzip.global.exception.UnauthorizedAccessException;
 import project.bobzip.entity.recipe.repository.RecipeRepository;
 import project.bobzip.entity.recipe.repository.RecipeSearchRepository;
 import project.bobzip.global.entity.UploadFile;

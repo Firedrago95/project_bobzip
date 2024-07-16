@@ -1,17 +1,14 @@
 package project.bobzip.entity.reply.controller;
 
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.bobzip.entity.member.dto.LoginConst;
 import project.bobzip.entity.member.entity.Member;
-import project.bobzip.entity.recipe.exception.UnauthorizedAccessException;
 import project.bobzip.entity.reply.dto.request.ReplyAddForm;
 import project.bobzip.entity.reply.dto.response.ReplyDto;
 import project.bobzip.entity.reply.entity.Reply;
@@ -37,38 +34,22 @@ public class ReplyController {
     @PostMapping("/add")
     public ResponseEntity<?> addReply(@RequestBody ReplyAddForm replyAddForm,
                                       @SessionAttribute(LoginConst.LOGIN) Member loginMember) {
-        try {
-            Page<ReplyDto> replyDtoPage = replyService.addReply(replyAddForm, loginMember, PAGE_SIZE);
-            return ResponseEntity.ok(replyDtoPage);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 추가 중 오류가 발생했습니다.");
-        }
+        Page<ReplyDto> replyDtoPage = replyService.addReply(replyAddForm, loginMember, PAGE_SIZE);
+        return ResponseEntity.ok(replyDtoPage);
     }
 
     @PostMapping("/edit/{commentId}")
     public ResponseEntity<String> editReply(
             @PathVariable("commentId") Long commentId, @ModelAttribute("comment") String comment,
             @SessionAttribute(LoginConst.LOGIN) Member loginMember) {
-        try {
-            replyService.editReply(commentId, comment, loginMember);
-            return ResponseEntity.ok("댓글 수정 완료");
-        } catch (UnauthorizedAccessException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 수정 중 오류가 발생했습니다.");
-        }
+        replyService.editReply(commentId, comment, loginMember);
+        return ResponseEntity.ok("댓글 수정 완료");
     }
 
     @PostMapping("/delete/{commentId}")
     public ResponseEntity<?> deleteReply(@PathVariable("commentId") Long commentId,
                                          @SessionAttribute(LoginConst.LOGIN) Member loginMember) {
-        try {
-            Page<ReplyDto> replyDtoPage = replyService.deleteReply(commentId, loginMember, PAGE_SIZE);
-            return ResponseEntity.ok(replyDtoPage);
-        } catch (UnauthorizedAccessException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 삭제 중 오류가 발생했습니다.");
-        }
+        Page<ReplyDto> replyDtoPage = replyService.deleteReply(commentId, loginMember, PAGE_SIZE);
+        return ResponseEntity.ok(replyDtoPage);
     }
 }
