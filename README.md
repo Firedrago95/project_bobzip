@@ -1,12 +1,35 @@
 # bobzip 프로젝트
-냉장고 관리 및 레시피 검색 사이트 개발 
+냉장고 관리 및 레시피 검색 사이트 개발
 
+## 목표
+1. Spring data JPA, QueryDsl 과 Spring MVC의 주요기능에 대한 숙달 및 문제해결 과정의 정리
+2. 서비스 기획 (ER 다이어그램 작성, 기능구현 목록)부터 배포까지 서비스 생애주기의 전 과정을 혼자 경험
 
 # 목차
-1. [기능구현 목록](#기능구현-목록)
+1. [기술 스택](#기술-스택)
 2. [ER 다이어그램](#er-다이어그램)
-3. [문제 해결](#문제_해결)
+3. [기능 구현 목록](#프로젝트-기능-구현-목록)
 
+
+# 기술 스택
+<div >
+  <h3> FrontEnd</h3>
+  <img src="https://img.shields.io/badge/thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white">
+  <img src="https://img.shields.io/badge/bootstap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white">
+  <img src="https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jQuery&logoColor=white">
+
+</div>
+<div >
+  <h3> BackEnd</h3>
+  <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+  <img src="https://img.shields.io/badge/Spring_Data_Jpa-00E47C?style=for-the-badge&logo=amazondynamodb&logoColor=white">
+  <img src="https://img.shields.io/badge/QueryDsl-0769AD?style=for-the-badge&logo=springboot&logoColor=white">
+  
+</div>
+
+# ER 다이어그램
+![img.png](img.png)
 
 # 프로젝트 기능 구현 목록
 
@@ -60,5 +83,4 @@
 - [AJAX 요청을 통한 댓글 조회](https://flowerdragon95.tistory.com/204), [댓글 작성](https://flowerdragon95.tistory.com/205), [댓글 수정](https://flowerdragon95.tistory.com/206)
 
 
-## ER 다이어그램
-![img.png](img.png)
+
