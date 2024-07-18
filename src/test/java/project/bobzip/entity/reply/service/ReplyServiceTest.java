@@ -74,7 +74,7 @@ public class ReplyServiceTest {
     @DisplayName("댓글 추가 예외발생")
     void addReplyExceptionTest() {
         // given
-        Long wrongRecipeId = 2L;
+        Long wrongRecipeId = 22345L;
         Member testMember = createTestMember();
         ReplyAddForm replyAddForm = new ReplyAddForm(wrongRecipeId, "존재하지 않는 레시피에 댓글 등록 예외발생");
 
