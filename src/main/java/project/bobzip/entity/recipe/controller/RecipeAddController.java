@@ -28,7 +28,7 @@ public class RecipeAddController {
 
     @GetMapping("/add")
     public String recipeForm(@ModelAttribute("recipeAddForm") RecipeAddForm recipeAddForm) {
-        return "/recipe/recipeForm";
+        return "recipe/recipeForm";
     }
 
     @PostMapping("/add")
@@ -37,7 +37,7 @@ public class RecipeAddController {
                             @SessionAttribute(name = LoginConst.LOGIN) Member loginMember) throws IOException {
         // 입력 정보 오류 있다면 입력폼으로
         if (bindingResult.hasErrors()) {
-            return "/recipe/recipeForm";
+            return "recipe/recipeForm";
         }
         // 재료 등록 후 반환
         List<Ingredient> ingredients = ingredientService.addIngredients(recipeAddForm.getIngredientNames());

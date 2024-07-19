@@ -32,7 +32,7 @@
     </style>
 </head>
 <body>
-    <div th:replace="~{/fragment/header :: header}"></div>
+    <div th:replace="~{fragment/header :: header}"></div>
     <div id="recipeContainer" class="container mt-4">
         <div class="row mt-4">
             <div th:each="recipe : ${recipes}" class="col-md-3 mb-4 py-3 border rounded">
@@ -47,6 +47,6 @@
 
         <div id="pagination" th:data-total-pages="${totalPages}" th:data-current-page="${currentPage}" class="mt-4 d-flex justify-content-center"></div>
     </div>
-    <div th:replace="~{/fragment/footer :: footer}"></div>
+    <div th:replace="~{fragment/footer :: footer}"></div>
 </body>
 </html>

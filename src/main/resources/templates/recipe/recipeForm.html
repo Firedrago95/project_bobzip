@@ -16,7 +16,7 @@
     <script src="/js/addForm.js"></script>
 </head>
 <body>
-    <div th:replace="~{/fragment/header :: header}"></div>
+    <div th:replace="~{fragment/header :: header}"></div>
     <div class="container mt-4">
         <form action="" method="post" th:object="${recipeAddForm}" enctype="multipart/form-data">
             <!-- 기본정보 -->
@@ -113,6 +113,6 @@
             </div>
         </form>
     </div>
-    <div th:replace="~{/fragment/footer :: footer}"></div>
+    <div th:replace="~{fragment/footer :: footer}"></div>
 </body>
 </html>

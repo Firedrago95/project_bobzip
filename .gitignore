@@ -166,7 +166,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-**/application.yml
+**/*.yml
 **/application.properties
 **/stepThumbnail
 **/thumbnail

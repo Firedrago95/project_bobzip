@@ -36,7 +36,7 @@ public class RecipeViewController {
         model.addAttribute("recipes", allRecipes);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("currentPage", page.getNumber() + 1);
-        return "/recipe/allRecipe";
+        return "recipe/allRecipe";
     }
 
     @GetMapping("/{id}")
@@ -48,7 +48,7 @@ public class RecipeViewController {
             model.addAttribute("isWriter", true);
         }
         model.addAttribute("recipe", recipe);
-        return "/recipe/recipeView";
+        return "recipe/recipeView";
     }
 
     @GetMapping("/search")
@@ -60,7 +60,7 @@ public class RecipeViewController {
         model.addAttribute("recipes", allRecipes);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("currentPage", page.getNumber() + 1);
-        return "/recipe/allRecipe";
+        return "recipe/allRecipe";
     }
 
     @ResponseBody
@@ -81,6 +81,6 @@ public class RecipeViewController {
         model.addAttribute("recipes", allRecipes);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("currentPage", page.getNumber() + 1);
-        return "/recipe/allRecipe";
+        return "recipe/allRecipe";
     }
 }

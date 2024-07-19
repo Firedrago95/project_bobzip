@@ -36,7 +36,7 @@ public class RecipeEditController {
         }
         RecipeEditForm recipeEditForm = RecipeEditForm.createEditForm(recipe);
         model.addAttribute("recipeEditForm", recipeEditForm);
-        return "/recipe/recipeEdit";
+        return "recipe/recipeEdit";
     }
 
     @PostMapping("/edit/{id}")
