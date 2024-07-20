@@ -15,6 +15,7 @@
   - GitHub
   - SourceTree
   - Visual Studio Code
+
 ## 사용기술
 ### 백엔드
 #### 주요 프레임워크 / 라이브러리
@@ -35,15 +36,14 @@
 
 ### 프론트엔드 
   - HTML/CSS
-  - JavaScript
-  - JQuery
+  - JavaScript/JQuery
+  - Thymeleaf
   - BootStrap 5
 
 ## 프로젝트 목표
   - Spring MVC의 주요 기능 이해와 숙달
-  - API 요청과 처리 경험
   - JPA 및 Hibernate 활용한 도메인 설계
-  - JavaScript 활용능력과 AJAX 비동기 요청 처리 경험
+  - JavaScript 활용능력 향상과 AJAX 비동기 요청 처리 경험
   - 웹 애플리케이션의 기획부터 배포까지의 전 과정을 경험
 
 ## ER 다이어그램
