@@ -1,5 +1,6 @@
 package project.bobzip.global.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -9,6 +10,9 @@ import project.bobzip.global.interceptor.LoginCheckInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+    @Value("${image.dir}")
+    private String imageDir;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -28,6 +32,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/file/**")
-                .addResourceLocations("file:C:/Users/ekore/file/");
+                .addResourceLocations("file:" + imageDir);
     }
 }
