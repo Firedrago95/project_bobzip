@@ -3,7 +3,6 @@ package project.bobzip.global.config;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -12,14 +11,20 @@ import org.springframework.core.env.Environment;
 @Configuration
 public class JasyptConfig {
 
-    @Value("${jasypt.encryptor.password}")
-    private String encryptKey;
+    private final Environment env;
+
+    public JasyptConfig(Environment env) {
+        this.env = env;
+    }
 
     @Bean(name = "jasyptStringEncryptor")
-    public StringEncryptor jasyptStringEncryptor(Environment env) {
+    public StringEncryptor jasyptStringEncryptor() {
 
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
+
+        // 시스템 속성에서 암호화 비밀번호를 가져옵니다.
+        String encryptKey = env.getProperty("jasypt.encryptor.password");
 
         config.setPassword(encryptKey); // 암호키가 필요한 method -> 암호키 필드를 값으로 전달
         config.setAlgorithm("PBEWithMD5AndDES"); // 처리에 필요한 알고리즘
