@@ -1,7 +1,9 @@
 package project.bobzip.global.config;
 
 import org.jasypt.encryption.StringEncryptor;
-import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
+import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -10,11 +12,24 @@ import org.springframework.core.env.Environment;
 @Configuration
 public class JasyptConfig {
 
+    @Value("${jasypt.encryptor.password}")
+    private String encryptKey;
+
     @Bean(name = "jasyptStringEncryptor")
     public StringEncryptor jasyptStringEncryptor(Environment env) {
-        StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
-        encryptor.setAlgorithm("PBEWithMD5AndDES");
-        encryptor.setPassword(env.getProperty("JASYPT_ENCRYPTOR_PASSWORD"));  // 암호화 키를 환경 변수로 설정
+
+        PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
+        SimpleStringPBEConfig config = new SimpleStringPBEConfig();
+        
+        config.setPassword(encryptKey); // 암호키가 필요한 method -> 암호키 필드를 값으로 전달
+        config.setAlgorithm("PBEWithMD5AndDES"); // 처리에 필요한 알고리즘
+        config.setKeyObtentionIterations("1000");
+        config.setPoolSize("1");
+        config.setProviderName("SunJCE");
+        config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
+        config.setIvGeneratorClassName("org.jasypt.iv.NoIvGenerator");
+        config.setStringOutputType("base64");
+        encryptor.setConfig(config);
         return encryptor;
     }
 }
