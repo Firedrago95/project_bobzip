@@ -7,7 +7,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-      dialect: org.hibernate.dialect.MySQLDialect
+      dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
 
 # 이미지 파일 저장 경로
