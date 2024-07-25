@@ -174,3 +174,7 @@ $RECYCLE.BIN/
 build/
 .idea/
 **/P6spyConfig.java
+
+# Gradle Wrapper
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
