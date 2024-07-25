@@ -18,4 +18,3 @@ stepThumbnail.dir: /root/image/steps/
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
-    password: ${JASYPT_ENCRYPTOR_PASSWORD}

@@ -20,7 +20,7 @@ public class JasyptConfig {
 
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
-        
+
         config.setPassword(encryptKey); // 암호키가 필요한 method -> 암호키 필드를 값으로 전달
         config.setAlgorithm("PBEWithMD5AndDES"); // 처리에 필요한 알고리즘
         config.setKeyObtentionIterations("1000");
