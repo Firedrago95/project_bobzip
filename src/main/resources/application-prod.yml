@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ENC(Yi7FxOWNKX9qUt7zHl7jI6Lxf1Iw78Lzwt9BO3M1ZKUvJYFBF6mKz39sgtEV6PTV)
+    username: ENC(Lf3x/RckSNaunthCqTmNUA==)
+    password: ENC(wCNF8MJVKDjsa1Mx6UxoCw==)
+  jpa:
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+
+# 이미지 파일 저장 경로
+image.dir: /root/image/
+recipeThumbnail.dir: /root/image/recipe/
+stepThumbnail.dir: /root/image/steps/
+
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
