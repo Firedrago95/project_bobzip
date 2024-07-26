@@ -43,26 +43,7 @@ public class JasyptConfig {
         config.setIvGeneratorClassName("org.jasypt.iv.NoIvGenerator");
         config.setStringOutputType("base64");
         encryptor.setConfig(config);
-
-        // Log decryption status for specific properties
-        logDecryptionStatus(encryptor, "spring.datasource.url");
-        logDecryptionStatus(encryptor, "spring.datasource.username");
-        logDecryptionStatus(encryptor, "spring.datasource.password");
-
         return encryptor;
     }
 
-    private void logDecryptionStatus(StringEncryptor encryptor, String propertyKey) {
-        String encryptedProperty = env.getProperty(propertyKey);
-        if (encryptedProperty != null && encryptedProperty.startsWith("ENC(") && encryptedProperty.endsWith(")")) {
-            try {
-                String decryptedProperty = encryptor.decrypt(encryptedProperty.substring(4, encryptedProperty.length() - 1));
-                log.info("Successfully decrypted property: {}", propertyKey);
-            } catch (Exception e) {
-                log.error("Failed to decrypt property: {}", propertyKey, e);
-            }
-        } else {
-            log.warn("Property {} is not encrypted or has an invalid format", propertyKey);
-        }
-    }
 }
