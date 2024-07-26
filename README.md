@@ -33,6 +33,9 @@
 
 #### infra
   - Vultr Cloud Compute
+  - jenkins
+  - nginx
+  - Docker
 
 ### 프론트엔드 
   - HTML/CSS
