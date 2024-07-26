@@ -3,7 +3,6 @@ package project.bobzip.entity.fridge.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Profile;
 import project.bobzip.entity.fridge.entity.FridgeIngredient;
 import project.bobzip.entity.ingredient.entity.Ingredient;
 import project.bobzip.entity.ingredient.repository.IngredientRepository;
@@ -15,7 +14,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@Profile("prod")
 class FridgeRepositoryTest {
 
     @Autowired

@@ -4,21 +4,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
 import org.springframework.transaction.annotation.Transactional;
 import project.bobzip.entity.member.entity.Member;
 import project.bobzip.entity.member.repository.MemberRepository;
 import project.bobzip.entity.recipe.entity.Recipe;
-import project.bobzip.global.exception.UnauthorizedAccessException;
 import project.bobzip.entity.recipe.repository.RecipeRepository;
 import project.bobzip.entity.recipe.service.RecipeService;
+import project.bobzip.global.exception.UnauthorizedAccessException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @Transactional
-@Profile("prod")
 public class RecipeServiceDeleteTest {
 
     @Autowired
