@@ -7,8 +7,6 @@ import project.bobzip.global.entity.UploadFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -50,7 +48,7 @@ public class FileStore {
 
     private String createStoreFilename(String originalFilename) {
         String ext = extractExt(originalFilename);
-        String uuid = UUID.randomUUID().toString().substring(0,8);
+        String uuid = UUID.randomUUID().toString();
         return uuid + "." + ext;
     }
 
