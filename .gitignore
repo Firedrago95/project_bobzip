@@ -170,6 +170,7 @@ $RECYCLE.BIN/
 **/thumbnail
 
 ### Gradle ###
+**/*.yml
 .gradle
 build/
 .idea/
