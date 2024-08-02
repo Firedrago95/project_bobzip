@@ -37,7 +37,7 @@
         <div class="row mt-4">
             <div th:each="recipe : ${recipes}" class="col-md-3 mb-4 py-3 border rounded">
                 <a th:href="@{/recipe/{id}(id = ${recipe.id})}" class="text-dark text-decoration-none">
-                    <img th:src="|/file/${recipe.thumbnail.storedFileName}|" class="img-fluid rounded border"
+                    <img th:src="|/file/recipe/${recipe.thumbnail.storedFileName}|" class="img-fluid rounded border"
                          alt="Recipe Image" width="300" height="300">
                     <h2 th:text="${recipe.title}" class="mt-3"></h2>
                     <p th:text="${recipe.instruction}"></p>

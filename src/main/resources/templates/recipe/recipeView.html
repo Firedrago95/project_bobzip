@@ -63,7 +63,7 @@
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <div class="card mb-4">
-                <img th:src="|/file/${recipe.thumbnail.storedFileName}|" class="card-img-top" alt="Recipe Image">
+                <img th:src="|/file/recipe/${recipe.thumbnail.storedFileName}|" class="card-img-top" alt="Recipe Image">
                 <div class="card-body">
                     <h1 class="card-title" th:text="${recipe.title}"></h1>
                     <p class="card-text" th:text="${recipe.instruction}"></p>
@@ -110,7 +110,7 @@
                             <span th:text="${recipeStep.instruction}"></span>
                         </div>
                         <div th:if="${recipeStep.thumbnail != null and recipeStep.thumbnail.storedFileName != null and !#strings.isEmpty(recipeStep.thumbnail.storedFileName)}">
-                            <img th:src="|/file/step/${recipeStep.thumbnail.storedFileName}|" class="img-fluid" alt="Step Image">
+                            <img th:src="|/file/steps/${recipeStep.thumbnail.storedFileName}|" class="img-fluid" alt="Step Image">
                         </div>
                     </div>
                 </div>
