@@ -28,7 +28,7 @@ function appendIngredient(ingredient) {
         .addClass('ingredient-item col-2')
         .text(ingredient);
 
-    const inputForm = $('<input type="hidden" name="ingredeints[]" value="'+ingredient+'">');
+    const inputForm = $('<input type="hidden" name="ingredients[]" value="'+ingredient+'">');
 
     const deleteButton = $('<button></button>')
         .text('x')

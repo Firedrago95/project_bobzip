@@ -24,6 +24,8 @@ public class FridgeService {
 
     @Transactional
     public void addFridgeIngredient(List<Ingredient> ingredientNames, Member loginMember) {
+        fridgeRepository.deleteAllByMember(loginMember);
+
         List<FridgeIngredient> ingredients = ingredientNames.stream()
                 .map(ingredient -> new FridgeIngredient(ingredient, loginMember))
                 .collect(Collectors.toList());
