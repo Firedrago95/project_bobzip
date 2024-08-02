@@ -26,7 +26,7 @@ public class FridgeController {
 
     @GetMapping
     public String fridgePage() {
-        return "/fridge/myFridge";
+        return "fridge/myFridge";
     }
 
     @GetMapping("/all")
