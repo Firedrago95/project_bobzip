@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-sm-4">
                     <img id="preview" class="img-thumbnail mt-2" width="400" height="300"
-                         th:src="|/file/${recipeEditForm.recipeThumbnail.storedFileName}|"/>
+                         th:src="|/file/recipe/${recipeEditForm.recipeThumbnail.storedFileName}|"/>
                 </div>
             </div>
             <!-- 재료정보 -->
@@ -99,7 +99,7 @@
                         <div class="col-sm-4">
                             <img id="step${iterStat.index}" th:if="${recipeEditForm.steps[__${iterStat.index}__].stepThumbnail != null}"
                                  class="img-thumbnail" width="380" height="240"
-                                 th:src="|/file/step/${recipeEditForm.steps[__${iterStat.index}__].stepThumbnail.storedFileName}|"/>
+                                 th:src="|/file/steps/${recipeEditForm.steps[__${iterStat.index}__].stepThumbnail.storedFileName}|"/>
                         </div>
                         <div class="col-sm-auto">
                             <button type="button" class="btn btn-danger" onclick="deleteRecipeStep(this, 'cooking_step')">X</button>
