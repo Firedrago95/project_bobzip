@@ -24,7 +24,7 @@ public class RecipeIngredient {
     private Ingredient ingredient;
 
     @Column(name = "quantity")
-    private int quantity;
+    private String quantity;
 
     @Column(length = 10)
     private String unit;
@@ -33,7 +33,7 @@ public class RecipeIngredient {
     public RecipeIngredient() {}
 
     public static List<RecipeIngredient> createRecipeIngredient(List<Ingredient> ingredients,
-                                                                List<Integer> quantities,
+                                                                List<String> quantities,
                                                                 List<String> units) {
         List<RecipeIngredient> recipeIngredients = new ArrayList<>();
         for (int i = 0; i < ingredients.size(); i++) {

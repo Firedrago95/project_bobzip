@@ -29,7 +29,7 @@ public class RecipeAddForm {
     private List<String> ingredientNames = new ArrayList<>();
 
     @NotEmptyList(message = "수량을 입력해주세요")
-    private List<Integer> quantities = new ArrayList<>();
+    private List<String> quantities = new ArrayList<>();
 
     @NotEmptyList(message = "단위를 입력해주세요")
     private List<String> units = new ArrayList<>();

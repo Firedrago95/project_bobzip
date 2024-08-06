@@ -56,10 +56,10 @@
                             <input type="text" th:field="*{ingredientNames}" class="form-control" placeholder="재료명">
                         </div>
                         <div class="col-sm">
-                            <input type="number" th:field="*{quantities}" class="form-control" placeholder="수량 (숫자)">
+                            <input type="text" th:field="*{quantities}" class="form-control" placeholder="수량 (1/2, 한)">
                         </div>
                         <div class="col-sm">
-                            <input type="text" th:field="*{units}" class="form-control" placeholder="단위 (g,ml)">
+                            <input type="text" th:field="*{units}" class="form-control" placeholder="단위 (g,ml,큰술)">
                         </div>
                         <div class="col-sm-auto">
                             <button type="button" class="btn btn-danger" onclick="deleteIngredient(this, 'ingredient')">
