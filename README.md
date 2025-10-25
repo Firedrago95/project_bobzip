@@ -1,25 +1,25 @@
-# bobzip 프로젝트
-* 사용자가 자신의 레시피를 공유, 검색하고 <br>냉장고에 있는 재료를 등록하여 해당 재료로 만들 수 있는 레시피를 찾을 수 있는 서비스
+# Bob.zip Project
+* A service where users can share and search recipes, and register ingredients from their refrigerator to find matching recipes.
 
-## 목차
-1. [개발환경](#개발환경)
-2. [사용기술](#사용기술)
-3. [프로젝트 목표](#프로젝트-목표)
-4. [시스템 아키텍쳐](#시스템-아키텍쳐)
-5. [ER 다이어그램](#er-다이어그램)
-6. [기능 구현](#기능-구현)
+## Table of Contents
+1. [Development Environment](#development-environment)
+2. [Tech Stack](#tech-stack)
+3. [Project Goals](#project-goals)
+4. [System Architecture](#system-architecture)
+5. [ER Diagram](#er-diagram)
+6. [Feature Implementation](#feature-implementation)
 
 
-## 개발환경
+## Development Environment
   - Intellij
   - PostMan
   - GitHub
   - SourceTree
   - Visual Studio Code
 
-## 사용기술
-### 백엔드
-#### 주요 프레임워크 / 라이브러리
+## Tech Stack
+### Backend
+#### Key Frameworks / Libraries
   - JAVA 17 Open Jdk
   - Spring MVC
   - Spring Boot 3.2.5
@@ -30,65 +30,61 @@
   - Gradle
 
 #### DataBase
-  - H2 (개발) / MySQL(배포)
+  - MySQL (Production) / H2 (Development)
 
-#### infra
+#### Infra
   - Vultr Cloud Compute
-  - jenkins
-  - nginx
+  - Jenkins
+  - Nginx
   - Docker
 
-### 프론트엔드 
+### Frontend
   - HTML/CSS
   - JavaScript/JQuery
   - Thymeleaf
   - BootStrap 5
 
-## 프로젝트 목표
-  - 혼자서 웹 애플리케이션의 기획부터 배포까지의 전 과정을 경험
-  - Spring MVC의 주요 기능 이해와 숙달
-  - JPA를 활용한 도메인 설계
-  - JavaScript 활용능력 향상과 AJAX 비동기 요청 처리 경험
+## Project Goals
+  - To **independently experience the entire web application lifecycle**, from initial planning to final deployment.
+  - To gain a deep understanding and proficiency in core Spring MVC functionalities.
+  - To design the application domain effectively using JPA.
+  - To improve JavaScript skills and gain hands-on experience with AJAX asynchronous processing.
 
-## 시스템 아키텍쳐
+## System Architecture
 ![img_1.png](img_1.png)
 
-## ER 다이어그램
-![img.png](img.png)
+## ER Diagram
+![img.png](img_png)
 
-## 기능 구현
-### 회원 관리
-- 회원가입, 탈퇴, 로그인 기능은 HttpSession을 이용하여 구현했습니다.
-- 회원가입 시 필수 항목 미입력 및 회원 중복 검사는 [사용자정의 BeanValidation](https://flowerdragon95.tistory.com/196)을 활용하여 처리했습니다.
-- 로그인 필요한 요청은 [인터셉터 interceptor](https://flowerdragon95.tistory.com/197)를 통해 로그인 검증을 수행하도록 했습니다.
+## Feature Implementation
+### User Management
+- Implemented user registration, withdrawal, and login features using **HttpSession**.
+- Handled validation for required fields and duplicate user checks during sign-up using [Custom BeanValidation](https://flowerdragon95.tistory.com/196).
+- Utilized **Interceptors** to perform login verification for all requests requiring authentication. [Interceptor](https://flowerdragon95.tistory.com/197).
 
-### 레시피 관리
-#### 레시피 등록
-- 레시피와 관련된 CRUD 기능들을 구현했습니다. [MultipartFile 포함한 레시피 수정하기](https://flowerdragon95.tistory.com/202)
-- 레시피 등록시 JavaScript를 활용하여 입력폼을 생성,삭제하고 업로드한 이미지를 확인할 수 있도록 했습니다.
-- 여러 엔티티와 연관관계를 맺고 있는 레시피 엔티티의 유연성을 위해 [빌더패턴 Builder](https://flowerdragon95.tistory.com/195)을 적용했습니다.
+### Recipe Management
+#### Recipe Registration
+- Implemented core CRUD functionalities for recipes. [Recipe modification with MultipartFile](https://flowerdragon95.tistory.com/202).
+- Used JavaScript to dynamically create/delete input forms for recipe registration and to preview uploaded images.
+- Applied the **Builder Pattern** for flexible creation of the Recipe entity, which has multiple entity relationships. [Builder Pattern](https://flowerdragon95.tistory.com/195).
 
-#### 레시피 조회
-  - 레시피 조회 결과를 페이징 하기위한 [페이지네이션 (javascript)](https://flowerdragon95.tistory.com/201)을 구현했습니다.
-  - 레시피 작성자와 현재 사용자의 일치 확인할때, [JPA 엔티티의 동일성](https://flowerdragon95.tistory.com/200) 문제를 해결했습니다.
-  - 외부 이미지 파일을 참조하기 위해 [리소스 경로 설정하기 ResourceHandler](https://flowerdragon95.tistory.com/199) 를 설정했습니다.
-  - 권한없는 사용자의 삭제요청, 검색결과 없는 경우 [예외처리 @ExceptionHandler]()를 사용했습니다.
+#### Recipe Search
+  - Implemented [Pagination (JavaScript)](https://flowerdragon95.tistory.com/201) for recipe search results.
+  - Resolved a [JPA Entity Identity Problem](https://flowerdragon95.tistory.com/200) when verifying if the current user is the recipe author.
+  - Configured a [Resource Handler Configuration](https://flowerdragon95.tistory.com/199) to reference external image files.
+  - Used [@ExceptionHandler for Exception Handling](https://flowerdragon95.tistory.com/XXX) to manage exceptions for unauthorized delete requests or "no results" searches. (Note: Link was empty)
 
+#### Recipe "Likes"
+  - Retrieves the total "like" count for a recipe. (API)
+  - Displays a filled heart for users who have "liked" a recipe; users can toggle the "like" on and off. (API)
+  - Users can view a collection of all recipes they have "liked".
 
-#### 레시피 좋아요
-  - 레시피의 좋아요 숫자를 조회합니다. (API)
-  - 좋아요 표시한 회원의 경우 하트가 채워진 것으로 표시되며, 토글을 이용하여 좋아요 취소 할 수 있습니다. (API)
-  - 좋아요 표시한 레시피를 모아서 볼 수 있습니다.
+### Refrigerator Management
+- Users can register ingredients to their refrigerator. (API)
+- Users can search for recipes that can be made with their registered ingredients. (API)
+  - Search results are sorted by the number of available ingredients, displaying "available" vs. "needed" ingredients for each recipe.
+  - [Using Querydsl to search recipes with refrigerator ingredients](https://flowerdragon95.tistory.com/207)
 
-### 냉장고 관리
-- 냉장고 재료를 등록할 수 있습니다. (API)
-- 냉장고 재료를 통해 만들 수 있는 레시피를 조회합니다.(API)
-  - 조회된 레시피는 사용가능한 재료, 필요한 재료로 나누어 재료를 표시합니다. 사용가능한 재료가 많은 레시피 순으로 정렬되어 조회됩니다.
-  - [Querydsl활용하여 냉장고 재료로 레시피 검색하기](https://flowerdragon95.tistory.com/207)
-
-### 댓글 관리
-- 작성된 레시피에 댓글 CRUD 기능을 구현했습니다. (API)
-  - [AJAX 요청을 통한 댓글 조회](https://flowerdragon95.tistory.com/204), [댓글 작성](https://flowerdragon95.tistory.com/205), [댓글 수정](https://flowerdragon95.tistory.com/206)
-
-
-
+### Comment Management
+- Implemented full CRUD functionality for comments on recipes. (API)
+  - [Fetching comments via AJAX request](https://flowerdragon95.tistory.com/204), [Creating comments](https://flowerdragon95.tistory.com/205), [Updating comments](https://flowerdragon95.tistory.com/206).
