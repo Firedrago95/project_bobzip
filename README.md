@@ -75,16 +75,16 @@
   - Used [@ExceptionHandler for Exception Handling](https://flowerdragon95.tistory.com/XXX) to manage exceptions for unauthorized delete requests or "no results" searches. (Note: Link was empty)
 
 #### Recipe "Likes"
-  - Retrieves the total "like" count for a recipe. (API)
+  - Retrieves the total "like" count for a recipe.
   - Displays a filled heart for users who have "liked" a recipe; users can toggle the "like" on and off. (API)
   - Users can view a collection of all recipes they have "liked".
 
 ### Refrigerator Management
-- Users can register ingredients to their refrigerator. (API)
-- Users can search for recipes that can be made with their registered ingredients. (API)
+- Users can register ingredients to their refrigerator.
+- Users can search for recipes that can be made with their registered ingredients.
   - Search results are sorted by the number of available ingredients, displaying "available" vs. "needed" ingredients for each recipe.
   - [Using Querydsl to search recipes with refrigerator ingredients](https://flowerdragon95.tistory.com/207)
 
 ### Comment Management
-- Implemented full CRUD functionality for comments on recipes. (API)
+- Implemented full CRUD functionality for comments on recipes.
   - [Fetching comments via AJAX request](https://flowerdragon95.tistory.com/204), [Creating comments](https://flowerdragon95.tistory.com/205), [Updating comments](https://flowerdragon95.tistory.com/206).
