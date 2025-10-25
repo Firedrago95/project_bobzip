@@ -54,7 +54,7 @@
 ![img_1.png](img_1.png)
 
 ## ER Diagram
-![img.png](img_png)
+![img.png](img.png)
 
 ## Feature Implementation
 ### User Management
